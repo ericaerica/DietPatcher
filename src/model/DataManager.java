@@ -1,26 +1,15 @@
-package pkg;
+package model;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+public class DataManager {
 
-public class MyServlet extends HttpServlet {       
-
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Setting up the DB Connection
+	/*
+ 		//Setting up the DB Connection
 		
 		Connection connection = null;
 		Statement st = null;
@@ -73,22 +62,5 @@ public class MyServlet extends HttpServlet {
 			System.err.println("Failed to make connection!");
 		}
 		
-		//Setting up the output
-		
-				PrintWriter writer = response.getWriter();
-				writer.println("<html>"+output+"</html>");
-				writer.flush();
-		
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-
-		
-
-	}
-
-
-
+	 */
 }

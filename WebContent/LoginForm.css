@@ -1,19 +1,56 @@
-body{
-	font-family:Century Gothic,Arial,Helvetica,sans-serif;
-	background-color:#ffffff;
+@import url(http://fonts.googleapis.com/css?family=Raleway);
 
+body{
+	font-family:"Raleway",Century Gothic,Arial,Helvetica,sans-serif;
+	background-color:#ffffff;
 }
 .form-class{
 	position: relative;
 	width:400px;
-	margin:50px;
+	margin:30px;
 	padding:30px;
-	background-color:#F5F5F5;
+	padding-top:0px;
+	background-color:#ffffff;
+    border-radius: 25px;
+    border: 2px solid #0E74AF;
 	float:left;
-	display:block;
 }
 
+#header{
+	background: -webkit-linear-gradient(#444444, #222222); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#444444, #222222); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#444444, #222222); /* For Firefox 3.6 to 15 */
+ 	background: linear-gradient(#444444, #222222); /* Standard syntax */
+	position:relative;
+	top:-0px;
+	left:-0px;
+	width:100%;
+	font-size:6vh;
+	color:#EEEEEE;
+	opacity:0.95;
+	float:left;
+}
+
+#header img{
+	height:10vh;
+	margin-bottom:12px;
+}
+
+#footer{
+	min-height:50px;
+	padding:10px;
+	position:relative;
+	height:15vh;
+	width:100%;
+	background-color:#050505;
+	color:#ffffff;
+	opacity:0.85;
+	float:left;
+}
 #main{
-
+	position:relative;
+	left:25%;
+	
 }
+
 
