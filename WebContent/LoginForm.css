@@ -1,8 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
 
 body{
 	font-family:"Raleway",Century Gothic,Arial,Helvetica,sans-serif;
 	background-color:#ffffff;
+	background:url('http://healthyhappyfitlife.com/wp-content/uploads/2013/03/fresh-fruits-vegetables-2419.jpg') no-repeat;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;
+	background-position:center;
 }
 .form-class{
 	position: relative;
@@ -13,44 +20,79 @@ body{
 	background-color:#ffffff;
     border-radius: 25px;
     border: 2px solid #0E74AF;
-	float:left;
+	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#ffffff, #eeeeee); /* For Firefox 3.6 to 15 */
+ 	background: linear-gradient(#ffffff, #eeeeee); /* Standard syntax */
+ 	float:right;
 }
 
 #header{
-	background: -webkit-linear-gradient(#444444, #222222); /* For Safari 5.1 to 6.0 */
-  	background: -o-linear-gradient(#444444, #222222); /* For Opera 11.1 to 12.0 */
-  	background: -moz-linear-gradient(#444444, #222222); /* For Firefox 3.6 to 15 */
- 	background: linear-gradient(#444444, #222222); /* Standard syntax */
+	padding-left:15px;
+	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#ffffff, #eeeeee); /* For Firefox 3.6 to 15 */
+ 	background: linear-gradient(#ffffff, #eeeeee); /* Standard syntax */
 	position:relative;
 	top:-0px;
 	left:-0px;
 	width:100%;
-	font-size:6vh;
-	color:#EEEEEE;
-	opacity:0.95;
+	font-size:6.8vh;
+	color:#330000;
 	float:left;
+	opacity:1;
+}
+#header b{
+	font-family:"Pacifico",Century Gothic,Arial,Helvetica,sans-serif;
 }
 
 #header img{
-	height:10vh;
+	height:9vh;
 	margin-bottom:12px;
+	vertical-align: text-bottom;
+}
+
+#header .form-class{
+	position: relative;
+	float: right;
+	width:600px;
+	border: none;
+	margin-bottom:-10px;
+	margin-top:20px;
+	background:none;
+}
+#header .form-class button{
+	position: relative;
+	float: left;
+	width: 20%;
+}
+
+#header .form-class input{
+	position: relative;
+	float: left;
+	width: 30%;
 }
 
 #footer{
 	min-height:50px;
 	padding:10px;
 	position:relative;
-	height:15vh;
+	height:12vh;
 	width:100%;
-	background-color:#050505;
-	color:#ffffff;
-	opacity:0.85;
+	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#ffffff, #eeeeee); /* For Firefox 3.6 to 15 */
+ 	background: linear-gradient(#ffffff, #eeeeee); /* Standard syntax */
+	color:#000000;
+
 	float:left;
 }
 #main{
 	position:relative;
-	left:25%;
-	
+}
+
+#main .form-class{
+	margin-right:10%;
 }
 
 

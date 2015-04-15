@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<jsp:useBean id="stringBean" class="view.UserBean" scope="application"/>
-<jsp:setProperty name="stringBean" property="*"/>
+<jsp:useBean id="uBean" class="view.UserBean" scope="application"/>
+<jsp:setProperty name="uBean" property="*"/>
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -10,28 +10,23 @@
 	<body>
 		
 		<div id="header">
-		<img src="DietPatcherIco.png" >
-			Diet Patcher
+			<img src="DietPatcherIco.png" />
+			<b>Diet Patcher</b>
+			<form class="form-class" id="login" method="POST"> <!-- insert action and method -->
+				<button type="submit" class="btn btn-primary">Login</button>
+				<div class="form-group">
+					<input type="text" class="form-control" id="inputUserNameLogin" placeholder="User Name">
+					<input type="password" class="form-control" id="inputPassword" placeholder="Password">
+				</div>
+			</form>
+			
+		
 		</div>
 	
 	
 		<div id="main">
-			<form class="form-class" id="login"> <!-- insert action and method -->
-			<h2 align="center">Login</h2><br>
-				<div class="form-group">
-					<label for="inputUserNameLogin">User name: </label>
-					<input type="text" class="form-control" id="inputUserNameLogin" placeholder="Write here the user name">
-				</div>
-				
-				<div class="form-group">
-					<label for="loginPassword">Password: </label>
-					<input type="password" class="form-control" id="inputPassword" placeholder="Write here the password">
-				</div>
-	
-				<button type="submit" class="btn btn-primary">Login</button>
-			</form>
 			
-			
+
 			
 			<form class="form-class" id="subscribe"> <!-- insert action and method -->
 			<h2 align="center">Subscribe</h2><br>
