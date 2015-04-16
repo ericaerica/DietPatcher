@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 public class UserBean {
 
@@ -50,10 +50,5 @@ public class UserBean {
 
 	public void setInputEmail(String inputEmail) {
 		this.inputEmail = inputEmail;
-	}
-
-	
-	
-	
-	
+	}	
 }

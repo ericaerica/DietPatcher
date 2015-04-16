@@ -1,5 +1,6 @@
-package view;
+package controller;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,7 @@ public class Servlet extends HttpServlet {
 		ServletContext ctx = httpSession.getServletContext();
 		UserBean bean = (UserBean) ctx.getAttribute("uBean");
 		
+
 		
 	}
 	

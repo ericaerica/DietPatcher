@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<jsp:useBean id="uBean" class="view.UserBean" scope="application"/>
+<jsp:useBean id="uBean" class="controller.UserBean" scope="session"/>
 <jsp:setProperty name="uBean" property="*"/>
 <html>
 	<head>
@@ -19,16 +19,11 @@
 					<input type="password" class="form-control" id="inputPassword" placeholder="Password">
 				</div>
 			</form>
-			
-		
 		</div>
 	
 	
 		<div id="main">
-			
-
-			
-			<form class="form-class" id="subscribe"> <!-- insert action and method -->
+			<form class="form-class" id="subscribe" method="POST"> <!-- insert action and method -->
 			<h2 align="center">Subscribe</h2><br>
 				<div class="form-group">
 					<label for="inputUserNameReg">User name: </label>
