@@ -1,7 +1,31 @@
-$font-stack:    Helvetica, sans-serif;
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
+
+$fontz: "Raleway",Century Gothic,Arial,Helvetica,sans-serif;
 $primary-color: #333;
 
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
+
+body{
+	font-family: $fontz;
+	background-color:#ffffff;
+	h1{
+		text-align: center;
+	}
+
+	a{
+		text-decoration: none;
+		color: #005500;
+	}
+}
+#container{
+	position: absolute;
+	width:40%;
+	left:30%;
+}
+
+.form-class{
+	width:100%;
+	input{
+		width:30%;
+	}
 }

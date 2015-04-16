@@ -10,11 +10,11 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>myservlet</servlet-name>
-    <servlet-class>pkg.MyServlet</servlet-class>
+    <servlet-name>servlet</servlet-name>
+    <servlet-class>controller.Servlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>myservlet</servlet-name>
-    <url-pattern>/myservlet</url-pattern>
+    <servlet-name>servlet</servlet-name>
+    <url-pattern>/servlet</url-pattern>
   </servlet-mapping>
 </web-app>
