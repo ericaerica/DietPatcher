@@ -12,7 +12,7 @@
 		<div id="header">
 			<img src="DietPatcherIco.png" />
 			<b>Diet Patcher</b>
-			<form class="form-class" id="login" method="POST"> <!-- insert action and method -->
+			<form class="form-class" id="login" action="Servlet" method="POST"> <!-- insert action and method -->
 				<button type="submit" class="btn btn-primary">Login</button>
 				<div class="form-group">
 					<input type="text" class="form-control" id="inputUserNameLogin" placeholder="User Name">
@@ -23,7 +23,7 @@
 	
 	
 		<div id="main">
-			<form class="form-class" id="subscribe" method="POST"> <!-- insert action and method -->
+			<form class="form-class" id="subscribe" action="Servlet" method="POST"> <!-- insert action and method -->
 			<h2 align="center">Subscribe</h2><br>
 				<div class="form-group">
 					<label for="inputUserNameReg">User name: </label>
