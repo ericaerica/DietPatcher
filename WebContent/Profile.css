@@ -2,21 +2,64 @@
 @import url(http://fonts.googleapis.com/css?family=Pacifico);
 body {
   font-family: "Raleway", Century Gothic, Arial, Helvetica, sans-serif;
-  background-color: #ffffff; }
+  background-color: #ddd; }
   body h1 {
     text-align: center; }
   body a {
     text-decoration: none;
     color: #005500; }
 
+#header {
+  position: relative;
+  padding-left: 15px;
+  background: -webkit-linear-gradient(#ffffff, #eeeeee);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#ffffff, #eeeeee);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#ffffff, #eeeeee);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#ffffff, #eeeeee);
+  /* Standard syntax */
+  position: relative;
+  top: -0px;
+  left: -0px;
+  width: 100%;
+  font-size: 6.8vh;
+  color: #330000;
+  float: left;
+  opacity: 1;
+  min-height: 50px; }
+  #header b {
+    font-family: "Pacifico",Century Gothic,Arial,Helvetica,sans-serif; }
+  #header img {
+    height: 9vh;
+    margin-bottom: 0px;
+    vertical-align: text-bottom; }
+  #header a {
+    float: right;
+    font-size: 5vh; }
+
 #container {
-  position: absolute;
+  float: left;
+  position: relative;
   width: 40%;
-  left: 30%; }
+  min-width: 300px;
+  left: 30%;
+  min-height: 100%;
+  border-radius: 25px;
+  border: 2px solid #3399FF;
+  padding: 20px;
+  background-color: #fff; }
 
 .form-class {
   width: 100%; }
   .form-class input {
-    width: 30%; }
+    width: 100%; }
+
+@media all and (orientation: portrait) {
+  #container {
+    width: 100%;
+    left: 0px;
+    padding: 10px; } }
 
 /*# sourceMappingURL=Profile.css.map */
