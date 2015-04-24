@@ -2,22 +2,27 @@ package controller;
 
 public class UserBean {
 
-	private String inputUserNameLogin, loginPassword, inputUserNameReg, subPassword, inputPasswordAgain,inputEmail;
+	private String usernameLogin, passwordLogin, inputUserNameReg, subPassword, inputPasswordAgain,inputEmail;
+	
+	/*public UserBean(String username, String password){
+		usernameLogin = username;
+		passwordLogin = password;
+	}*/
 
-	public String getInputUserNameLogin() {
-		return inputUserNameLogin;
+	public String getUsernameLogin() {
+		return usernameLogin;
 	}
 
-	public void setInputUserNameLogin(String inputUserNameLogin) {
-		this.inputUserNameLogin = inputUserNameLogin;
+	public void setUsernameLogin(String usernameLogin) {
+		this.usernameLogin = usernameLogin;
 	}
 
-	public String getLoginPassword() {
-		return loginPassword;
+	public String getPasswordLogin() {
+		return passwordLogin;
 	}
 
-	public void setLoginPassword(String loginPassword) {
-		this.loginPassword = loginPassword;
+	public void setPasswordLogin(String passwordLogin) {
+		this.passwordLogin = passwordLogin;
 	}
 
 	public String getInputUserNameReg() {
