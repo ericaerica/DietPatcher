@@ -21,23 +21,23 @@
 	
 	
 		<div id="main">
-			<form class="form-class" id="subscribe" action="Servlet" method="GET"> <!-- insert action and method -->
+			<form class="form-class" id="subscribe" action="Servlet" method="POST"> <!-- insert action and method -->
 			<h2 align="center">Subscribe</h2><br>
 				<div class="form-group">
 					<label for="inputUserNameReg">User name: </label>
-					<input type="text" class="form-control" name="inputUserNameReg" placeholder="Write here the user name">
+					<input type="text" class="form-control" name="usernameReg" placeholder="Write here the user name">
 				</div>
 				<div class="form-group">
 					<label for="subPassword">Password: </label>
-					<input type="password" class="form-control" name="passwordLogin" placeholder="Write here the password">
+					<input type="password" class="form-control" name="passwordReg1" placeholder="Write here the password">
 				</div>
 				<div class="form-group">
 					<label for="inputPasswordAgain">Confirm password: </label>
-					<input type="password" class="form-control" name="inputPasswordAgain" placeholder="write here the password again">
+					<input type="password" class="form-control" name="passwordReg2" placeholder="write here the password again">
 				</div>
 				<div class="form-group">
 					<label for="inputEmail">Email address: </label>
-					<input type="email" class="form-control" name="inputEmail" placeholder="Write your Email">
+					<input type="email" class="form-control" name="email" placeholder="Write your Email">
 				</div>
 				<button type="submit" class="btn btn-primary">Subscribe</button>
 			</form>

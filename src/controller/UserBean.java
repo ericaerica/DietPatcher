@@ -1,13 +1,8 @@
 package controller;
 
 public class UserBean {
-
+	//TODO correggere in modo che ci siano solo username, password, email e controllarli con un autenticatore
 	private String usernameLogin, passwordLogin, inputUserNameReg, subPassword, inputPasswordAgain,inputEmail;
-	
-	/*public UserBean(String username, String password){
-		usernameLogin = username;
-		passwordLogin = password;
-	}*/
 
 	public String getUsernameLogin() {
 		return usernameLogin;
