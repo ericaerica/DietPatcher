@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.UserBean;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -29,13 +31,13 @@ public class Servlet extends HttpServlet {
 			
 			if(username != null && password != null){
 				//TODO Check credentials in the database
+				boolean userExists = true;
 				
-				Boolean  userExists = true;
 				if (userExists){
 					//Create bean
 					UserBean user = new UserBean();
-					user.setUsernameLogin("username");
-					user.setPasswordLogin("password");
+					user.setUsernameLogin(username);
+					user.setPasswordLogin(password);
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);		//codice per creare un bean e caricarlo
 					request.getRequestDispatcher("/Profile.jsp").forward(request, response);//Send profile page
@@ -53,7 +55,7 @@ public class Servlet extends HttpServlet {
 			//PrintWriter writer = response.getWriter();
 			//writer.print("<html><body>" + username + " " + password + "</body></html>");
 			
-		} else if(request.getParameterNames().nextElement()=="usernameReg"){
+		} else if (request.getParameterNames().nextElement()=="usernameReg"){
 			//Subscription triggered
 			
 			String username = request.getParameter("usernameReg");
@@ -94,6 +96,8 @@ public class Servlet extends HttpServlet {
 				//Send back again the login page with the error "missing parameters"
 				request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING_PARAM").forward(request, response);
 			}
+		} else {
+			//TODO Implement case of error made by user in LoginForm.html
 		}
 		
 	}

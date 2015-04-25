@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 public class UserBean {
 	//TODO correggere in modo che ci siano solo username, password, email e controllarli con un autenticatore
