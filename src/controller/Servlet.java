@@ -53,7 +53,7 @@ public class Servlet extends HttpServlet {
 			//PrintWriter writer = response.getWriter();
 			//writer.print("<html><body>" + username + " " + password + "</body></html>");
 			
-		} else {
+		} else if(request.getParameterNames().nextElement()=="usernameReg"){
 			//Subscription triggered
 			
 			String username = request.getParameter("usernameReg");

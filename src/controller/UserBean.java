@@ -2,7 +2,7 @@ package controller;
 
 public class UserBean {
 	//TODO correggere in modo che ci siano solo username, password, email e controllarli con un autenticatore
-	private String usernameLogin, passwordLogin, inputUserNameReg, subPassword, inputPasswordAgain,inputEmail;
+	private String usernameLogin, passwordLogin, usernameReg, passwordReg1, passwordReg2, email;
 
 	public String getUsernameLogin() {
 		return usernameLogin;
@@ -20,35 +20,35 @@ public class UserBean {
 		this.passwordLogin = passwordLogin;
 	}
 
-	public String getInputUserNameReg() {
-		return inputUserNameReg;
+	public String getUsernameReg() {
+		return usernameReg;
 	}
 
-	public void setInputUserNameReg(String inputUserNameReg) {
-		this.inputUserNameReg = inputUserNameReg;
+	public void setUsernameReg(String usernameReg) {
+		this.usernameReg = usernameReg;
 	}
 
-	public String getSubPassword() {
-		return subPassword;
+	public String getPasswordReg1() {
+		return passwordReg1;
 	}
 
-	public void setSubPassword(String subPassword) {
-		this.subPassword = subPassword;
+	public void setPasswordReg1(String passwordReg1) {
+		this.passwordReg1 = passwordReg1;
 	}
 
-	public String getInputPasswordAgain() {
-		return inputPasswordAgain;
+	public String getPasswordReg2() {
+		return passwordReg2;
 	}
 
-	public void setInputPasswordAgain(String inputPasswordAgain) {
-		this.inputPasswordAgain = inputPasswordAgain;
+	public void setPasswordReg2(String passwordReg2) {
+		this.passwordReg2 = passwordReg2;
 	}
 
-	public String getInputEmail() {
-		return inputEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setInputEmail(String inputEmail) {
-		this.inputEmail = inputEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}	
 }
