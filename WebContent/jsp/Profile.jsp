@@ -4,12 +4,12 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="Profile.css"></link>
+		<link rel="stylesheet" type="text/css" href="../css/Profile.css"></link>
 		<title>Personal Profile Page - Diet Patcher</title>
 	</head>
 	<body>
 		<div id="header">
-			<img src="DietPatcherIco.png" />
+			<img src="../resources/DietPatcherIco.png" />
 			<b>Diet Patcher</b>
 			<a href=""> Logout </a> 
 			<a> / </a>

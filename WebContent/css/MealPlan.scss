@@ -8,6 +8,13 @@ $primary-color: #333;
 body{
 	font-family: $fontz;
 	background-color:#ddd;
+	background-image: url("http://www.piubenessere.it/wp-content/uploads/2014/04/blueberries.jpg");
+-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;
+	background-position:center;
+
 	h1{
 		text-align: center;
 	}
@@ -19,11 +26,12 @@ body{
 }
 #header{
 	position: relative;
-	padding-left:15px;
-	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
-  	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
-  	background: -moz-linear-gradient(#ffffff, #eeeeee); /* For Firefox 3.6 to 15 */
- 	background: linear-gradient(#ffffff, #eeeeee); /* Standard syntax */
+	padding-left:35px;
+	padding-right:35px;
+	background: -webkit-linear-gradient(#ffffff, #eeeeff); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#ffffff, #eeeeff); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#ffffff, #eeeeff); /* For Firefox 3.6 to 15 */
+ 	background: linear-gradient(#ffffff, #eeeeff); /* Standard syntax */
 	position:relative;
 	top:-0px;
 	left:-0px;
@@ -31,8 +39,9 @@ body{
 	font-size:6.8vh;
 	color:#330000;
 	float:left;
-	opacity:1;
-	
+	opacity:0.90;
+	border-radius: 25px;
+    border: 2px solid #3399FF;
 	min-height: 50px;
 	b{
 		font-family:"Pacifico",Century Gothic,Arial,Helvetica,sans-serif;
@@ -55,15 +64,29 @@ body{
 #container{
 	float:left;
 	position: relative;
-	width:40%;
+	width:60%;
 	min-width: 300px;
-	left:30%;
+	left:20%;
 	min-height: 100%;
 	border-radius: 25px;
     border: 2px solid #3399FF;
 	padding: 20px;
 	background-color: #fff;
 }
+
+#title{
+	text-align: center;
+}
+
+#addModule{
+	width:100%;
+	text-align: center;
+	div{
+		width:50%;
+		float: left;
+	}
+}
+
 
 .form-class{
 	width:100%;

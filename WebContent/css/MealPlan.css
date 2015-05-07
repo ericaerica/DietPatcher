@@ -1,0 +1,84 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
+body {
+  font-family: "Raleway", Century Gothic, Arial, Helvetica, sans-serif;
+  background-color: #ddd;
+  background-image: url("http://www.piubenessere.it/wp-content/uploads/2014/04/blueberries.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center; }
+  body h1 {
+    text-align: center; }
+  body a {
+    text-decoration: none;
+    color: #005500; }
+
+#header {
+  position: relative;
+  padding-left: 35px;
+  padding-right: 35px;
+  background: -webkit-linear-gradient(#ffffff, #eeeeff);
+  /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#ffffff, #eeeeff);
+  /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#ffffff, #eeeeff);
+  /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#ffffff, #eeeeff);
+  /* Standard syntax */
+  position: relative;
+  top: -0px;
+  left: -0px;
+  width: 100%;
+  font-size: 6.8vh;
+  color: #330000;
+  float: left;
+  opacity: 0.90;
+  border-radius: 25px;
+  border: 2px solid #3399FF;
+  min-height: 50px; }
+  #header b {
+    font-family: "Pacifico",Century Gothic,Arial,Helvetica,sans-serif; }
+  #header img {
+    height: 9vh;
+    margin-bottom: 0px;
+    vertical-align: text-bottom; }
+  #header a {
+    float: right;
+    font-size: 5vh; }
+
+#container {
+  float: left;
+  position: relative;
+  width: 60%;
+  min-width: 300px;
+  left: 20%;
+  min-height: 100%;
+  border-radius: 25px;
+  border: 2px solid #3399FF;
+  padding: 20px;
+  background-color: #fff; }
+
+#title {
+  text-align: center; }
+
+#addModule {
+  width: 100%;
+  text-align: center; }
+  #addModule div {
+    width: 50%;
+    float: left; }
+
+.form-class {
+  width: 100%; }
+  .form-class input {
+    width: 100%; }
+
+@media all and (orientation: portrait) {
+  #container {
+    width: 100%;
+    left: 0px;
+    padding: 10px; } }
+
+/*# sourceMappingURL=MealPlan.css.map */
