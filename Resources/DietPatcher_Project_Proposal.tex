@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{indentfirst}
+\usepackage{pgfgantt}
+
+\begin{document}
+
+\title{\huge \textbf{DietPatcher}}
+\author{Erica Tomaselli \& Stanko Franz Ovkaric}
+\date{}
+\maketitle
+
+
+\section{Introduction}
+
+
+Generally, people are not really aware about what they are/should be/should not be eating. Recently, however, many have started seeking information about food and diets; to this end, the Internet is a great and mostly used resource, thus many websites already exist which provide nutritional information to the users at various levels of personalization: some have a passive, dictionary-like approach based on lists or tables, while others show more individualized results based on user input.
+
+Nonetheless the most personalized websites tell the users what nutrients they are/are not assuming and in which percentage, but not where to get the missing ones, so the problem is diagnosed but not solved.
+
+\section{Solution}
+Our web-application will offer a personalized solution to this issue. The user will be able to track his/her own diet and will receive suggestions on how to improve it based on his/her own profile information, food habits and tags.
+
+\section{Features}
+\begin{small}
+	\textasteriskcentered\textasteriskcentered\textasteriskcentered \space Legend \space \textasteriskcentered\textasteriskcentered\textasteriskcentered\\
+	\begin{itemize}
+		\renewcommand\labelitemi{{\boldmath$\cdot$}}
+		\item Nutrient: nutritional component in foods; this category includes all macronutrients (proteins, carbohydrates and fats), micronutrients (vitamins, minerals and organic acids) and fibers.
+		\item Food: any substance made of nutrients that can be consumed by the user for nutritional purposes (e.g. any fruit, vegetable or meat without additional condiments); this category also includes drinks, common composite foods (e.g. pasta, tomato sauce, French fries) and foods that are not usually consumed alone (e.g. flour, oil).
+		\item Dish: combination of foods that the user consumes together; this definition is intended to facilitate the user during the creation of a meal plan.
+		\item Meal: combination of foods and/or dishes that the user plans to eat during the selected day.
+		\item Meal plan: set of meals the user plans to eat on the selected day.\\
+	\end{itemize}
+	\hspace*{0.5cm}\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\\
+\end{small}
+
+
+The user will have a username and a password to access his/her own account. Every account will have a profile page and a meal plan page.\\
+In the profile page the user will be able to:
+
+\begin{itemize}
+
+  \item insert personal information: name, age, gender, height, weight, waist size.
+  \item have tags to identify in a user category, like "Vegetarian", "Vegan", "Paleo" or "Frutarian".
+  \item visualize his/her BMI (Body Mass Index) and BAI (Body Adiposity Index), that the application will calculate based on the personal information.
+
+\end{itemize}
+
+
+In the meal plan page the user will be able to:
+\begin{itemize}
+
+  \item Navigate through the calendar to select the meal plan of a certain day.
+  \item Select from the DB the foods he/she has eaten or plans to eat.
+  \item Create dishes (aggregates of foods) by choosing the ingredients from the DB and inserting the name of the dish.
+  \item Add dishes to the meal plan. 
+  \item Check how nutritious a daily plan is by looking at the percentage of covered nutrients. These percentages will be shown in a graphical way.
+  \item See a real-time modification of the percentages based on the foods added to the meal plan as soon as the user adds them.
+  \item See recommendations on what foods or dishes could provide the missing nutrients and add them to the meal plan.
+\end{itemize}
+
+
+\section{Technologies}
+
+\begin{itemize}
+
+  \item Java 8
+  \item Apache Tomcat
+  \item Java Servlets
+  \item JSP
+  \item CSS3
+  \item Javascript, jQuery
+  \item HTML
+  \item PostgreSQL
+\end{itemize}
+\clearpage
+
+
+\section{Time estimation}
+Weeks division:\\ 
+1st week: 23 Mar / 29 Mar	\textperiodcentered 
+2nd week: 30 Mar / 5 Apr	\textperiodcentered
+3rd week: 6 Apr / 12 Apr	\textperiodcentered
+4th week: 13 Apr / 19 Apr	\textperiodcentered
+5th week: 20 Apr / 26 Apr	\textperiodcentered
+6th week: 27 Apr / 3 May	\textperiodcentered
+7th week: 4 May / 10 May	\textperiodcentered
+8th week: 11 May / 17 May	\textperiodcentered
+9th week: 18 May / 24 May	\textperiodcentered
+10th week: 25 May / 31 May.\\
+
+\hspace*{-3cm}
+\begin{ganttchart}[vgrid=true]{1}{20}
+
+\gantttitle{Weeks}{20} \\
+\gantttitlelist{1,...,10}{2} \\
+\ganttbar{Software Proposal}{1}{2} \\
+\ganttbar{Gather data sets}{1}{2} \\
+\ganttbar{Project creation}{1}{2} \\
+\ganttbar{Logo creation}{1}{2} \\
+\ganttbar{Login + Registration pages creation}{3}{4} \\
+\ganttbar{Database structure}{4}{7} \\
+\ganttbar{Population of DB with food data sets}{5}{6} \\
+\ganttbar{Profile page creation}{7}{8} \\
+\ganttbar{Calendar GUI and management}{9}{11} \\
+\ganttbar{Recommender GUI}{12}{13} \\
+\ganttbar{Recommender Algorithm}{12}{13} \\
+\ganttbar{Nutrients GUI}{14}{15} \\
+\ganttbar{Documentation}{16}{17} \\
+\end{ganttchart}
+
+
+\end{document}

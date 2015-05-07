@@ -2,7 +2,7 @@ package model;
 
 public class UserBean {
 	//TODO correggere in modo che ci siano solo username, password, email e controllarli con un autenticatore
-	private String usernameLogin, passwordLogin, usernameReg, passwordReg1, passwordReg2, email;
+	private String usernameLogin, password, usernameReg, email;
 
 	public String getUsernameLogin() {
 		return usernameLogin;
@@ -12,12 +12,12 @@ public class UserBean {
 		this.usernameLogin = usernameLogin;
 	}
 
-	public String getPasswordLogin() {
-		return passwordLogin;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswordLogin(String passwordLogin) {
-		this.passwordLogin = passwordLogin;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getUsernameReg() {
@@ -26,22 +26,6 @@ public class UserBean {
 
 	public void setUsernameReg(String usernameReg) {
 		this.usernameReg = usernameReg;
-	}
-
-	public String getPasswordReg1() {
-		return passwordReg1;
-	}
-
-	public void setPasswordReg1(String passwordReg1) {
-		this.passwordReg1 = passwordReg1;
-	}
-
-	public String getPasswordReg2() {
-		return passwordReg2;
-	}
-
-	public void setPasswordReg2(String passwordReg2) {
-		this.passwordReg2 = passwordReg2;
 	}
 
 	public String getEmail() {
