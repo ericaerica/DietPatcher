@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<jsp:useBean id="uBean" class="controller.UserBean" scope="application"/>
+<jsp:useBean id="uBean" class="model.UserBean" scope="application"/>
 <jsp:setProperty name="uBean" property="*"/>
 <html>
 	<head>
