@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import database.DataManager;
 import model.UserBean;
 
 import java.io.IOException;
@@ -19,6 +23,9 @@ public class Servlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		SessionFactory sf = DataManager.getSessionFactory();
+		Session hibernateSession = sf.openSession();
+		hibernateSession.beginTransaction();
 		if(request.getParameterNames().nextElement()=="usernameLogin"){
 			//Login triggered
 			
