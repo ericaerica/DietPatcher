@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+
 import model.UserBean;
 
 public class DataManager {
@@ -29,10 +32,22 @@ public class DataManager {
     }
 
 	public static boolean saveUser(UserBean user){
-		
+		//TODO 
 		return true;
 	}
 
+	public static UserBean getUser(){
+		SessionFactory sf = getSessionFactory();
+		Session hibernateSession = sf.openSession();
+		hibernateSession.beginTransaction();
+		//TODO
+		
+		return null;
+	}
+	
+	
+	
+	
 	/*
  		//Setting up the DB Connection
 		

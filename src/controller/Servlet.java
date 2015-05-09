@@ -23,11 +23,12 @@ public class Servlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionFactory sf = DataManager.getSessionFactory();
-		Session hibernateSession = sf.openSession();
-		hibernateSession.beginTransaction();
+		
 		if(request.getParameterNames().nextElement()=="usernameLogin"){
-			//Login triggered
+			
+			//-----------------------------------------------
+			//-----------------Login triggered---------------
+			//-----------------------------------------------
 			
 			String username = request.getParameter("usernameLogin");
 			String password = request.getParameter("passwordLogin");
@@ -60,7 +61,10 @@ public class Servlet extends HttpServlet {
 			//writer.print("<html><body>" + username + " " + password + "</body></html>");
 			
 		} else if (request.getParameterNames().nextElement()=="usernameReg"){
-			//Subscription triggered
+			
+			//-----------------------------------------------
+			//------------Subscription triggered-------------
+			//-----------------------------------------------
 			
 			String username = request.getParameter("usernameReg");
 			String password1 = request.getParameter("passwordReg1");
