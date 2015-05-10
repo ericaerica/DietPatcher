@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,17 +33,36 @@ public class DataManager {
     }
 
 	public static boolean saveUser(UserBean user){
-		//TODO 
+		//Standard transaction begin
+		SessionFactory sf = getSessionFactory();
+		Session hibernateSession = sf.openSession();
+		hibernateSession.beginTransaction();
+		
+		//Saving/updating user
+		hibernateSession.saveOrUpdate(user);
+
 		return true;
 	}
 
 	public static UserBean getUser(){
+		//Standard transaction begin
 		SessionFactory sf = getSessionFactory();
 		Session hibernateSession = sf.openSession();
 		hibernateSession.beginTransaction();
+		
 		//TODO
 		
 		return null;
+	}
+	public static boolean existsUser(UserBean user){
+		//Standard transaction begin
+		SessionFactory sf = getSessionFactory();
+		Session hibernateSession = sf.openSession();
+		hibernateSession.beginTransaction();
+		
+		//Getting all users from the table
+		List<UserBean> users = hibernateSession.createQuery("from userbean").list();
+		return true;
 	}
 	
 	
