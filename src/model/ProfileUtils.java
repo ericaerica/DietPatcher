@@ -7,6 +7,11 @@ public class ProfileUtils {
 	private ProfileUtils(){}	//make the class uninstantiatable
 	
 	//check username at login
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 */
 	public static boolean isUsernameLoginValid(String username){
 		boolean valid = false;
 		if(username.matches("[a-zA-Z]+(-|_)*[a-zA-Z0-9]*")){

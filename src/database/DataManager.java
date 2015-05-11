@@ -15,8 +15,7 @@ import utils.HibernateUtils;
 import model.UserBean;
 
 public class DataManager {
-   
-
+	
 	public static boolean saveUser(UserBean user){
 		//Standard transaction begin
 		SessionFactory sf = HibernateUtils.getSessionFactory();
