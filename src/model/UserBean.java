@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="User")
+@Table(name="user")
 public class UserBean {
 	//TODO controllarli con un autenticatore
 	@Id

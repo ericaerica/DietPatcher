@@ -20,32 +20,29 @@ public class DataManager {
 		//Standard transaction begin
 		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.openSession();
+		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
 		
 		//Saving/updating user
 		hibernateSession.saveOrUpdate(user);
-
+		
+		if(hibernateSession.isOpen())
+			hibernateSession.close();
 		return true;
 	}
-
-	public static UserBean getUser(){
+	
+	public static boolean getUser(String username, String password){
 		//Standard transaction begin
 		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.openSession();
-		hibernateSession.beginTransaction();
-		
-		//TODO
-		
-		return null;
-	}
-	public static boolean existsUser(UserBean user){
-		//Standard transaction begin
-		SessionFactory sf = HibernateUtils.getSessionFactory();
-		Session hibernateSession = sf.openSession();
+		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
 		
 		//Getting all users from the table
 		List<UserBean> users = hibernateSession.createQuery("from userbean").list();
+		
+		if(hibernateSession.isOpen())
+			hibernateSession.close();
 		return true;
 	}
 	
