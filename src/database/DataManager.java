@@ -11,30 +11,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
+import utils.HibernateUtils;
 import model.UserBean;
 
 public class DataManager {
-    private static final SessionFactory sessionFactory = buildSessionFactory();
-    
-    private static SessionFactory buildSessionFactory() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
-            return new AnnotationConfiguration()
-            		.configure()
-                    .buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
- 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+   
 
 	public static boolean saveUser(UserBean user){
 		//Standard transaction begin
-		SessionFactory sf = getSessionFactory();
+		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.openSession();
 		hibernateSession.beginTransaction();
 		
@@ -46,7 +31,7 @@ public class DataManager {
 
 	public static UserBean getUser(){
 		//Standard transaction begin
-		SessionFactory sf = getSessionFactory();
+		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.openSession();
 		hibernateSession.beginTransaction();
 		
@@ -56,7 +41,7 @@ public class DataManager {
 	}
 	public static boolean existsUser(UserBean user){
 		//Standard transaction begin
-		SessionFactory sf = getSessionFactory();
+		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.openSession();
 		hibernateSession.beginTransaction();
 		
