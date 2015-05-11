@@ -31,14 +31,14 @@ public class DataManager {
 		return true;
 	}
 	
-	public static boolean getUser(String username, String password){
+	public static UserBean getUser(String username, String password){
 		//Standard transaction begin
 		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.openSession();
 		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
 		
-		//Getting all users from the table
+		//TODO either get all users from table and find user or find user in table
 		List<UserBean> users = hibernateSession.createQuery("from userbean").list();
 		
 		if(hibernateSession.isOpen())

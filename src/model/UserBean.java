@@ -3,7 +3,10 @@ package model;
 import javax.persistence.*;
 
 
-
+/**
+ * Persistent class for user object
+ * @author
+ */
 @Entity
 @Table(name="user")
 public class UserBean {
