@@ -19,12 +19,13 @@ public class DataManager {
 	public static boolean saveUser(UserBean user){
 		//Standard transaction begin
 		SessionFactory sf = HibernateUtils.getSessionFactory();
-		Session hibernateSession = sf.openSession();
+		Session hibernateSession = sf.getCurrentSession();
 		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
 		
 		//Saving/updating user
 		hibernateSession.saveOrUpdate(user);
+		hibernateSession.getTransaction().commit();
 		
 		if(hibernateSession.isOpen())
 			hibernateSession.close();
@@ -32,18 +33,25 @@ public class DataManager {
 	}
 	
 	public static UserBean getUser(String username, String password){
+		//Create HQL query
+		String query = "FROM UserBean WHERE username = :uname AND password = :pass";
+		UserBean user = null;
 		//Standard transaction begin
 		SessionFactory sf = HibernateUtils.getSessionFactory();
-		Session hibernateSession = sf.openSession();
+		Session hibernateSession = sf.getCurrentSession();
 		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
-		
 		//TODO either get all users from table and find user or find user in table
-		List<UserBean> users = hibernateSession.createQuery("from userbean").list();
+		List<UserBean> users = hibernateSession.createQuery(query).setString("uname", username).setString("pass", password).list();
+		if(!users.isEmpty()){
+			user = users.get(0);
+		} else if(users.size() > 1){
+			//more than one such user?
+		}
 		
 		if(hibernateSession.isOpen())
 			hibernateSession.close();
-		return true;
+		return user;
 	}
 	
 	

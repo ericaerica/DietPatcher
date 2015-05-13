@@ -8,32 +8,32 @@ import javax.persistence.*;
  * @author
  */
 @Entity
-@Table(name="user")
+@Table(name="USERBEAN")
 public class UserBean {
 	//TODO controllarli con un autenticatore
 	@Id
-	@Column(name="email")
+	@Column(name="EMAIL")
 	private String email;
 	
-	@Column(name="username")
+	@Column(name="USERNAME")
 	private String usernameLogin;
 	
-	@Column(name="password")
+	@Column(name="PASSWORD")
 	private String password;
 	
-	@Column(name="gender")
+	@Column(name="GENDER")
 	private String gender;
 	
-	@Column(name="age")
+	@Column(name="AGE")
 	private String age;
 	
-	@Column(name="height")
+	@Column(name="HEIGHT")
 	private String height;
 	
-	@Column(name="weight")
+	@Column(name="WEIGHT")
 	private String weight;
 	
-	@Column(name="waist")
+	@Column(name="WAIST")
 	private String waist;
 
 	public String getUsernameLogin() {
