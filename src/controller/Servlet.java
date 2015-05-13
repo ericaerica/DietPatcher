@@ -14,6 +14,7 @@ import model.ProfileUtils;
 import model.UserBean;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Servlet extends HttpServlet {       
 
@@ -24,9 +25,8 @@ public class Servlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(request.getParameterNames().nextElement()=="usernameLogin"){
-			
+
+		if(request.getParameterNames().nextElement().equals("usernameLogin")){
 			//-----------------------------------------------
 			//-----------------Login triggered---------------
 			//-----------------------------------------------
@@ -35,7 +35,7 @@ public class Servlet extends HttpServlet {
 			String password = request.getParameter("passwordLogin");
 			
 			//Check if null parameters
-			if(username != null && password != null){
+			if(username != "" && password != "" && username != null && password != null){
 				
 				//Check if valid strings
 				if(ProfileUtils.isUsernameValid(username) && ProfileUtils.isPasswordValid(password)){
@@ -56,13 +56,16 @@ public class Servlet extends HttpServlet {
 					
 				} else {
 					//Send back again the login page with the error "Invalid input"
-					request.getRequestDispatcher("/LoginForm.html?ERROR=INVALID").forward(request, response);
+					response.sendRedirect("LoginForm.html?ERROR=INVALID");
+					//request.getRequestDispatcher("/LoginForm.html?ERROR=INVALID").forward(request, response);
 				}
 				
 				
 			} else {
 				//Send back again the login page with the error "missing parameters"
-				request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING").forward(request, response);
+				
+				//request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING").forward(request, response);
+				response.sendRedirect("?ERROR=MISSING");
 			}
 			
 			//UserBean user = (UserBean) session.getAttribute("uBean");		//codice per prendersi un bean gia` creato
@@ -127,7 +130,7 @@ public class Servlet extends HttpServlet {
 				
 			} else {
 				//Send back again the login page with the error "missing parameters"
-				request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING_PARAM").forward(request, response);
+				request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING").forward(request, response);
 			}
 		} else {
 			//TODO Implement case of error made by user in LoginForm.html

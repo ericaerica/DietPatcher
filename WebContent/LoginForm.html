@@ -2,13 +2,21 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="../css/LoginForm.css"></link>
+		<link rel="stylesheet" type="text/css" href="css/LoginForm.css"></link>
 		<title>Login</title>
 	</head>
 	<body>
-		
+		<div id="error">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  			<span class="sr-only">Error:</span>
+			<span class="errorMessage" id="MISSING">There are some parameters missing, please fill all the fields.</span>
+			<span class="errorMessage" id="INVALID">Some characters that you inserted are not valid, please use alphanumeric characters. The underscore and the minus are accepted.</span>
+			<span class="errorMessage" id="WRONG">Wrong username or password, please double check and try again.</span>
+			<span class="errorMessage" id="PASS_MIS">The passwords don't match, please double check them!.</span>
+			<span class="errorMessage" id="USER_EXISTS">Whooops! Seems that either your username or email exist already in our system. Fantasy and imagination may help you!</span>
+		</div>
 		<div id="header">
-			<img src="../resources/DietPatcherIco.png" />
+			<img src="resources/DietPatcherIco.png" />
 			<b>Diet Patcher</b>
 			<form class="form-class" id="login" action="Servlet" method="GET"> <!-- insert action and method -->
 				<button type="submit" class="btn btn-primary">Login</button>

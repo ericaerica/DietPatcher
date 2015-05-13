@@ -5,15 +5,15 @@
 <head>
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../css/datepicker.css" type="text/css" />
-	<link rel="stylesheet" type="text/css" href="../css/MealPlan.css" />
+	<link rel="stylesheet" href="css/datepicker.css" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="css/MealPlan.css" />
 	<!-- JS -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script type="text/javascript" src="../js/jquery.js"></script>
-	<script type="text/javascript" src="../js/datepicker.js"></script>
-	<script type="text/javascript" src="../js/eye.js"></script>
-	<script type="text/javascript" src="../js/utils.js"></script>
-	<script type="text/javascript" src="../js/layout.js?ver=1.0.2"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/datepicker.js"></script>
+	<script type="text/javascript" src="js/eye.js"></script>
+	<script type="text/javascript" src="js/utils.js"></script>
+	<script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
 	<script type="text/javascript">
 
 
@@ -90,7 +90,7 @@ function dtval(d,e) {
 			</head>
 			<body>
 				<div id="header">
-					<img src="../resources/DietPatcherIco.png" />
+					<img src="resources/DietPatcherIco.png" />
 					<b>Diet Patcher</b>
 					<a href=""> Logout </a> 
 					<a> / </a>

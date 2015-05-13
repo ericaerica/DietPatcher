@@ -3,8 +3,8 @@
 
 body{
 	font-family:"Raleway",Century Gothic,Arial,Helvetica,sans-serif;
-	background-color:#ffffff;
-	background:url('http://healthyhappyfitlife.com/wp-content/uploads/2013/03/fresh-fruits-vegetables-2419.jpg') no-repeat;
+	background-color:#ddd;
+	background-image: url("http://www.piubenessere.it/wp-content/uploads/2014/04/blueberries.jpg");
 	-webkit-background-size:cover;
 	-moz-background-size:cover;
 	-o-background-size:cover;
@@ -28,6 +28,7 @@ body{
 }
 
 #header{
+	border-bottom: 3px solid #0E74AF;
 	padding-left:15px;
 	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
   	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
@@ -77,14 +78,14 @@ body{
 	min-height:50px;
 	padding:10px;
 	position:relative;
-	height:12vh;
+
 	width:100%;
 	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
   	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
   	background: -moz-linear-gradient(#ffffff, #eeeeee); /* For Firefox 3.6 to 15 */
  	background: linear-gradient(#ffffff, #eeeeee); /* Standard syntax */
 	color:#000000;
-
+	border-top: 3px solid #0E74AF;
 	float:left;
 }
 #main{
@@ -95,4 +96,46 @@ body{
 	margin-right:10%;
 }
 
+#error{
+	color: #fff;
+	background-color: #D9534F;
+	font-size: 18px;
+	padding: 10px;
+	display:none;
+}
 
+.glyphicon{
+	font-size: 26px;
+}
+#MISSING{
+	display: none;
+}
+#INVALID{
+	display: none;
+}
+#WRONG{
+	display: none;
+}
+#PASS_MIS{
+	display: none;
+}
+#USER_EXISTS{
+	display: none;
+}
+
+
+
+
+@media all and (orientation: portrait) {
+	#main{
+		min-width:100%;
+		left:0px;
+	}
+	#main .form-class{
+		min-width:100%;
+		margin:0px;
+	}
+	#header .form-class{
+	float: none;
+	}
+}
