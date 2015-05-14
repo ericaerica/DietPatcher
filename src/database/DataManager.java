@@ -39,7 +39,10 @@ public class DataManager {
 		UserBean user = null;
 		//Standard transaction begin
 		System.out.println("before session factory creation");
+		
 		SessionFactory sf = HibernateUtils.getSessionFactory();
+		
+		System.out.println("after session factory creation");
 		Session hibernateSession = sf.getCurrentSession();
 		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
