@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
 
 import utils.HibernateUtils;
 import model.UserBean;
@@ -18,6 +17,7 @@ public class DataManager {
 	
 	public static boolean saveUser(UserBean user){
 		//Standard transaction begin
+		System.out.println("here saveUser");
 		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.getCurrentSession();
 		//TODO put in try-catch-finally  ?
@@ -34,9 +34,11 @@ public class DataManager {
 	
 	public static UserBean getUser(String username, String password){
 		//Create HQL query
+		System.out.println("here getUser");
 		String query = "FROM UserBean WHERE username = :uname AND password = :pass";
 		UserBean user = null;
 		//Standard transaction begin
+		System.out.println("before session factory creation");
 		SessionFactory sf = HibernateUtils.getSessionFactory();
 		Session hibernateSession = sf.getCurrentSession();
 		//TODO put in try-catch-finally  ?

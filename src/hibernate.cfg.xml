@@ -26,11 +26,10 @@
 			Metadata -->
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
-		<property name="hbm2ddl.auto">create</property>
-		<property name="hibernate.hbm2ddl.import_files">initial_data.sql</property>
+		<property name="hbm2ddl.auto">update</property>
+		<!-- <property name="hibernate.hbm2ddl.import_files">initial_data.sql</property> -->
 		
-		
-		<mapping class="it.unibz.model.UserDetails" />
+		<mapping class="model.UserBean.java" />
 		
 	</session-factory>
 </hibernate-configuration>

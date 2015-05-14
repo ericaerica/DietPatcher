@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.Properties;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -19,7 +17,7 @@ public class HibernateUtils {
     	try {
             // Create the SessionFactory from hibernate.cfg.xml
         	Configuration configuration = new Configuration();
-        	configuration.configure();        	
+        	configuration.configure();
         	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         	SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         	

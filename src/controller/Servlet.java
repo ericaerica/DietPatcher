@@ -94,6 +94,7 @@ public class Servlet extends HttpServlet {
 						
 						//Check if account exists:
 						//Try to get user
+						System.out.println("here servlet");
 						UserBean user = DataManager.getUser(username,password1);
 						
 						//If the user doesn't exist
