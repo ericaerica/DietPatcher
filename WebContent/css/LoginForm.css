@@ -13,8 +13,8 @@ body{
 }
 .form-class{
 	position: relative;
-	width:400px;
-	margin:30px;
+	width:40%;
+	margin:2%;
 	padding:30px;
 	padding-top:0px;
 	background-color:#ffffff;
@@ -56,7 +56,9 @@ body{
 #header .form-class{
 	position: relative;
 	float: right;
-	
+	min-width:300px;
+	width:100%;
+	max-width:500px;
 	border: none;
 	margin-bottom:-10px;
 	margin-top:20px;
@@ -88,11 +90,26 @@ body{
 	border-top: 3px solid #0E74AF;
 	float:left;
 }
-#main{
+#explanation{
+	position:relative;
+	width:40%;
+	margin:2%;
+	background-color:#ffffff;
+    border: 2px solid #0E74AF;
+	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
+  	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */
+  	background: -moz-linear-gradient(#ffffff, #eeeeee); /* For Firefox 3.6 to 15 */
+ 	background: linear-gradient(#ffffff, #eeeeee); /* Standard syntax */
+ 	float:left;
+}
+.panel-heading{
+	font-size: 22px;
+}
+#subscribe{
 	position:relative;
 }
 
-#main .form-class{
+#subscribe .form-class{
 	margin-right:10%;
 }
 
@@ -127,11 +144,16 @@ body{
 
 
 @media all and (orientation: portrait) {
-	#main{
+	#explanation{
+	min-width:100%;
+		left:0px;
+		margin:0px;
+}
+	#subscribe{
 		min-width:100%;
 		left:0px;
 	}
-	#main .form-class{
+	#subscribe .form-class{
 		min-width:100%;
 		margin:0px;
 	}

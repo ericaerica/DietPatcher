@@ -3,6 +3,33 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/LoginForm.css"></link>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+		<script type="text/javascript">
+			$( document ).ready(function() {
+
+				function getQueryVariable(variable) {
+				  var query = window.location.search.substring(1);
+				  var vars = query.split("&");
+				  for (var i=0;i<vars.length;i++) {
+				    var pair = vars[i].split("=");
+				    if (pair[0] == variable) {
+				      return pair[1];
+				    }
+				  } 
+				}
+				var errorMessage = getQueryVariable("ERROR");
+
+			 	if (errorMessage=="MISSING"){document.getElementById("error").style.display = "block";document.getElementById("MISSING").style.display = "inline-block";}
+			  	else if (errorMessage=="INVALID"){document.getElementById("error").style.display = "block";document.getElementById("INVALID").style.display = "inline-block";}
+			  	else if (errorMessage=="WRONG"){document.getElementById("error").style.display = "block";document.getElementById("WRONG").style.display = "inline-block";}
+			  	else if (errorMessage=="PASS_MIS"){document.getElementById("error").style.display = "block";document.getElementById("PASS_MIS").style.display = "inline-block";}
+			  	else if (errorMessage=="USER_EXISTS"){document.getElementById("error").style.display = "block";document.getElementById("USER_EXISTS").style.display = "inline-block";}
+
+
+			});
+
+		</script>
 		<title>Login</title>
 	</head>
 	<body>
@@ -10,7 +37,7 @@
 			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
   			<span class="sr-only">Error:</span>
 			<span class="errorMessage" id="MISSING">There are some parameters missing, please fill all the fields.</span>
-			<span class="errorMessage" id="INVALID">Some characters that you inserted are not valid, please use alphanumeric characters. The underscore and the minus are accepted.</span>
+			<span class="errorMessage" id="INVALID">Please use only alphanumeric characters, the minus and the underscore, and don't forget that the password must be at least 8 characters long!</span>
 			<span class="errorMessage" id="WRONG">Wrong username or password, please double check and try again.</span>
 			<span class="errorMessage" id="PASS_MIS">The passwords don't match, please double check them!.</span>
 			<span class="errorMessage" id="USER_EXISTS">Whooops! Seems that either your username or email exist already in our system. Fantasy and imagination may help you!</span>
@@ -26,10 +53,24 @@
 				</div>
 			</form>
 		</div>
-	
-	
-		<div id="main">
-			<form class="form-class" id="subscribe" action="Servlet" method="POST"> <!-- insert action and method -->
+
+		<div id="explanation" class="panel panel-info">
+		  <div class="panel-heading">
+			<span class="glyphicon glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+  			<span class="sr-only">About:</span>
+		  	What is all this about?
+		  </div>
+		  <div class="panel-body">
+		    Many websites provide nutritional information to you at various levels of personalization: some have a passive, dictionary-like approach based on lists or tables, while others show more individualized results based on your input.
+		    <br>
+			Nonetheless the most personalized websites tell you what nutrients you are/are not eating and in which percentage, but not where to get the missing ones, so the problem is <i>diagnosed</i> but not <i>solved</i>.
+			<br><br>
+			This web-application offers a personalized solution to this issue. <b>You will be able to track your own diet and will receive suggestions on how to improve it </b>based on your own profile information, food habits and tags.
+		  </div>
+		</div>
+
+		<div id="subscribe">
+			<form class="form-class" id="subscribe" action="Servlet" method="GET"> <!-- insert action and method -->
 			<h2 align="center">Subscribe</h2><br>
 				<div class="form-group">
 					<label for="inputUserNameReg">User name: </label>
@@ -51,6 +92,8 @@
 			</form>
 		</div>
 		
+
+
 		<div id="footer">
 				<h4>Diet Patcher</h4>
                Copyright © Erica Tomaselli & Stanko Franz Ovkaric 2015 All rights reserved. 

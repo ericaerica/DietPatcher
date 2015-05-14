@@ -51,20 +51,17 @@ public class Servlet extends HttpServlet {
 						request.getRequestDispatcher("/Profile.jsp").forward(request, response);
 					} else {
 						//Send back again the login page with the error "Wrong UserName or Password"
-						request.getRequestDispatcher("/LoginForm.html?ERROR=WRONG").forward(request, response);
+						request.getRequestDispatcher("?ERROR=WRONG").forward(request, response);
 					}
 					
 				} else {
 					//Send back again the login page with the error "Invalid input"
-					response.sendRedirect("LoginForm.html?ERROR=INVALID");
-					//request.getRequestDispatcher("/LoginForm.html?ERROR=INVALID").forward(request, response);
+					response.sendRedirect("?ERROR=INVALID");
 				}
 				
 				
 			} else {
 				//Send back again the login page with the error "missing parameters"
-				
-				//request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING").forward(request, response);
 				response.sendRedirect("?ERROR=MISSING");
 			}
 			
@@ -72,7 +69,7 @@ public class Servlet extends HttpServlet {
 			//PrintWriter writer = response.getWriter();
 			//writer.print("<html><body>" + username + " " + password + "</body></html>");
 			
-		} else if (request.getParameterNames().nextElement()=="usernameReg"){
+		} else if (request.getParameterNames().nextElement().equals("usernameReg")){
 			
 			//-----------------------------------------------
 			//------------Subscription triggered-------------
@@ -84,7 +81,7 @@ public class Servlet extends HttpServlet {
 			String email = request.getParameter("email");
 			
 			//Check if any of the parameters are null
-			if(username != null && password1 != null && password2 != null && email != null){
+			if(username != null && password1 != null && password2 != null && email != null && username != "" && password1 != "" && password2 != "" && email != ""){
 
 				//Check if valid
 				if(ProfileUtils.isUsernameValid(username) 
@@ -115,26 +112,24 @@ public class Servlet extends HttpServlet {
 							
 						} else {
 							//Send back again the login page with the error "A user with the same username or password already exist"
-							request.getRequestDispatcher("/LoginForm.html?ERROR=USER_EXISTS").forward(request, response);
+							response.sendRedirect("?ERROR=USER_EXISTS");
 						}
 						
 					} else {
 						//Send back again the login page with the error "Password mismatch"
-						request.getRequestDispatcher("/LoginForm.html?ERROR=PASS_MIS").forward(request, response);
+						response.sendRedirect("?ERROR=PASS_MIS");
 					}
 					
 				} else {
 					//Send back again the login page with the error "Invalid input"
-					request.getRequestDispatcher("/LoginForm.html?ERROR=INVALID").forward(request, response);
+					response.sendRedirect("?ERROR=INVALID");
 				}
 				
 			} else {
 				//Send back again the login page with the error "missing parameters"
-				request.getRequestDispatcher("/LoginForm.html?ERROR=MISSING").forward(request, response);
+				response.sendRedirect("?ERROR=MISSING");
 			}
-		} else {
-			//TODO Implement case of error made by user in LoginForm.html
-		}
+		} 
 		
 	}
 }
