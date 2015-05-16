@@ -39,20 +39,19 @@ public class Servlet extends HttpServlet {
 				
 				//Check if valid strings
 				if(ProfileUtils.isUsernameValid(username) && ProfileUtils.isPasswordValid(password)){
+					
 					//Try to get user
 					UserBean user = DataManager.getUser(username,password);
 					
 					//Check if user exists
 					if (user!=null){
 						//If exists, create bean
-						System.out.println("user not null " + user.getUsername());
 						HttpSession session = request.getSession();
 						session.setAttribute("uBean", user);
 						request.getRequestDispatcher("/Profile.jsp").forward(request, response);
 					} else {
 						//Send back again the login page with the error "Wrong UserName or Password"
-						System.out.println("user null");
-						response.sendRedirect("?ERROR=WRONG");
+						request.getRequestDispatcher("?ERROR=WRONG").forward(request, response);
 					}
 					
 				} else {
@@ -96,13 +95,13 @@ public class Servlet extends HttpServlet {
 						//Check if account exists:
 						//Try to get user
 						System.out.println("here servlet");
-						UserBean user = null;// DataManager.getUser(username,password1);
+						UserBean user = DataManager.getUser(username,password1);
 						
 						//If the user doesn't exist
 						if (user==null){
 							
 							user = new UserBean();
-							user.setUsername(username);
+							user.setUsernameLogin(username);
 							user.setPassword(password1);
 							user.setEmail(email);
 							
