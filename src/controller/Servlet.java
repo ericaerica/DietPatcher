@@ -6,9 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import database.DataManager;
 import model.ProfileUtils;
 import model.UserBean;
@@ -94,14 +91,14 @@ public class Servlet extends HttpServlet {
 						
 						//Check if account exists:
 						//Try to get user
-						System.out.println("here servlet");
+						DataManager.connect();
 						UserBean user = DataManager.getUser(username,password1);
 						
 						//If the user doesn't exist
 						if (user==null){
 							
 							user = new UserBean();
-							user.setUsernameLogin(username);
+							user.setUsername(username);
 							user.setPassword(password1);
 							user.setEmail(email);
 							
@@ -109,7 +106,7 @@ public class Servlet extends HttpServlet {
 							
 							HttpSession session = request.getSession();
 							session.setAttribute("uBean", user);
-							
+							request.getRequestDispatcher("/Profile.jsp").forward(request, response);
 							
 						} else {
 							//Send back again the login page with the error "A user with the same username or password already exist"
@@ -134,3 +131,5 @@ public class Servlet extends HttpServlet {
 		
 	}
 }
+		
+

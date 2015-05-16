@@ -7,40 +7,23 @@ import javax.persistence.*;
  * Persistent class for user object
  * @author
  */
-@Entity
-@Table(name="UserBean")
-public class UserBean {
-	//TODO controllarli con un autenticatore
-	@Id
-	@Column(name="email")
-	private String email;
-	
-	@Column(name="username")
-	private String usernameLogin;
-	
-	@Column(name="password")
-	private String password;
-	
-	@Column(name="gender")
-	private String gender;
-	
-	@Column(name="age")
-	private String age;
-	
-	@Column(name="height")
-	private String height;
-	
-	@Column(name="weight")
-	private String weight;
-	
-	@Column(name="waist")
-	private String waist;
 
-	public String getUsernameLogin() {
-		return usernameLogin;
+public class UserBean {
+
+	private String email="";
+	private String username="";
+	private String password="";
+	private String gender="";
+	private int age=0;
+	private double height=0;
+	private double weight=0;
+	private double waist=0;
+
+	public String getUsername() {
+		return username;
 	}
-	public void setUsernameLogin(String usernameLogin) {
-		this.usernameLogin = usernameLogin;
+	public void setUsername(String usernameLogin) {
+		this.username = usernameLogin;
 	}
 	public String getPassword() {
 		return password;
@@ -63,35 +46,35 @@ public class UserBean {
 		this.gender = gender;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 
-	public String getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(String height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 
-	public String getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(String weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 
-	public String getWaist() {
+	public double getWaist() {
 		return waist;
 	}
 
-	public void setWaist(String waist) {
+	public void setWaist(double waist) {
 		this.waist = waist;
 	}	
 	
