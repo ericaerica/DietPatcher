@@ -29,7 +29,7 @@
 		<property name="hbm2ddl.auto">update</property>
 		<!-- <property name="hibernate.hbm2ddl.import_files">initial_data.sql</property> -->
 		
-		<mapping class="model.UserBean.java" />
+		<mapping class="model.UserBean"/>
 		
 	</session-factory>
 </hibernate-configuration>

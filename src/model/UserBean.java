@@ -16,7 +16,7 @@ public class UserBean {
 	private String email;
 	
 	@Column(name="username")
-	private String usernameLogin;
+	private String username;
 	
 	@Column(name="password")
 	private String password;
@@ -36,11 +36,11 @@ public class UserBean {
 	@Column(name="waist")
 	private String waist;
 
-	public String getUsernameLogin() {
-		return usernameLogin;
+	public String getUsername() {
+		return username;
 	}
-	public void setUsernameLogin(String usernameLogin) {
-		this.usernameLogin = usernameLogin;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

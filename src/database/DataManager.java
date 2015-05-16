@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -24,7 +25,7 @@ public class DataManager {
 		hibernateSession.beginTransaction();
 		
 		//Saving/updating user
-		hibernateSession.saveOrUpdate(user);
+		hibernateSession.save(user);
 		hibernateSession.getTransaction().commit();
 		
 		if(hibernateSession.isOpen())
@@ -35,19 +36,21 @@ public class DataManager {
 	public static UserBean getUser(String username, String password){
 		//Create HQL query
 		System.out.println("here getUser");
-		String query = "FROM UserBean WHERE username = :uname AND password = :pass";
+		String query = "FROM model.UserBean ub WHERE ub.username = " + username + " AND ub.password = " + password;
 		UserBean user = null;
 		//Standard transaction begin
-		System.out.println("before session factory creation");
-		
 		SessionFactory sf = HibernateUtils.getSessionFactory();
-		
 		System.out.println("after session factory creation");
 		Session hibernateSession = sf.getCurrentSession();
 		//TODO put in try-catch-finally  ?
 		hibernateSession.beginTransaction();
+		System.out.println("in the transaction");
 		//TODO either get all users from table and find user or find user in table
-		List<UserBean> users = hibernateSession.createQuery(query).setString("uname", username).setString("pass", password).list();
+		Query resultQuery = hibernateSession.createQuery(query);
+		//resultQuery.setParameter(1, username);
+		//resultQuery.setParameter(2, password);
+		List<UserBean> users = resultQuery.list();
+		System.out.println("after user list");
 		if(!users.isEmpty()){
 			user = users.get(0);
 		} else if(users.size() > 1){
