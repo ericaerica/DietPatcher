@@ -90,7 +90,6 @@ public class DataManager {
 		if (connection != null) {
 			try {
 				if (userExists(user)) {
-					System.out.println("UPDATING");
 					Statement st2 = connection.createStatement();
 					st2.executeUpdate("UPDATE userbean SET "
 							+ "userbean.username="+"'"+user.getUsername()+"'"+ ","
@@ -130,20 +129,17 @@ public class DataManager {
 	}
 	
 	public static UserBean getUser(String username, String password){
-		System.out.println("inside getUser");
 		UserBean user = null;
 		Statement st = null;
         ResultSet rs = null;
 
 		if (connection != null) {
 			try {
-				System.out.println("inside try");
 				st = connection.createStatement();
 				String query = "SELECT * "
 						+ "FROM userbean "
 						+ "WHERE userbean.username=" +"'"+ username+"'"
 						+ " AND userbean.password = "+"'"+ password+"'"+';';
-				System.out.println(query);
 				rs = st.executeQuery(query);
 				
 				if (rs.next()){

@@ -16,6 +16,17 @@ public class UserBean {
 	private double weight=0;
 	private double waist=0;
 
+	public void setUserBeanParameters(String email, String username, String password,
+			String gender, int age, double height, double weight, double waist) {
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.gender = gender;
+		this.age = age;
+		this.height = height;
+		this.weight = weight;
+		this.waist = waist;
+	}
 	public String getUsername() {
 		return username;
 	}

@@ -5,8 +5,7 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/Profile.css"></link>
-		<script type="text/javascript" src="js/profileErrors.js"></script>	<!-- there is no profileErrors.js -->
-		<title>Personal Profile Page - Diet Patcher</title>
+		<title>${uBean.username}'s Profile Page - Diet Patcher</title>
 	</head>
 	<body>
 		<div id="header">
@@ -22,22 +21,22 @@
 			</div>
 			<div id="main">
 				<h2> Information about your account </h2>
-				<form class="form-class" id="Profile" method="POST">
+				<form class="form-class" id="Profile" action="ProfileServlet" method="GET">
 				
 					<div class="form-group" id="accountInfo">
 						<div class="input-group">
 					      <div class="input-group-addon">User Name</div>
-					      <input type="text" class="form-control" id="profileUserName" value=${uBean.username}>
+					      <input type="text" class="form-control" name="profileUserName" id="profileUserName" value="${uBean.username}" disabled>
 					    </div>
  
  						<div class="input-group">
 					      <div class="input-group-addon">Password</div>
-					      <input type="password" class="form-control" id="profilePassword" value=${uBean.password}>
+					      <input type="text" class="form-control" name="profilePassword" id="profilePassword" value="${uBean.password}">
 					    </div>
 
 					    <div class="input-group">
 					      <div class="input-group-addon">Email</div>
-					      <input type="email" class="form-control" id="profileEmail" value=${uBean.email}>
+					      <input type="email" class="form-control" name="profileEmail" id="profileEmail" value="${uBean.email}" disabled>
 					    </div>
 					</div>
 					
@@ -46,26 +45,26 @@
 						 
 						 <div class="input-group">
 					      <div class="input-group-addon">Gender</div>
-					      <input type="text" class="form-control" id="profileGender" placeholder="M (Male), F (Female), O (Other)"><br>
+					      <input type="text" class="form-control" name="profileGender" id="profileGender" value="${uBean.gender}" placeholder="M (Male), F (Female), O (Other)"><br>
 					    </div>
 						<div class="input-group">
 					      <div class="input-group-addon">Age</div>
-					      <input type="number" min="0" class="form-control" id="profileAge" placeholder="40">
+					      <input type="text" min="0" class="form-control" name="profileAge" id="profileAge" value="${uBean.age}" placeholder="40">
 					      <div class="input-group-addon">y/o</div>
 					    </div>
 						<div class="input-group">
 					      <div class="input-group-addon">Height</div>
-					      <input type="number" min="0" class="form-control" id="profileHeight" placeholder="170">
+					      <input type="text" min="0" class="form-control" name="profileHeight" id="profileHeight" value="${uBean.height}" placeholder="170">
 					      <div class="input-group-addon">cm</div>
 					    </div>
 					    <div class="input-group">
 					      <div class="input-group-addon">Weight</div>
-					      <input type="number" min="0" class="form-control" id="profileWeight" placeholder="70">
+					      <input type="text" min="0" class="form-control" name="profileWeight" id="profileWeight" value="${uBean.weight}" placeholder="70">
 					      <div class="input-group-addon">kg</div>
 					    </div>
 					    <div class="input-group">
 					      <div class="input-group-addon">Waist</div>
-					      <input type="number" min="0" class="form-control" id="profileWaist" placeholder="60">
+					      <input type="text" min="0" class="form-control" name="profileWaist" id="profileWaist" value="${uBean.waist}" placeholder="60">
 					      <div class="input-group-addon">cm</div>
 					    </div>
 
