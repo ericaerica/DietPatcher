@@ -1,14 +1,14 @@
 package model;
 /**
- * Provide some static methods to check user input from the servlet using regular expressions.
+ * Provide some static methods to check user input using regular expressions and to calculate BMI and BAI
  * 
  */
 public class ProfileUtils {
 	private ProfileUtils(){}
 	
 	/**
-	 * Checks the username: the username must start with an alpha-numeric character
-	 * and can contain alpha-numeric characters and the minus and the underscore symbols.
+	 * Checks the username: the username must start with an alphanumeric character
+	 * and can contain alphanumeric characters and the minus and the underscore symbols.
 	 * @param username
 	 * @return True if it matches the regex, False otherwise
 	 */
@@ -21,7 +21,7 @@ public class ProfileUtils {
 	}
 	
 	/**
-  	 * Checks the password at login: the password must be at least 8 characters long and can contain
+  	 * Checks the password: the password must be at least 8 characters long and can contain
 	 * alphanumeric characters and symbols 
 	 * @param password
 	 * @return True if it matches the regex, False otherwise
@@ -46,5 +46,31 @@ public class ProfileUtils {
 			valid = true;
 		}
 		return valid;
+	}
+	
+	//TODO methods to check every other input (profile.jsp)
+	
+	/**
+	 * Calculate body mass index.
+	 * @param height
+	 * @param weight
+	 * @return	double	BMI
+	 */
+	public static double calculateBMI(double height, double weight){
+		double BMI = 0.0;
+		
+		return BMI;
+	}
+	
+	/**
+	 * Calculate body adiposity index.
+	 * @param height
+	 * @param waist
+	 * @return	double	BAI
+	 */
+	public static double calculateBAI(double height, double waist){
+		double BAI = 0.0;
+		
+		return BAI;
 	}
 }

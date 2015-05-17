@@ -5,7 +5,7 @@
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/Profile.css"></link>
-		<script type="text/javascript" src="js/profileErrors.js"></script>
+		<script type="text/javascript" src="js/profileErrors.js"></script>	<!-- there is no profileErrors.js -->
 		<title>Personal Profile Page - Diet Patcher</title>
 	</head>
 	<body>
@@ -22,27 +22,25 @@
 			</div>
 			<div id="main">
 				<h2> Information about your account </h2>
-				<form class="form-class" id="login" method="POST">
+				<form class="form-class" id="Profile" method="POST">
+				
 					<div class="form-group" id="accountInfo">
-
 						<div class="input-group">
 					      <div class="input-group-addon">User Name</div>
-					      <input type="text" class="form-control" id="profileUserName" placeholder="PatchedDieter69">
+					      <input type="text" class="form-control" id="profileUserName" value=${uBean.username}>
 					    </div>
  
  						<div class="input-group">
 					      <div class="input-group-addon">Password</div>
-					      <input type="password" class="form-control" id="profilePassword" placeholder="$uP3R5EkR3T_P4$$w0rD">
+					      <input type="password" class="form-control" id="profilePassword" value=${uBean.password}>
 					    </div>
 
 					    <div class="input-group">
 					      <div class="input-group-addon">Email</div>
-					      <input type="email" class="form-control" id="profileEmail" placeholder="your@email.here">
+					      <input type="email" class="form-control" id="profileEmail" value=${uBean.email}>
 					    </div>
-
-						
-						
 					</div>
+					
 					<h2> Information about you </h2>
 					<div class="form-group" id="userInfo">
 						 
@@ -73,8 +71,8 @@
 
 					</div>
 					<h2> Some useful information </h2>
-							BMI <span id="BMI"></span><br>
-							BAS <span id="BAS"></span><br>
+							Your BMI (body mass index): <span id="BMI"></span><br>
+							Your BAS (body adiposity index): <span id="BAS"></span><br>
 					<button type="submit" class="btn btn-primary">Save Changes</button>
 				</form>
 			</div>
