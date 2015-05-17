@@ -38,6 +38,7 @@ public class Servlet extends HttpServlet {
 				if(ProfileUtils.isUsernameValid(username) && ProfileUtils.isPasswordValid(password)){
 					
 					//Try to get user
+					DataManager.connect();
 					UserBean user = DataManager.getUser(username,password);
 					
 					//Check if user exists
@@ -48,7 +49,7 @@ public class Servlet extends HttpServlet {
 						request.getRequestDispatcher("/Profile.jsp").forward(request, response);
 					} else {
 						//Send back again the login page with the error "Wrong UserName or Password"
-						request.getRequestDispatcher("?ERROR=WRONG").forward(request, response);
+						response.sendRedirect("?ERROR=WRONG");
 					}
 					
 				} else {

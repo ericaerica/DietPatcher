@@ -10,6 +10,9 @@ import model.UserBean;
 public class DataManager {
 	private static Connection connection = null;
 	
+	private static void setConnection(Connection con) {
+		connection = con;
+	}
 	
 	/**
 	 * This method connects the system with the DB.
@@ -34,9 +37,6 @@ public class DataManager {
 			e.printStackTrace();
 		}
 		return result;
-	}
-	private static void setConnection(Connection con) {
-		connection = con;
 	}
 	
 	/**
@@ -130,13 +130,14 @@ public class DataManager {
 	}
 	
 	public static UserBean getUser(String username, String password){
+		System.out.println("inside getUser");
 		UserBean user = null;
 		Statement st = null;
         ResultSet rs = null;
 
 		if (connection != null) {
 			try {
-				
+				System.out.println("inside try");
 				st = connection.createStatement();
 				String query = "SELECT * "
 						+ "FROM userbean "

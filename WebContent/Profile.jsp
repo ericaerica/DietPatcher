@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<jsp:useBean id="uBean" class="model.UserBean" scope="application"/>
-<jsp:setProperty name="uBean" property="*"/>
+<!-- <jsp:useBean id="uBean" class="model.UserBean" scope="session"/> -->
+<!-- <jsp:setProperty name="uBean" property="*"/> -->
 <html>
 	<head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -18,11 +18,11 @@
 		</div>
 		<div id="container">
 			<div id="title">
-				<h1>#UserName's Profile</h1>
+				<h1>${uBean.username}'s Profile</h1>
 			</div>
 			<div id="main">
 				<h2> Information about your account </h2>
-				<form class="form-class" id="login" method="POST"> <!-- insert action and method -->
+				<form class="form-class" id="login" method="POST">
 					<div class="form-group" id="accountInfo">
 
 						<div class="input-group">
