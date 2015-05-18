@@ -92,13 +92,14 @@ public class DataManager {
 				if (userExists(user)) {
 					Statement st2 = connection.createStatement();
 					st2.executeUpdate("UPDATE userbean SET "
-							+ "userbean.username="+"'"+user.getUsername()+"'"+ ","
-							+ "userbean.password="+"'"+user.getPassword()+"'"+ ","
-							+ "userbean.gender="+"'"+user.getGender()+"'"+ ","
-							+ "userbean.age="+user.getAge()+ ","
-							+ "userbean.height="+user.getHeight()+ ","
-							+ "userbean.weight="+user.getWeight()+ ","
-							+ "userbean.waist="+user.getWaist()
+							+ "email="+"'"+user.getEmail()+"'"+ ","
+							+ "username="+"'"+user.getUsername()+"'"+ ","
+							+ "password="+"'"+user.getPassword()+"'"+ ","
+							+ "gender="+"'"+user.getGender()+"'"+ ","
+							+ "age="+user.getAge()+ ","
+							+ "height="+user.getHeight()+ ","
+							+ "weight="+user.getWeight()+ ","
+							+ "waist="+user.getWaist()
 							+ "WHERE userbean.email="+"'"+user.getEmail()+"'"+";");
 					opResult = true;
 					st2.close();

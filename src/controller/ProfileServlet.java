@@ -16,14 +16,12 @@ public class ProfileServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	
+			
 
 			String username = request.getParameter("profileUserName");
 			String password = request.getParameter("profilePassword");
 			String email = request.getParameter("profileEmail");
-			System.out.println(password);
-			System.out.println(email);
-			System.out.println(username);
 			String gender = request.getParameter("profileGender");
 			int age = Integer.parseInt(request.getParameter("profileAge"));
 			double height = Double.parseDouble(request.getParameter("profileHeight"));
@@ -38,24 +36,20 @@ public class ProfileServlet extends HttpServlet {
 					&& email != null
 					&& username != null 
 					&& password != null){
-				System.out.println("nothing null");
 				//Check if valid strings
 				if(ProfileUtils.isUsernameValid(username) 
 						&& ProfileUtils.isPasswordValid(password)
 						&& ProfileUtils.isEmailValid(email)
 						){
-					System.out.println("is valid");
 					//Try to get user
 					DataManager.connect();
-					System.out.println("connected");
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
-					System.out.println("bean Created");
 					DataManager.saveUser(user);
-					System.out.println("user saved");
+
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);
-					request.getRequestDispatcher("/ProfileServlet?INFO=SUCCESS").forward(request, response);
+					request.getRequestDispatcher("/Profile.jsp").forward(request, response);
 					
 				} else {
 					//Send back again the profile page with the error "Invalid input"

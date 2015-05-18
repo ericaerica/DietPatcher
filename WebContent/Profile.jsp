@@ -26,7 +26,7 @@
 					<div class="form-group" id="accountInfo">
 						<div class="input-group">
 					      <div class="input-group-addon">User Name</div>
-					      <input type="text" class="form-control" name="profileUserName" id="profileUserName" value="${uBean.username}" disabled>
+					      <input type="text" class="form-control" name="profileUserName" id="profileUserName" value="${uBean.username}" >
 					    </div>
  
  						<div class="input-group">
@@ -36,7 +36,7 @@
 
 					    <div class="input-group">
 					      <div class="input-group-addon">Email</div>
-					      <input type="email" class="form-control" name="profileEmail" id="profileEmail" value="${uBean.email}" disabled>
+					      <input type="email" class="form-control" name="profileEmail" id="profileEmail" value="${uBean.email}" >
 					    </div>
 					</div>
 					
