@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Persistent class for user object
  * @author
@@ -15,7 +17,8 @@ public class UserBean {
 	private double height=0;
 	private double weight=0;
 	private double waist=0;
-
+	private ArrayList<String> tags = new ArrayList<String>();
+	
 	public void setUserBeanParameters(String email, String username, String password,
 			String gender, int age, double height, double weight, double waist) {
 		this.email = email;
@@ -27,6 +30,7 @@ public class UserBean {
 		this.weight = weight;
 		this.waist = waist;
 	}
+	
 	public String getUsername() {
 		return username;
 	}
@@ -86,6 +90,12 @@ public class UserBean {
 		this.waist = waist;
 	}	
 	
+	public ArrayList<String> getTags() {
+		return tags;
+	}
+	public void setTags(ArrayList<String> tags) {
+		this.tags = tags;
+	}
 	
 }
 

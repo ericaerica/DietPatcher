@@ -17,10 +17,7 @@ public class Servlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserBean user = (UserBean)session.getAttribute("uBean");
-		String x = request.getParameter("profileEmail");
-		System.out.println(x);
+		
 	}
 	
 	@Override

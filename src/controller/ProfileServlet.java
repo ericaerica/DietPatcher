@@ -16,9 +16,7 @@ public class ProfileServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
 			
-
 			String username = request.getParameter("profileUserName");
 			String password = request.getParameter("profilePassword");
 			String email = request.getParameter("profileEmail");
