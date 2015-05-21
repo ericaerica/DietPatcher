@@ -6,6 +6,24 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/Profile.css"></link>
 		<title>${uBean.username}'s Profile Page - Diet Patcher</title>
+		<script type="text/javascript">
+			function refresh(){
+				var result = document.getElementById("profileWeight").value / ((document.getElementById("profileHeight").value/100)*(document.getElementById("profileHeight").value/100));
+				if (result<17.5 || result>30){document.getElementById("BMI").style.color = "#F00";}
+				else if (result<19 || result>25){document.getElementById("BMI").style.color = "#fA0";}
+				else{document.getElementById("BMI").style.color = "#090";}
+				 document.getElementById("BMI").innerHTML = (result).toFixed(2)
+
+
+				 var result = document.getElementById("profileWaist").value / (document.getElementById("profileHeight").value * sqrt(document.getElementById("height").value)) -18;
+				if (result<17.5 || result>30){document.getElementById("BMI").style.color = "#F00";}
+				else if (result<19 || result>25){document.getElementById("BMI").style.color = "#fA0";}
+				else{document.getElementById("BAI").style.color = "#090";}
+				 document.getElementById("BAI").innerHTML = (result).toFixed(2)
+			}
+
+			
+		</script>
 	</head>
 	<body>
 		<div id="header">
@@ -69,9 +87,15 @@
 					    </div>
 
 					</div>
-					<h2> Some useful information </h2>
-							Your BMI (body mass index): <span id="BMI"></span><br>
-							Your BAS (body adiposity index): <span id="BAS"></span><br>
+						<h2> Some useful information 
+							<button type="button" class="btn btn-default" aria-label="Left Align" 
+							onClick="refresh();">
+	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+							</button>
+						</h2>
+							Your BMI (body mass index)= <span id="BMI"></span><br><br>
+							Your BAI (body adiposity index)= <span id="BAI"></span><br>
+							<br><br>
 					<button type="submit" class="btn btn-primary">Save Changes</button>
 				</form>
 			</div>
