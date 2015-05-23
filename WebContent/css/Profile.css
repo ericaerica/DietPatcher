@@ -2,7 +2,14 @@
 @import url(http://fonts.googleapis.com/css?family=Pacifico);
 body {
   font-family: "Raleway", Century Gothic, Arial, Helvetica, sans-serif;
-  background-color: #ddd; }
+  background-color: #ddd; 
+  background-image: url("http://www.piubenessere.it/wp-content/uploads/2014/04/blueberries.jpg");
+  -webkit-background-size:cover;
+  -moz-background-size:cover;
+  -o-background-size:cover;
+  background-size:cover;
+  background-position:center;
+}
   body h1 {
     text-align: center; }
   body a {
@@ -21,6 +28,7 @@ body {
   background: linear-gradient(#ffffff, #eeeeee);
   /* Standard syntax */
   position: relative;
+  border-bottom: 3px solid #0E74AF;
   top: -0px;
   left: -0px;
   width: 100%;

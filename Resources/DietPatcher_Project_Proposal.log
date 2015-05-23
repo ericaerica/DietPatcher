@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.7)  7 MAY 2015 17:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.7)  22 MAY 2015 07:33
 entering extended mode
 **DietPatcher_Project_Proposal.tex
 
@@ -510,26 +510,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--36
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 43.
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 80--91
+Underfull \hbox (badness 10000) in paragraph at lines 89--100
 
  []
 
 
-Overfull \hbox (43.15198pt too wide) in paragraph at lines 92--111
+Overfull \hbox (43.15198pt too wide) in paragraph at lines 101--120
 []|  [] 
  []
 
 [3
 
-]
+] [4]
 (C:\Users\stanko16\Documents\Studio\UniBZ\DietPatcher\DietPatcher\Resources\Die
 tPatcher_Project_Proposal.aux) ) 
 Here is how much of TeX's memory you used:
- 13140 strings out of 493921
- 284528 string characters out of 3144868
- 311943 words of memory out of 3000000
- 16212 multiletter control sequences out of 15000+200000
- 11560 words of font info for 40 fonts, out of 3000000 for 9000
+ 13141 strings out of 493921
+ 284543 string characters out of 3144868
+ 311942 words of memory out of 3000000
+ 16213 multiletter control sequences out of 15000+200000
+ 11867 words of font info for 41 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  62i,8n,66p,529b,706s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/
@@ -540,9 +540,9 @@ blic/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmr9.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/am
 sfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmsy9.pfb>
-Output written on DietPatcher_Project_Proposal.pdf (3 pages, 91077 bytes).
+Output written on DietPatcher_Project_Proposal.pdf (4 pages, 93139 bytes).
 PDF statistics:
- 43 PDF objects out of 1000 (max. 8388607)
+ 46 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

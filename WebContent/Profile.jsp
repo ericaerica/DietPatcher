@@ -15,11 +15,8 @@
 				 document.getElementById("BMI").innerHTML = (result).toFixed(2)
 
 
-				 var result = document.getElementById("profileWaist").value / (document.getElementById("profileHeight").value * sqrt(document.getElementById("height").value)) -18;
-				if (result<17.5 || result>30){document.getElementById("BMI").style.color = "#F00";}
-				else if (result<19 || result>25){document.getElementById("BMI").style.color = "#fA0";}
-				else{document.getElementById("BAI").style.color = "#090";}
-				 document.getElementById("BAI").innerHTML = (result).toFixed(2)
+				 var result1 = document.getElementById("profileWaist").value / (document.getElementById("profileHeight").value * sqrt(document.getElementById("height").value));
+				 document.getElementById("BAI").innerHTML = result1;
 			}
 
 			
@@ -86,6 +83,97 @@
 					      <div class="input-group-addon">cm</div>
 					    </div>
 
+					    <h2> Choose your tags </h2>
+					    <div class="row">
+						    <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Vegan" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+							  <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Lacto-ovo Vegetarian" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+						</div>
+						<div class="row">
+						    <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Frutarian" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+							  <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Raw Vegan" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+						</div>
+						<div class="row">
+						    <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Raw Till 4 Vegan" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+							  <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Paleo" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+						</div>
+						<div class="row">
+						    <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Pescetarian" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+							  <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Pollotarian" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+						</div>
+						<div class="row">
+						    <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Mediterranean" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+							  <div class="col-lg-6">
+							    <div class="input-group">
+							      <span class="input-group-addon">
+							        <input type="checkbox" aria-label="...">
+							      </span>
+							      <input type="text" class="form-control" aria-label="..." value="Omnivore" disabled >
+							    </div><!-- /input-group -->
+							  </div><!-- /.col-lg-6 -->
+						</div>
 					</div>
 						<h2> Some useful information 
 							<button type="button" class="btn btn-default" aria-label="Left Align" 
