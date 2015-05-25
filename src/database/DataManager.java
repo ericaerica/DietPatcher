@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import model.UserBean;
 
 public class DataManager {
+	//TODO riordinare i metodi e controllare che per ogni save ci sia un get e viceversa
 	private static Connection connection = null;
 	
 	private static void setConnection(Connection con) {
@@ -77,7 +78,7 @@ public class DataManager {
 						+ "'" + user.getEmail() + "'" + ";");
 				if (rs.next()) {
 					opResult = true;
-					System.out.println(rs.getString(1));
+					//System.out.println(rs.getString(1));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -199,5 +200,72 @@ public class DataManager {
 		}
 		
 		return foodList;
+	}
+	
+	/**
+	 * This method saves or updates the tags chosen by the user in the database.
+	 * 
+	 * @param newTags	ArrayList of tags to save
+	 */
+	public static void saveTags(UserBean user, ArrayList<String> newTags){
+		if (connection != null) {
+			try {
+				if (userExists(user)) {
+					ArrayList<String> oldTags = getTags(user);
+					
+					if(oldTags.isEmpty()){		//there are no tags saved for this user
+						Statement st = connection.createStatement();
+						//save the tags
+						st.executeUpdate("INSERT INTO userxtag VALUES (" + "'"	//TODO
+								+ user.getEmail() + "'" + "," + "'"
+								+ user.getUsername() + "'" + "," + "'"
+								+ user.getPassword() + "'" + "," + "'"
+								+ user.getGender() + "'" + "," + user.getAge()
+								+ "," + user.getHeight() + "," + user.getWeight()
+								+ "," + user.getWaist() + ");");
+						st.close();
+					} else {					//there are already some tags saved for this user
+						Statement st = connection.createStatement();
+						//update the tags
+						st.executeUpdate("UPDATE userbean SET email=" + "'"		//TODO
+								+ user.getEmail() + "'" + "WHERE userbean.email=" + "'"
+								+ user.getEmail() + "'" + ";");
+						st.close();
+					}
+				}
+			} catch (SQLException e) {
+				System.err.println("ERROR in the query!");
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * This method returns the list of tags of the user.
+	 * 
+	 * @param user	UserBean
+	 * @return	ArrayList<String>
+	 */
+	public static ArrayList<String> getTags(UserBean user) {
+		ArrayList<String> tags = new ArrayList<String>();
+		Statement st = null;
+		ResultSet rs = null;
+
+		if (connection != null) {
+			try {
+				st = connection.createStatement();
+				String nestedQuery = "SELECT * FROM userxtag WHERE user = (SELECT id FROM userbean WHERE userbean.email = "
+						+ "'" + user.getEmail() + "'" + ");";
+				rs = st.executeQuery(nestedQuery);
+				
+				while (rs.next()) {
+					tags.add((rs.getString(3)));
+				}
+			} catch (SQLException e) {
+				System.out.println("error in nestedQuery");
+				e.printStackTrace();
+			}
+		}
+		return tags;
 	}
 }

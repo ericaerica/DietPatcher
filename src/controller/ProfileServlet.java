@@ -11,6 +11,7 @@ import model.ProfileUtils;
 import model.UserBean;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ProfileServlet extends HttpServlet {
 
@@ -25,7 +26,15 @@ public class ProfileServlet extends HttpServlet {
 			double height = Double.parseDouble(request.getParameter("profileHeight"));
 			double weight = Double.parseDouble(request.getParameter("profileWeight"));
 			double waist = Double.parseDouble(request.getParameter("profileWaist"));
+			String[] tagArray = request.getParameterValues("tag");
 			
+			//Prepare the ArrayList of user tags
+			ArrayList<String> tags = new ArrayList<String>();
+			if(tagArray.length > 0){
+				for(int i = 0; i < tagArray.length; i++){
+					tags.add(tagArray[i]);
+				}
+			}
 			
 			//Check if null parameters
 			if(username != "" 
@@ -43,7 +52,9 @@ public class ProfileServlet extends HttpServlet {
 					DataManager.connect();
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
-					DataManager.saveUser(user);
+					user.setTags(tags);
+					DataManager.saveUser(user);	//TODO saveUser e` booleano, cambiare a void o fare un if?
+					DataManager.saveTags(user, tags);
 
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);

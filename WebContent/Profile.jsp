@@ -8,15 +8,17 @@
 		<title>${uBean.username}'s Profile Page - Diet Patcher</title>
 		<script type="text/javascript">
 			function refresh(){
-				var result = document.getElementById("profileWeight").value / ((document.getElementById("profileHeight").value/100)*(document.getElementById("profileHeight").value/100));
+				var result = document.getElementById("profileWeight").value / ((document.getElementById("profileHeight")
+						.value/100)*(document.getElementById("profileHeight").value/100));
 				if (result<17.5 || result>30){document.getElementById("BMI").style.color = "#F00";}
 				else if (result<19 || result>25){document.getElementById("BMI").style.color = "#fA0";}
 				else{document.getElementById("BMI").style.color = "#090";}
-				 document.getElementById("BMI").innerHTML = (result).toFixed(2)
+				document.getElementById("BMI").innerHTML = (result).toFixed(2)
 
 
-				 var result1 = document.getElementById("profileWaist").value / (document.getElementById("profileHeight").value * sqrt(document.getElementById("height").value));
-				 document.getElementById("BAI").innerHTML = result1;
+				var result1 = document.getElementById("profileWaist").value / (document.getElementById("profileHeight")
+						 .value * sqrt(document.getElementById("height").value));
+				document.getElementById("BAI").innerHTML = result1;
 			}
 
 			
@@ -82,13 +84,15 @@
 					      <input type="text" min="0" class="form-control" name="profileWaist" id="profileWaist" value="${uBean.waist}" placeholder="60">
 					      <div class="input-group-addon">cm</div>
 					    </div>
-
-					    <h2> Choose your tags </h2>
+					</div>
+					
+					<h2> Choose your tags </h2>
+					<div class="form-group" id="tags">
 					    <div class="row">
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="vegan">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Vegan" disabled >
 							    </div><!-- /input-group -->
@@ -96,7 +100,7 @@
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="lacto_ovo_veg">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Lacto-ovo Vegetarian" disabled >
 							    </div><!-- /input-group -->
@@ -106,7 +110,7 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="frutarian">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Frutarian" disabled >
 							    </div><!-- /input-group -->
@@ -114,7 +118,7 @@
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="raw_vegan">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Raw Vegan" disabled >
 							    </div><!-- /input-group -->
@@ -124,7 +128,7 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="raw_till_4">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Raw Till 4 Vegan" disabled >
 							    </div><!-- /input-group -->
@@ -132,7 +136,7 @@
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="paleo">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Paleo" disabled >
 							    </div><!-- /input-group -->
@@ -142,7 +146,7 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="pescetarian">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Pescetarian" disabled >
 							    </div><!-- /input-group -->
@@ -150,7 +154,7 @@
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="pollotarian">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Pollotarian" disabled >
 							    </div><!-- /input-group -->
@@ -160,7 +164,7 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="mediterranean">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Mediterranean" disabled >
 							    </div><!-- /input-group -->
@@ -168,22 +172,22 @@
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="...">
+							        <input type="checkbox" aria-label="..." name="tag" value="omnivore">
 							      </span>
 							      <input type="text" class="form-control" aria-label="..." value="Omnivore" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 						</div>
 					</div>
-						<h2> Some useful information 
-							<button type="button" class="btn btn-default" aria-label="Left Align" 
-							onClick="refresh();">
-	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-							</button>
-						</h2>
-							Your BMI (body mass index)= <span id="BMI"></span><br><br>
-							Your BAI (body adiposity index)= <span id="BAI"></span><br>
-							<br><br>
+					
+					<h2> Some useful information 
+						<button type="button" class="btn btn-default" aria-label="Left Align" onClick="refresh();">
+	  						<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+						</button>
+					</h2>
+					Your BMI (body mass index)= <span id="BMI"></span><br><br>
+					Your BAI (body adiposity index)= <span id="BAI"></span><br>
+					<br><br>
 					<button type="submit" class="btn btn-primary">Save Changes</button>
 				</form>
 			</div>
