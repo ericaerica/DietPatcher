@@ -183,18 +183,27 @@ public class DataManager {
 		Statement st = null;
 		ResultSet rs = null;
 		
+		String[] words = partialName.split("\\s+");
+		
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
-				String query = "SELECT long_desc " + "FROM food_des "
-						+ "WHERE food_des.long_desc LIKE '%" + partialName + "%';";
+				System.out.println("init query");
+				String query = "SELECT long_desc " + "FROM food_des ";
+				int i = 0;
+				for(String s : words){
+					if (i==0)query+="WHERE ";
+					if (i>=1)query+="AND ";
+					query+="UPPER(food_des.long_desc) LIKE UPPER('%" + s + "%') ";
+					i++;
+				}
+				query+=";";
+				System.out.println(query);
 				rs = st.executeQuery(query);
-
 				while (rs.next()) {
-					foodList.add((rs.getString(3)));
+					foodList.add((rs.getString(1)));
 				}
 				st.close();
-
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();

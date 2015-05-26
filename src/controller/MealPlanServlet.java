@@ -1,6 +1,8 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,42 +13,60 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONArray;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import database.DataManager;
 
-@WebServlet("/MealPlanServlet")
+
 public class MealPlanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	       System.out.println("IM IN");
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
-        response.setHeader("Cache-control", "no-cache, no-store");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "-1");
-       
-        JSONArray arrayObj=new JSONArray();
-       
-        String query = request.getParameter("term");
-        System.out.println(query);
-        query = query.toLowerCase();
-        
-        ArrayList<String> list = DataManager.getFood(query);
-        
-        for(String s : list) {
-             ((List<String>) arrayObj).add(s); 
-        }
-       
-        out.println(arrayObj.toString());
-        out.close();
        
     }
-
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+		        throws ServletException, IOException{
 		
+			// 1. get received JSON data from request
+			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+			String json = "";
+			if(br != null){
+				json = br.readLine();
+			}
+			System.out.println(json);
+			
+			// 2. initiate jackson mapper
+	    	ObjectMapper mapper = new ObjectMapper();
+	    	
+	    	// 3. Convert received JSON to String
+	    	String substring = mapper.readValue(json, String.class);
+
+	    	// 4. Get list of suggestions
+	    	ArrayList<String> foodz = DataManager.getFood(substring);
+	    	ArrayList<String> suggestions = new ArrayList<String>();
+	    	int i = 0;
+	    	if(foodz.size()>60){
+	    		for (String s : foodz){
+		    		if (i<30){suggestions.add(s);}
+		    		i++;
+		    	}
+	    	} else {
+	    		for(String s : foodz){
+	    			suggestions.add(s);
+	    		}
+	    	}
+	    	
+	    	for(String d : suggestions){
+	    		System.out.println(d);
+	    	}
+			// 5. Set response type to JSON
+			response.setContentType("application/json");		    
+
+			// 6. Send ArrayList<String> as JSON to client
+	    	mapper.writeValue(response.getOutputStream(), suggestions);
+		}
 	}
 
-}
+

@@ -14,60 +14,40 @@
 	<script type="text/javascript" src="js/eye.js"></script>
 	<script type="text/javascript" src="js/utils.js"></script>
 	<script type="text/javascript" src="js/layout.js?ver=1.0.2"></script>
-
-<script src="http://code.jquery.com/jquery-1.7.js"
-    type="text/javascript"></script>
-<script
-    src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
-    type="text/javascript"></script>
-<link
-    href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
-    rel="stylesheet" type="text/css" />
-<STYLE TYPE="text/css" media="all">
-.ui-autocomplete { 
-    position: absolute; 
-    cursor: default; 
-    height: 200px; 
-    overflow-y: scroll; 
-    overflow-x: hidden;}
-</STYLE>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $("input#autoText").autocomplete({
-        width: 300,
-        max: 10,
-        delay: 100,
-        minLength: 1,
-        autoFocus: true,
-        cacheLength: 1,
-        scroll: true,
-        highlight: false,
-        source: function(request, response) {
-            $.ajax({
-                url: "MealPlanServlet",
-                dataType: "json",
-                data: request,
-                term : request.term,
-                success: function( data, textStatus, jqXHR) {
-                    console.log( data);
-                    var items = data;
-                    response(items);
-                },
-                error: function(jqXHR, textStatus, errorThrown){
-                     console.log( textStatus);
-                }
-                select: function(event, ui) {
-				     $("input#autoText").val(ui.item.value);
-				 }
-            });
-        }
-
-    });
-});
-   
-</script>
+	<script src="js/jquery.1.9.1.min.js"></script>
+	<script src="js/myfunctions.js"></script>
 	<script type="text/javascript">
+
+function sendAjax() {
+ 
+	// get inputs
+	
+	var string = $('#autocomplete').val();
+	if(string.length >2){
+		$("option").remove();
+		$.ajax({
+			url: "${pageContext.request.contextPath}/MealPlanServlet",
+			type: 'POST',
+			dataType: 'json',
+			data: JSON.stringify(string),
+			contentType: 'application/json',
+			mimeType: 'application/json',
+			
+			success: function (data) {
+	            var setOfSuggestions = "";
+	            
+	        	$.each(data, function (index, sugg) {
+	            	setOfSuggestions+= '<option value="'+sugg+'">';
+	            });
+	            document.getElementById('datalist1').innerHTML = setOfSuggestions;
+
+	        },
+			error:function(data,status,er) {
+				alert("error: "+data+" status: "+status+" er:"+er);
+			}
+		});
+	}
+}
 
 
 	function dtval(d,e) {
@@ -160,8 +140,14 @@ function dtval(d,e) {
 						<div class="panel-body">
 							<div id="addModule">
 								<div id="foodAdd">Choose a food to add to your meal plan!<br><span id="selection"></span>
-									<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" />
+
+									<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax()" list="datalist1">
+										<datalist id="datalist1">
+
+										</datalist>
+
 									<input type="number" placeholder="100"></input>
+
 									<select>
 										<option value="null"> </option>
 										<option value="g">g</option>
