@@ -17,6 +17,7 @@ public class UserBean {
 	private double height=0;
 	private double weight=0;
 	private double waist=0;
+	private int id=0;
 	private ArrayList<String> tags = new ArrayList<String>();
 	
 	public void setUserBeanParameters(String email, String username, String password,
@@ -34,18 +35,23 @@ public class UserBean {
 	public String getUsername() {
 		return username;
 	}
+	
 	public void setUsername(String usernameLogin) {
 		this.username = usernameLogin;
 	}
+	
 	public String getPassword() {
 		return password;
 	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -88,11 +94,20 @@ public class UserBean {
 
 	public void setWaist(double waist) {
 		this.waist = waist;
-	}	
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
 	
 	public ArrayList<String> getTags() {
 		return tags;
 	}
+	
 	public void setTags(ArrayList<String> tags) {
 		this.tags = tags;
 	}

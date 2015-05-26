@@ -30,7 +30,7 @@ public class ProfileServlet extends HttpServlet {
 			
 			//Prepare the ArrayList of user tags
 			ArrayList<String> tags = new ArrayList<String>();
-			if(tagArray.length > 0){
+			if(tagArray != null && tagArray.length > 0){
 				for(int i = 0; i < tagArray.length; i++){
 					tags.add(tagArray[i]);
 				}
@@ -52,9 +52,17 @@ public class ProfileServlet extends HttpServlet {
 					DataManager.connect();
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
-					user.setTags(tags);
 					DataManager.saveUser(user);	//TODO saveUser e` booleano, cambiare a void o fare un if?
-					DataManager.saveTags(user, tags);
+					System.out.println("user id: " + user.getId());
+					user.setTags(tags);
+					
+					ArrayList<String> prova = DataManager.getTags(user);
+					if(prova.isEmpty())
+						System.out.println("empty");
+					else
+						for(int i=0; i<prova.size(); i++)
+							System.out.println(prova.get(i));
+					//DataManager.saveTags(user, tags);
 
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);

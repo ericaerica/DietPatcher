@@ -94,8 +94,8 @@ public class DataManager {
 		if (connection != null) {
 			try {
 				if (userExists(user)) {
-					Statement st2 = connection.createStatement();
-					st2.executeUpdate("UPDATE userbean SET " + "email=" + "'"
+					Statement st = connection.createStatement();
+					st.executeUpdate("UPDATE userbean SET " + "email=" + "'"
 							+ user.getEmail() + "'" + "," + "username=" + "'"
 							+ user.getUsername() + "'" + "," + "password="
 							+ "'" + user.getPassword() + "'" + "," + "gender="
@@ -106,20 +106,23 @@ public class DataManager {
 							+ user.getWaist() + "WHERE userbean.email=" + "'"
 							+ user.getEmail() + "'" + ";");
 					opResult = true;
-					st2.close();
+					st.close();
 				} else {
 					System.out.println("INSERTING");
-					Statement st3 = connection.createStatement();
-					st3.executeUpdate("INSERT INTO userbean VALUES (" + "'"
+					Statement st = connection.createStatement();
+					st.executeUpdate("INSERT INTO userbean VALUES (" + "'"
 							+ user.getEmail() + "'" + "," + "'"
 							+ user.getUsername() + "'" + "," + "'"
 							+ user.getPassword() + "'" + "," + "'"
 							+ user.getGender() + "'" + "," + user.getAge()
 							+ "," + user.getHeight() + "," + user.getWeight()
 							+ "," + user.getWaist() + ");");
-					System.out.println("DONE!");
+					ResultSet rs = st.executeQuery("SELECT id FROM userbean WHERE userbean.email=" 
+							+ "'" + user.getEmail() + "'" + ";");
+					if(rs.next())
+						user.setId(rs.getInt(1));
 					opResult = true;
-					st3.close();
+					st.close();
 				}
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
@@ -247,6 +250,7 @@ public class DataManager {
 	 * @return	ArrayList<String>
 	 */
 	public static ArrayList<String> getTags(UserBean user) {
+		System.out.println("inside getTags");
 		ArrayList<String> tags = new ArrayList<String>();
 		Statement st = null;
 		ResultSet rs = null;
@@ -254,12 +258,12 @@ public class DataManager {
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
-				String nestedQuery = "SELECT * FROM userxtag WHERE user = (SELECT id FROM userbean WHERE userbean.email = "
-						+ "'" + user.getEmail() + "'" + ");";
+				String nestedQuery = "SELECT tag FROM userxtag WHERE userxtag.user = " + "'" + user.getId() + "'" + ";";
+				String joinQuery = "";
 				rs = st.executeQuery(nestedQuery);
-				
+				System.out.println("inside try");
 				while (rs.next()) {
-					tags.add((rs.getString(3)));
+					tags.add((rs.getString(1)));
 				}
 			} catch (SQLException e) {
 				System.out.println("error in nestedQuery");
