@@ -58,7 +58,7 @@ public class ProfileServlet extends HttpServlet {
 
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);
-					request.getRequestDispatcher("/Profile.jsp").forward(request, response);
+					request.getRequestDispatcher("/MealPlan.jsp").forward(request, response);
 					
 				} else {
 					//Send back again the profile page with the error "Invalid input"
