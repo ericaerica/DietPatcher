@@ -92,17 +92,17 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="vegan">
+							        <input type="checkbox" name="tag" value="Vegan">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Vegan" disabled >
+							      <input type="text" class="form-control" value="Vegan" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="lacto_ovo_veg">
+							        <input type="checkbox" name="tag" value="Lacto-ovo Vegetarian">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Lacto-ovo Vegetarian" disabled >
+							      <input type="text" class="form-control" value="Lacto-ovo Vegetarian" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 						</div>
@@ -110,17 +110,17 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="frutarian">
+							        <input type="checkbox" name="tag" value="Frutarian">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Frutarian" disabled >
+							      <input type="text" class="form-control" value="Frutarian" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="raw_vegan">
+							        <input type="checkbox" name="tag" value="Raw Vegan">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Raw Vegan" disabled >
+							      <input type="text" class="form-control" value="Raw Vegan" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 						</div>
@@ -128,17 +128,17 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="raw_till_4">
+							        <input type="checkbox" name="tag" value="Raw Till 4 Vegan">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Raw Till 4 Vegan" disabled >
+							      <input type="text" class="form-control" value="Raw Till 4 Vegan" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="paleo">
+							        <input type="checkbox" name="tag" value="Paleo">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Paleo" disabled >
+							      <input type="text" class="form-control" value="Paleo" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 						</div>
@@ -146,17 +146,17 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="pescetarian">
+							        <input type="checkbox" name="tag" value="Pescetarian">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Pescetarian" disabled >
+							      <input type="text" class="form-control" value="Pescetarian" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="pollotarian">
+							        <input type="checkbox" name="tag" value="Pollotarian">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Pollotarian" disabled >
+							      <input type="text" class="form-control" value="Pollotarian" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 						</div>
@@ -164,17 +164,17 @@
 						    <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="mediterranean">
+							        <input type="checkbox" name="tag" value="Mediterranean">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Mediterranean" disabled >
+							      <input type="text" class="form-control" value="Mediterranean" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 							  <div class="col-lg-6">
 							    <div class="input-group">
 							      <span class="input-group-addon">
-							        <input type="checkbox" aria-label="..." name="tag" value="omnivore">
+							        <input type="checkbox" name="tag" value="Omnivore">
 							      </span>
-							      <input type="text" class="form-control" aria-label="..." value="Omnivore" disabled >
+							      <input type="text" class="form-control" value="Omnivore" disabled >
 							    </div><!-- /input-group -->
 							  </div><!-- /.col-lg-6 -->
 						</div>

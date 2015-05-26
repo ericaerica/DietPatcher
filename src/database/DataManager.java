@@ -105,6 +105,10 @@ public class DataManager {
 							+ user.getWeight() + "," + "waist="
 							+ user.getWaist() + "WHERE userbean.email=" + "'"
 							+ user.getEmail() + "'" + ";");
+					ResultSet rs = st.executeQuery("SELECT id FROM userbean WHERE userbean.email=" 
+							+ "'" + user.getEmail() + "'" + ";");
+					if(rs.next())
+						user.setId(rs.getInt(1));
 					opResult = true;
 					st.close();
 				} else {
@@ -158,6 +162,7 @@ public class DataManager {
 					user.setHeight(rs.getDouble(6));
 					user.setWeight(rs.getDouble(7));
 					user.setWaist(rs.getDouble(8));
+					user.setId(rs.getInt(9));
 				}
 				st.close();
 
@@ -220,29 +225,42 @@ public class DataManager {
 	 * @param newTags	ArrayList of tags to save
 	 */
 	public static void saveTags(UserBean user, ArrayList<String> newTags){
+		System.out.println("inside saveTags");
 		if (connection != null) {
 			try {
 				if (userExists(user)) {
 					ArrayList<String> oldTags = getTags(user);
 					
 					if(oldTags.isEmpty()){		//there are no tags saved for this user
+						System.out.println("oldtags is empty");
 						Statement st = connection.createStatement();
 						//save the tags
-						st.executeUpdate("INSERT INTO userxtag VALUES (" + "'"	//TODO
-								+ user.getEmail() + "'" + "," + "'"
-								+ user.getUsername() + "'" + "," + "'"
-								+ user.getPassword() + "'" + "," + "'"
-								+ user.getGender() + "'" + "," + user.getAge()
-								+ "," + user.getHeight() + "," + user.getWeight()
-								+ "," + user.getWaist() + ");");
+						for(String tag : newTags){
+							String query1 = "SELECT tag.id FROM tag WHERE tag.name=" + "'" + tag + "'" + ";";
+							System.out.println(query1);
+							ResultSet rs = st.executeQuery(query1);
+							int tagId = 0;
+							while(rs.next()){
+								tagId = rs.getInt(1);
+							}
+							
+							String query2 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
+							System.out.println(query2);
+							st.executeUpdate(query2);
+							System.out.println("after while");
+						}
+						user.setTags(newTags);	//set the tags of the userbean with the new list
 						st.close();
 					} else {					//there are already some tags saved for this user
-						Statement st = connection.createStatement();
+						System.out.println("there are already some tags");
+						/*Statement st = connection.createStatement();
 						//update the tags
-						st.executeUpdate("UPDATE userbean SET email=" + "'"		//TODO
+						st.executeUpdate("UPDATE userbean SET email=" + "'"
 								+ user.getEmail() + "'" + "WHERE userbean.email=" + "'"
 								+ user.getEmail() + "'" + ";");
+						//TODO user.setTags(query to database for oldtags+newtags);
 						st.close();
+						*/
 					}
 				}
 			} catch (SQLException e) {
@@ -267,15 +285,14 @@ public class DataManager {
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
-				String nestedQuery = "SELECT tag FROM userxtag WHERE userxtag.user = " + "'" + user.getId() + "'" + ";";
-				String joinQuery = "";
-				rs = st.executeQuery(nestedQuery);
-				System.out.println("inside try");
+				String joinQuery = "SELECT userxtag.tag, tag.name, userxtag.user FROM tag INNER JOIN userxtag "
+						+ "ON tag.id = userxtag.tag WHERE userxtag.user=" + user.getId() + ";";
+				rs = st.executeQuery(joinQuery);
 				while (rs.next()) {
-					tags.add((rs.getString(1)));
+					tags.add((rs.getString(2)));
 				}
 			} catch (SQLException e) {
-				System.out.println("error in nestedQuery");
+				System.out.println("error in joinQuery");
 				e.printStackTrace();
 			}
 		}

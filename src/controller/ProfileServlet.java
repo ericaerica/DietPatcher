@@ -53,17 +53,15 @@ public class ProfileServlet extends HttpServlet {
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
 					DataManager.saveUser(user);	//TODO saveUser e` booleano, cambiare a void o fare un if?
-					System.out.println("user id: " + user.getId());
-					user.setTags(tags);
+					DataManager.saveTags(user, tags);
 					
-					ArrayList<String> prova = DataManager.getTags(user);
+					/*ArrayList<String> prova = DataManager.getTags(user);
 					if(prova.isEmpty())
 						System.out.println("empty");
 					else
 						for(int i=0; i<prova.size(); i++)
-							System.out.println(prova.get(i));
-					//DataManager.saveTags(user, tags);
-
+							System.out.println(prova.get(i));*/
+					
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);
 					request.getRequestDispatcher("/MealPlan.jsp").forward(request, response);
