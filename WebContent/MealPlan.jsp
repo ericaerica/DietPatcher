@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/datepicker.css" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="css/MealPlan.css" />
+
 	<!-- JS -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery.js"></script>
@@ -36,7 +37,7 @@
                 var setOfSuggestions = "";
                 
                 $.each(data, function (index, sugg) {
-                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td>'+sugg+'</td></tr>';
+                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td><label for="'+sugg+'">'+sugg+'</label><input id="'+sugg+'" name="food_name" type="hidden" value="'+sugg+'"></td></tr>';
                 });
                 document.getElementById('food_suggestions').innerHTML = setOfSuggestions;
 
@@ -53,11 +54,9 @@ function focused(c){
 }
 
 
-
-$('.ok').on('click', function(e){
-    document.getElementById('tbody').innerHTML += "<tr><td>"+$("#food_suggestions td.selected").html()+"</td><tr>"+$("#amount").html()+"</td></tr>"
-   
-});
+function ok(){
+	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td><label>'+document.getElementById('amount').value + '</label><input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td></tr>';
+}
 </script>
 
 				<title>Personal Profile Page - Diet Patcher</title>
@@ -70,10 +69,10 @@ $('.ok').on('click', function(e){
 						<table class="table table-hover" id="food_suggestions">
 
 						</table>
-					</div>
-					<input id="amount" type="number" placeholder="100"></input>g
+					</div><div class="input-group">
+					<input name="amount" class="form-control" id="amount" type="text" placeholder="100"></input><span class="input-group-addon">g</span></div>
 									<br><br>
-									<a class="btn btn-info ok" href="#header" role="button">Add!</a><br>
+									<a class="btn btn-info" href="#header" onClick="ok()" role="button">Add!</a><br>
 				</div>
 
 
@@ -88,8 +87,9 @@ $('.ok').on('click', function(e){
 				</div>
 				<div id="container">
 					<div id="title">
-						<h2>Meal Plan for the day 		
-							<input class="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
+						<h2>Meal Plan for the day 	
+						<form class="form-class" id="addMealPlan" action="MealPlanAdderServlet" method="GET">	
+							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
 						</h2>
 					</div>
 
@@ -116,13 +116,14 @@ $('.ok').on('click', function(e){
 								<thead>
 									<tr>
 										<th>What</th>
-										<th>How much</th>
+										<th>How much (g)</th>
 									</tr>
 								</thead>
 								<tbody id="tbody">
 
 								</tbody>
 							</table>
+							<button type="submit" class="btn btn-primary">Save Meal Plan</button>
 						</div>
 					</div>
 					<div id="recommender" class="panel panel-primary">

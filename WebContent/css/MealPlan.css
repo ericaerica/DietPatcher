@@ -61,15 +61,14 @@ body {
   display: block; }
 
 #food_suggestions_div {
+  font-size: 13px;
   height: 300px;
-  width: 400px;
   overflow: scroll; }
   #food_suggestions_div tr {
     cursor: pointer; }
 
 .selected {
-  background-color: #AfA;
-  color: #FA0;
+  background-color: #dFd;
   cursor: pointer; }
 
 #container {

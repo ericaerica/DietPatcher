@@ -58,9 +58,6 @@ public class MealPlanServlet extends HttpServlet {
 	    		}
 	    	}
 	    	
-	    	for(String d : suggestions){
-	    		System.out.println(d);
-	    	}
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    
 

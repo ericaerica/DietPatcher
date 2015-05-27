@@ -23,6 +23,7 @@ body{
 		text-decoration: none;
 		color: #005500;
 	}
+	
 }
 #header{
 	position: relative;
@@ -69,13 +70,14 @@ body{
 	margin-left: -250px;
 	z-index: 10;
 	padding: 20px;
+
 }
 #adder:target{
 	display: block;
 }
 #food_suggestions_div{
+	font-size: 13px;
 	height:300px;
-	width:400px;
 	overflow: scroll;
 	tr{
 		cursor: pointer;
@@ -83,10 +85,11 @@ body{
 }
 
 .selected{
-    background-color: #AfA;
-    color: #FA0;
+    background-color: #dFd;
     cursor: pointer;
 }
+
+
 #container{
 	float:left;
 	position: relative;
