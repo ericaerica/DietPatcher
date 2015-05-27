@@ -2,11 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-/**
- * Persistent class for user object
- * @author
- */
-
 public class UserBean {
 
 	private String email="";

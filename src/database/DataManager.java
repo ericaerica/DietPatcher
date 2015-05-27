@@ -298,4 +298,36 @@ public class DataManager {
 		}
 		return tags;
 	}
+	
+	
+	public static void database(){
+		try {
+			connect();
+			Statement st = connection.createStatement();
+			ResultSet rs = null;
+			rs = st.executeQuery("SELECT nutr_no FROM nutr_def");
+			ArrayList<String> list1 = new ArrayList<String>();
+			ArrayList<String> list2 = new ArrayList<String>();
+			ArrayList<Double> list3 = new ArrayList<Double>();
+			while(rs.next())
+				list1.add(rs.getString(1));
+			for(String s : list1){
+				String query = "SELECT ndb_no, nutr_val FROM nut_data WHERE nutr_val="
+						+ "(SELECT MAX(nutr_val) FROM nut_data WHERE nutr_no=" + "'" + s + "'" + ");";
+				ResultSet rs1 = st.executeQuery(query);
+				while(rs1.next()){
+					list2.add(rs1.getString(1));
+					list3.add(rs1.getDouble(2));
+				}
+			}
+			System.out.println(list1.size());
+			System.out.println(list2.size());
+			System.out.println(list3.size());
+			
+			st.close();
+		} catch (SQLException e) {
+			System.out.println("ERROR ERROR");
+			e.printStackTrace();
+		}
+	}
 }
