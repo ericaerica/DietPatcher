@@ -17,110 +17,68 @@
 	<script src="js/jquery.1.9.1.min.js"></script>
 	<script src="js/myfunctions.js"></script>
 	<script type="text/javascript">
-
-function sendAjax() {
+	function sendAjax() {
  
-	// get inputs
-	
-	var string = $('#autocomplete').val();
-	if(string.length >2){
-		$("option").remove();
-		$.ajax({
-			url: "${pageContext.request.contextPath}/MealPlanServlet",
-			type: 'POST',
-			dataType: 'json',
-			data: JSON.stringify(string),
-			contentType: 'application/json',
-			mimeType: 'application/json',
-			
-			success: function (data) {
-	            var setOfSuggestions = "";
-	            
-	        	$.each(data, function (index, sugg) {
-	            	setOfSuggestions+= '<option value="'+sugg+'">';
-	            });
-	            document.getElementById('datalist1').innerHTML = setOfSuggestions;
+    // get inputs
+    
+    var string = $('#autocomplete').val();
+    if(string.length >2){
+        $("option").remove();
+        $.ajax({
+            url: "${pageContext.request.contextPath}/MealPlanServlet",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(string),
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            
+            success: function (data) {
+                var setOfSuggestions = "";
+                
+                $.each(data, function (index, sugg) {
+                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td>'+sugg+'</td></tr>';
+                });
+                document.getElementById('food_suggestions').innerHTML = setOfSuggestions;
 
-	        },
-			error:function(data,status,er) {
-				alert("error: "+data+" status: "+status+" er:"+er);
-			}
-		});
-	}
+            },
+            error:function(data,status,er) {
+                alert("error: "+data+" status: "+status+" er:"+er);
+            }
+        });
+    }
+}
+
+function focused(c){
+	 $(c).addClass("selected").siblings().removeClass('selected'); 
 }
 
 
-	function dtval(d,e) {
 
-		var pK = e ? e.which : window.event.keyCode;
-		if (pK == 8) {d.value = substr(0,d.value.length-1); return;}
-		var dt = d.value;
-		var da = dt.split('/');
-		for (var a = 0; a < da.length; a++) {if (da[a] != +da[a]) da[a] = da[a].substr(0,da[a].length-1);}
-			if (da[0] > 12) {da[1] = da[0].substr(da[0].length-1,1);da[0] = '0'+da[0].substr(0,da[0].length-1);}
-		if (da[1] > 31) {da[2] = da[1].substr(da[1].length-1,1);da[1] = '0'+da[1].substr(0,da[1].length-1);}
-		if (da[2] > 9999) da[1] = da[2].substr(0,da[2].length-1);
-		dt = da.join('/');
-		if (dt.length == 2  || dt.length == 5) dt += '/';
-		d.value = dt;
-
-		var today = new Date();
-		var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
-if(dd<10) {dd='0'+dd} 
-	if(mm<10) {mm='0'+mm} 
-		today = mm + '/' + dd + '/'+yyyy;
-	if (dt.length == 0) dt += today;
-	d.value = dt;
-}
+$('.ok').on('click', function(e){
+    document.getElementById('tbody').innerHTML += "<tr><td>"+$("#food_suggestions td.selected").html()+"</td><tr>"+$("#amount").html()+"</td></tr>"
+   
+});
 </script>
 
-<script type="text/javascript">
-
-$('#inputDate').DatePicker({
-	format:"Y/m/d",
-	date: $('#inputDate').val(),
-	current: $('#inputDate').val(),
-	starts: 1,
-	position: 'r',
-	onBeforeShow: function(){
-		$('#inputDate').DatePickerSetDate($('#inputDate').val(), true);
-	},
-	onChange: function(formated, dates){
-		$('#inputDate').val(formated);
-		$('#inputDate').DatePickerHide();
-	}
-});
-
-
-function dtval(d,e) {
-	var pK = e ? e.which : window.event.keyCode;
-	if (pK == 8) {d.value = substr(0,d.value.length-1); return;}
-	var dt = d.value;
-	var da = dt.split('/');
-	for (var a = 0; a < da.length; a++) {if (da[a] != +da[a]) da[a] = da[a].substr(0,da[a].length-1);}
-		if (da[0] > 12) {da[1] = da[0].substr(da[0].length-1,1);da[0] = '0'+da[0].substr(0,da[0].length-1);}
-	if (da[1] > 31) {da[2] = da[1].substr(da[1].length-1,1);da[1] = '0'+da[1].substr(0,da[1].length-1);}
-	if (da[2] > 9999) da[1] = da[2].substr(0,da[2].length-1);
-	dt = da.join('/');
-	if (dt.length == 2 || dt.length == 5) dt += '/';
-	d.value = dt;
-
-	var today = new Date();
-	var dd = today.getDate();
-				var mm = today.getMonth()+1; //January is 0!
-				var yyyy = today.getFullYear();
-
-				if(dd<10) {dd='0'+dd} 
-					if(mm<10) {mm='0'+mm} 
-						today = mm+'/'+dd+'/'+yyyy;
-					if(d.value ==""){d.value=today;}
-				}
-				</script>
 				<title>Personal Profile Page - Diet Patcher</title>
 			</head>
 			<body>
+
+				<div id="adder" class="panel panel-primary">
+					<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax()" >
+					<div id="food_suggestions_div">
+						<table class="table table-hover" id="food_suggestions">
+
+						</table>
+					</div>
+					<input id="amount" type="number" placeholder="100"></input>g
+									<br><br>
+									<a class="btn btn-info ok" href="#header" role="button">Add!</a><br>
+				</div>
+
+
+
+
 				<div id="header">
 					<img src="resources/DietPatcherIco.png" />
 					<b>Diet Patcher</b>
@@ -139,25 +97,8 @@ function dtval(d,e) {
 						<div class="panel-heading">Contents table</div>
 						<div class="panel-body">
 							<div id="addModule">
-								<div id="foodAdd">Choose a food to add to your meal plan!<br><span id="selection"></span>
-
-									<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax()" list="datalist1">
-										<datalist id="datalist1">
-
-										</datalist>
-
-									<input type="number" placeholder="100"></input>
-
-									<select>
-										<option value="null"> </option>
-										<option value="g">g</option>
-										<option value="kg">kg</option>
-										<option value="lbs">lbs</option>
-										<option value="st">st</option>
-									</select> 
-									<br><br>
-									<a class="btn btn-info" href="#" role="button">Add!</a><br>
-								</div>
+								<a class="btn btn-info" id="addFood" role="button" href="#adder">Choose a food to add to your meal plan!</a>
+								<!--
 								<div id="dishAdd">Choose a dish to add to your meal plan!<br>
 									<select>
 										<option value="null"></option>
@@ -167,6 +108,7 @@ function dtval(d,e) {
 									</select><br> <br>
 									<a class="btn btn-info" href="#" role="button">Add!</a><br>
 								</div>
+							-->
 							</div>
 							
 							<table class="table">
@@ -177,30 +119,9 @@ function dtval(d,e) {
 										<th>How much</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>Honey</td>
-										<td>100g</td>
-									</tr>
-									<tr>
-										<td>Apple</td>
-										<td>100g</td>
-									</tr>
-									<tr>
-										<td>Orange</td>
-										<td>100g</td>
-									</tr>
-									<tr>
-										<td>Cookie</td>
-										<td>100g</td>
-									</tr>
-									<tr>
-										<td>Pineapple</td>
-										<td>100g</td>
-									</tr>
+								<tbody id="tbody">
 
 								</tbody>
-
 							</table>
 						</div>
 					</div>

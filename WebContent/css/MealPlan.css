@@ -46,6 +46,32 @@ body {
     float: right;
     font-size: 5vh; }
 
+#adder {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  max-height: 500px;
+  display: none;
+  left: 50%;
+  margin-left: -250px;
+  z-index: 10;
+  padding: 20px; }
+
+#adder:target {
+  display: block; }
+
+#food_suggestions_div {
+  height: 300px;
+  width: 400px;
+  overflow: scroll; }
+  #food_suggestions_div tr {
+    cursor: pointer; }
+
+.selected {
+  background-color: #AfA;
+  color: #FA0;
+  cursor: pointer; }
+
 #container {
   float: left;
   position: relative;
