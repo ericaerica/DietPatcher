@@ -301,38 +301,6 @@ public class DataManager {
 		return tags;
 	}
 	
-	
-	public static void database(){
-		try {
-			connect();
-			Statement st = connection.createStatement();
-			ResultSet rs = null;
-			rs = st.executeQuery("SELECT nutr_no FROM nutr_def");
-			ArrayList<String> list1 = new ArrayList<String>();
-			ArrayList<String> list2 = new ArrayList<String>();
-			ArrayList<Double> list3 = new ArrayList<Double>();
-			while(rs.next())
-				list1.add(rs.getString(1));
-			for(String s : list1){
-				String query = "SELECT ndb_no, nutr_val FROM nut_data WHERE nutr_val="
-						+ "(SELECT MAX(nutr_val) FROM nut_data WHERE nutr_no=" + "'" + s + "'" + ");";
-				ResultSet rs1 = st.executeQuery(query);
-				while(rs1.next()){
-					list2.add(rs1.getString(1));
-					list3.add(rs1.getDouble(2));
-				}
-			}
-			System.out.println(list1.size());
-			System.out.println(list2.size());
-			System.out.println(list3.size());
-			
-			st.close();
-		} catch (SQLException e) {
-			System.out.println("ERROR ERROR");
-			e.printStackTrace();
-		}
-	}
-	
 	public static ArrayList<String> getFoodIDfromFoodName(String[] foods){
 		connect();
 		ArrayList<String> foodsId = new ArrayList<String>();
@@ -481,5 +449,99 @@ public class DataManager {
 			}
 			
 		}
+	}
+	
+	/**
+	 * This recommender method finds the food containing the greatest amount of the given nutrient among the whole
+	 * list of foods in the database. If there is more than one food with the same amount, one is chosen randomly.
+	 * 
+	 * @param nutrient
+	 * @return ArrayList<String>	containing the food ID of the food found and the amount of nutrient per 100g
+	 */
+	public static ArrayList<String> getBestFood(String nutrient){
+		ArrayList<String> food_NutrAmount = new ArrayList<String>();
+		ArrayList<String> bestFoods = new ArrayList<String>();
+		ArrayList<Double> amounts = new ArrayList<Double>();
+		String foodId = "";
+		String amount = "";
+		Statement st = null;
+		ResultSet rs = null;
+		
+		if (connection != null) {
+			try {
+				st = connection.createStatement();
+				String query = "SELECT ndb_no, nutr_val FROM highest_nutr WHERE nutr_no=" + "'" + nutrient + "'" + ";";
+				rs = st.executeQuery(query);
+				
+				while (rs.next()) {
+					bestFoods.add(rs.getString(1));
+					amounts.add(rs.getDouble(2));
+				}
+				
+				if(bestFoods.size() > 1){						//there is more than one food with the same amount
+					Random rnd = new Random();
+					int index = rnd.nextInt(bestFoods.size());	//choose randomly one food
+					foodId = bestFoods.get(index);
+					amount += amounts.get(index);
+				} else {
+					foodId = bestFoods.get(0);
+					amount += amounts.get(0);
+				}
+			} catch (SQLException e) {
+				System.out.println("error in best food query");
+				e.printStackTrace();
+			}
+		}
+		food_NutrAmount.add(foodId);
+		food_NutrAmount.add(amount);
+		System.out.println(food_NutrAmount.get(0) + "\t" + food_NutrAmount.get(1));
+		return food_NutrAmount;
+	}
+	
+	
+	
+	
+	
+	public static void database(){
+		/*try {
+			connect();
+			Statement st = connection.createStatement();
+			ResultSet rs = null;
+			rs = st.executeQuery("SELECT nutr_no FROM nutr_def");
+			ArrayList<String> list1 = new ArrayList<String>(); //150 nutrients
+			ArrayList<String> list2 = new ArrayList<String>(); //nutrients
+			ArrayList<String> list3 = new ArrayList<String>(); //food
+			ArrayList<Double> list4 = new ArrayList<Double>(); //values
+			
+			while(rs.next())
+				list1.add(rs.getString(1));
+			for(String s : list1){
+				String query = "SELECT nutr_no, ndb_no, nutr_val FROM nut_data WHERE nutr_val="
+						+ "(SELECT MAX(nutr_val) FROM nut_data WHERE nutr_no=" + "'" + s + "'" + ")"
+						+ " AND nutr_no=" + "'" + s + "'" + " ORDER BY nutr_no ASC;";
+				ResultSet rs1 = st.executeQuery(query);
+				while(rs1.next()){
+					list2.add(rs1.getString(1));
+					list3.add(rs1.getString(2));
+					list4.add(rs1.getDouble(3));
+				}
+			}
+			
+			for(int i=0; i<list2.size(); i++){
+
+				if(i<100){
+					System.out.println("INSERT INTO highest_nutr (nutr_no, ndb_no, nutr_val) VALUES ("
+							+ "'" + list2.get(i) + "'" + ", " + "'" + list3.get(i) + "'" + ", " + list4.get(i) + ");");
+				}
+
+				st.executeUpdate("INSERT INTO highest_nutr (nutr_no, ndb_no, nutr_val) VALUES ("
+						+ "'" + list2.get(i) + "'" + ", " + "'" + list3.get(i) + "'" + ", " + list4.get(i) + ");");
+			}
+			
+			st.close();
+		} catch (SQLException e) {
+			System.out.println("ERROR ERROR");
+			e.printStackTrace();
+		}*/
 	}
 }
