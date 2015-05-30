@@ -22,7 +22,6 @@ public class Servlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DataManager.database();
 		if(request.getParameterNames().nextElement().equals("usernameLogin")){
 			//-----------------------------------------------
 			//-----------------Login triggered---------------

@@ -8,6 +8,12 @@ $primary-color: #333;
 body{
 	font-family: $fontz;
 	background-color:#ddd;
+	background-image: url("http://www.piubenessere.it/wp-content/uploads/2014/04/blueberries.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center; 
 	
 	h1{
 		text-align: center;

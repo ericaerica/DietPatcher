@@ -1,11 +1,13 @@
 package database;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import model.UserBean;
 
@@ -328,6 +330,156 @@ public class DataManager {
 		} catch (SQLException e) {
 			System.out.println("ERROR ERROR");
 			e.printStackTrace();
+		}
+	}
+	
+	public static ArrayList<String> getFoodIDfromFoodName(String[] foods){
+		connect();
+		ArrayList<String> foodsId = new ArrayList<String>();
+		for (String food : foods) {
+			Statement st = null;
+			ResultSet rs = null;
+
+			if (connection != null) {
+				try {
+					st = connection.createStatement();
+					String joinQuery = "SELECT food_des.ndb_no FROM food_des "
+							+ "WHERE food_des.long_desc='" + food + "';";
+					System.out.println(joinQuery);
+					rs = st.executeQuery(joinQuery);
+					while (rs.next()) {
+						foodsId.add(rs.getString(1));
+					}
+				} catch (SQLException e) {
+					System.out.println("error in joinQuery");
+					e.printStackTrace();
+				}
+			}
+		}
+		return foodsId;
+	}
+	
+	public static boolean saveMealPlan(UserBean user, String date, String[] food, String[] amount){
+
+		boolean opResult = false;
+		if (connection != null) {
+			try {
+				String foodToAdd = "'{";
+				String amountToAdd ="'{";
+				int i = 0;
+				for(String f:food){
+					if (i!=0)foodToAdd+=",";
+					foodToAdd+='"'+f+'"';
+					i++;
+				}foodToAdd+="}'";
+				int j = 0;
+				for(String a:amount){
+					if (j!=0)amountToAdd+=",";
+					amountToAdd+='"'+a+'"';
+					j++;
+				}amountToAdd+="}'";
+				if (mealPlanExists(user.getId(),date)) {
+					Statement st = connection.createStatement();
+					String query = "UPDATE mealplan SET foodlist="
+							+  foodToAdd +  "," + "amountlist="
+							+ amountToAdd   + " WHERE mealplan.user="+user.getId()+" AND mealplan.date='"+date+"';";
+					System.out.println(query);
+					st.executeUpdate(query);
+					opResult = true;
+					st.close();
+				} else {
+					Statement st = connection.createStatement();
+					
+					String query = "INSERT INTO mealplan VALUES ("+user.getId()+",'"+date+"',"
+							+foodToAdd+","+amountToAdd+");";
+					System.out.println(query);
+					st.executeUpdate(query);
+					opResult = true;
+					st.close();
+				}
+				
+				userCrono(user.getId(),food);
+			} catch (SQLException e) {
+				System.err.println("ERROR in the query!");
+				e.printStackTrace();
+			} 			
+
+		}
+		return opResult;
+	}
+	
+	public static boolean mealPlanExists(int id, String date) {
+		boolean opResult = false;
+
+		Statement st1 = null;
+		ResultSet rs = null;
+
+		if (connection != null) {
+			try {
+				st1 = connection.createStatement();
+				rs = st1.executeQuery("SELECT * FROM mealplan WHERE mealplan.user = "+ id + "AND mealplan.date='"+date+"';");
+				if (rs.next()) {
+					opResult = true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return opResult;
+	}
+	
+		
+	public static void userCrono(int id, String[] foods){
+		Statement st2 = null;
+		ResultSet rs2 = null;
+
+		if (connection != null) {
+			try {
+					st2 = connection.createStatement();
+					rs2 = st2.executeQuery("SELECT foodlist FROM userxfoodcronology WHERE userxfoodcronology.user = "+id+";");
+					if (rs2.next()) {
+						ArrayList<String> oldFood = (ArrayList<String>)Arrays.asList((String[])(rs2.getArray("foodlist")).getArray());
+					    for (String f : foods){
+					    	if(!oldFood.contains(f)){
+					    		oldFood.add(f);
+					    	}
+					    }
+					    
+					    String foodToAdd = "'{";
+						int i = 0;
+						for(String f:oldFood){
+							if (i!=0)foodToAdd+=",";
+							foodToAdd+='"'+f+'"';
+							i++;
+						}foodToAdd+="}'";
+					    
+					    Statement st = connection.createStatement();
+						String query = "UPDATE userxfoodcronology SET foodlist="+foodToAdd+" WHERE userxfoodcronology.user="+id+")";
+						System.out.println(query);
+						st.executeUpdate(query);
+						st.close();
+					} else{
+						String foodToAdd = "'{";
+						int i = 0;
+						for(String f:foods){
+							if (i!=0)foodToAdd+=",";
+							foodToAdd+='"'+f+'"';
+							i++;
+						}foodToAdd+="}'";
+						Statement st = connection.createStatement();
+						String query = "INSERT INTO userxfoodcronology VALUES("+id+","+foodToAdd+")";
+						System.out.println(query);
+						st.executeUpdate(query);
+
+						st.close();
+					}
+										
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 }

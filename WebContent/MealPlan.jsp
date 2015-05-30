@@ -37,7 +37,7 @@
                 var setOfSuggestions = "";
                 
                 $.each(data, function (index, sugg) {
-                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td><label for="'+sugg+'">'+sugg+'</label><input id="'+sugg+'" name="food_name" type="hidden" value="'+sugg+'"></td></tr>';
+                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td>'+sugg+'<input name="food_name" type="hidden" value="'+sugg+'"></td></tr>';
                 });
                 document.getElementById('food_suggestions').innerHTML = setOfSuggestions;
 
@@ -55,11 +55,11 @@ function focused(c){
 
 
 function ok(){
-	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td><label>'+document.getElementById('amount').value + '</label><input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td></tr>';
+	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td></tr>';
 }
 </script>
 
-				<title>Personal Profile Page - Diet Patcher</title>
+				<title>Meal Plan Manager - Diet Patcher</title>
 			</head>
 			<body>
 
@@ -86,9 +86,10 @@ function ok(){
 					<a href="">Profile </a>
 				</div>
 				<div id="container">
+					<form class="form-class" id="addMealPlan" action="MealPlanAdderServlet" method="GET">	
 					<div id="title">
 						<h2>Meal Plan for the day 	
-						<form class="form-class" id="addMealPlan" action="MealPlanAdderServlet" method="GET">	
+						
 							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
 						</h2>
 					</div>
@@ -126,6 +127,7 @@ function ok(){
 							<button type="submit" class="btn btn-primary">Save Meal Plan</button>
 						</div>
 					</div>
+				</form>
 					<div id="recommender" class="panel panel-primary">
 						<div class="panel-heading">Recommendations</div>
 						<div class="panel-body">
