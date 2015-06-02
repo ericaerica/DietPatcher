@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.Random;
 
 import model.UserBean;
@@ -538,10 +539,56 @@ public class DataManager {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<String> calculateNutrients(String[] foods, String[] amounts){
-		ArrayList<String> nutrients = new ArrayList<String>();
+	public static Hashtable<String, Integer> calculateNutrients(String[] foods, String[] amounts){
+		Statement st = null;
+		ResultSet rs = null;
 		
-		return nutrients;
+		//Creation of the hashmap		
+		Hashtable<String, Integer> mealplan_nutrients = new Hashtable<String, Integer>();
+		if (connection != null) {
+			try {
+				st = connection.createStatement();
+				System.out.println("init query");
+				String query = "SELECT nutr_no FROM nutr_def;";
+				System.out.println(query);
+				rs = st.executeQuery(query);
+				while (rs.next()) {
+					mealplan_nutrients.put(rs.getString(1), 0);
+				}
+				st.close();
+			} catch (SQLException e) {
+				System.err.println("ERROR in the query!");
+				e.printStackTrace();
+			}
+		}
+		
+		
+		for(String food : DataManager.getFoodIDfromFoodName(foods)){
+			//Get nutrients for each food
+			Statement st1 = null;
+			ResultSet rs1 = null;
+	
+			if (connection != null) {
+				try {
+					st1 = connection.createStatement();
+					System.out.println("init query");
+					String query = "SELECT nutr_no, nutr_val FROM nut_data WHERE ndb_no="+'"'+food+'"'+";";
+					System.out.println(query);
+					rs1 = st1.executeQuery(query);
+					while (rs1.next()) {
+						//For each nutrient, add it to the hastable
+						mealplan_nutrients.replace(rs1.getString(1), mealplan_nutrients.get(rs1.getString(1))+Integer.parseInt(rs1.getString(2)));
+					}
+					st1.close();
+				} catch (SQLException e) {
+					System.err.println("ERROR in the query!");
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return mealplan_nutrients;
 	}
 	
 	//**********************************************************************************************************//
