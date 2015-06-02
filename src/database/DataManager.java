@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 import model.UserBean;
 
@@ -499,8 +500,45 @@ public class DataManager {
 	}
 	
 	
+	public static ArrayList<String[]> getMealPlanFromDate(UserBean user, String date){
+		connect();
+		String[] foodId = new String[200];
+		String[] foodAmount = new String[200];
+		ArrayList<String[]> output = new ArrayList<String[]>();
+			Statement st = null;
+			ResultSet rs = null;
+
+			if (connection != null) {
+				try {
+					st = connection.createStatement();
+					String query = "SELECT foodlist, amountlist FROM mealplan WHERE "+'"'+"user"+'"'+"="+ + user.getId() +" AND "+'"'+"date"+'"'+"='" +date + "';";
+					System.out.println(query);
+					rs = st.executeQuery(query);
+					
+					if (rs.next()) {
+						Array y = rs.getArray("foodlist");
+						foodId = ((String[])(y.getArray()));
+						y.free();
+						y = rs.getArray("amountlist");
+						for (int i = 0; i < ((String[])(y).getArray()).length; i++) {
+							System.out.println(((String[])(y).getArray())[i]);
+						}
+						foodAmount = ((String[])(y).getArray());					
+					}
+					
+				} catch (SQLException e) {
+					System.err.println("error in query");
+					e.printStackTrace();
+				}
+			}
 	
+			output.add(foodId);
+			output.add(foodAmount);
+			
+		return output;
 	
+	}
+
 	
 	public static void database(){
 		/*try {
@@ -544,4 +582,5 @@ public class DataManager {
 			e.printStackTrace();
 		}*/
 	}
+	
 }

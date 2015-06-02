@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<jsp:useBean id="uBean" class="model.UserBean" scope="application"/>
+<jsp:useBean id="uBean" class="model.UserBean" scope="session"/>
 <jsp:setProperty name="uBean" property="*"/>
 <html>
 <head>
@@ -18,15 +18,12 @@
 	<script src="js/jquery.1.9.1.min.js"></script>
 	<script src="js/myfunctions.js"></script>
 	<script type="text/javascript">
-	function sendAjax() {
- 
-    // get inputs
-    
-    var string = $('#autocomplete').val();
+	function sendAjax(){
+		var string = $('#autocomplete').val();
     if(string.length >2){
         $("option").remove();
         $.ajax({
-            url: "${pageContext.request.contextPath}/MealPlanServlet",
+            url: "${pageContext.request.contextPath}/MealPlanFoodChooserServlet",
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(string),
@@ -40,6 +37,32 @@
                     setOfSuggestions+= '<tr onClick="focused(this)" class=""><td>'+sugg+'<input name="food_name" type="hidden" value="'+sugg+'"></td></tr>';
                 });
                 document.getElementById('food_suggestions').innerHTML = setOfSuggestions;
+
+            },
+            error:function(data,status,er) {
+                alert("error: "+data+" status: "+status+" er:"+er);
+            }
+        });
+    }
+	}
+
+	function sendDate() {
+ 
+    // get inputs
+    
+    var string = $('#inputDate').val();
+    if(string.length >2){
+        $(".table td").remove();
+        $.ajax({
+            url: "${pageContext.request.contextPath}/MealPlanDateServlet",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(string),
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            
+            success: function (data) {
+                document.getElementById('tbody').innerHTML = data+"";
 
             },
             error:function(data,status,er) {
@@ -62,22 +85,20 @@ function ok(){
 				<title>Meal Plan Manager - Diet Patcher</title>
 			</head>
 			<body>
+				<div id="black">
+					<div id="adder" class="panel panel-primary">
+						<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax()" >
+						<div id="food_suggestions_div">
+							<table class="table table-hover" id="food_suggestions">
 
-				<div id="adder" class="panel panel-primary">
-					<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax()" >
-					<div id="food_suggestions_div">
-						<table class="table table-hover" id="food_suggestions">
-
-						</table>
-					</div><div class="input-group">
-					<input name="amount" class="form-control" id="amount" type="text" placeholder="100"></input><span class="input-group-addon">g</span></div>
-									<br><br>
-									<a class="btn btn-info" href="#header" onClick="ok()" role="button">Add!</a><br>
+							</table>
+						</div><div class="input-group">
+						<input name="amount" class="form-control" id="amount" type="text" placeholder="100"></input><span class="input-group-addon">g</span></div>
+										<br><br>
+										<a class="btn btn-info" href="#header" onClick="ok()" role="button">Add!</a>
+										<a class="btn btn-default" href="#header" role="button">Cancel</a><br>
+					</div>
 				</div>
-
-
-
-
 				<div id="header">
 					<img src="resources/DietPatcherIco.png" />
 					<b>Diet Patcher</b>
@@ -91,6 +112,9 @@ function ok(){
 						<h2>Meal Plan for the day 	
 						
 							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
+							<button type="button" class="btn btn-default" aria-label="Left Align" onClick="sendDate()">
+	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+							</button>
 						</h2>
 					</div>
 
@@ -98,18 +122,7 @@ function ok(){
 						<div class="panel-heading">Contents table</div>
 						<div class="panel-body">
 							<div id="addModule">
-								<a class="btn btn-info" id="addFood" role="button" href="#adder">Choose a food to add to your meal plan!</a>
-								<!--
-								<div id="dishAdd">Choose a dish to add to your meal plan!<br>
-									<select>
-										<option value="null"></option>
-										<option value="Pasta al pomodoro">Pasta al pomodoro</option>
-										<option value="Torta salata xyz">Torta salata xyz</option>
-										<option value="Spuntino">Spuntino</option>
-									</select><br> <br>
-									<a class="btn btn-info" href="#" role="button">Add!</a><br>
-								</div>
-							-->
+								<a class="btn btn-info" id="addFood" role="button" href="#black">Choose a food to add to your meal plan!</a>
 							</div>
 							
 							<table class="table">
@@ -129,7 +142,11 @@ function ok(){
 					</div>
 				</form>
 					<div id="recommender" class="panel panel-primary">
-						<div class="panel-heading">Recommendations</div>
+						<div class="panel-heading">Recommendations and Statistics
+							<button type="button" class="btn btn-info" aria-label="Left Align" onClick="refresh();">
+	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+							</button>
+						</div>
 						<div class="panel-body">
 							Here are some awesome Recommendations to Patch your diet! <br>
 							Please select a nutrient you lack in: 
@@ -142,9 +159,6 @@ function ok(){
 							Other people with the tag <span><b>Vegan</b></span> ave eaten <span><b>Potassium pills</b></span>!  <a class="btn btn-info" href="#" role="button">More</a> <br><br>
 							If you want something new, you could try <span><b>Beans</b></span>!  <a class="btn btn-info" href="#" role="button">More</a> <br><br>
 						</div>
-					</div>
-					<div id="stats" class="panel panel-primary">
-						<div class="panel-heading">Statistics</div>
 						<div class="panel-body">
 							<div class="nutrientStat">
 								Potassium:<div class="progress"><div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">45%</div></div>
@@ -160,6 +174,9 @@ function ok(){
 							</div>
 						</div>
 					</div>
+
+						
+
 
 					<div id="main">
 

@@ -15,6 +15,9 @@ body {
     text-decoration: none;
     color: #005500; }
 
+#inputDate {
+  width: 200px; }
+
 #header {
   position: relative;
   padding-left: 15px;
@@ -57,7 +60,18 @@ body {
   z-index: 10;
   padding: 20px; }
 
-#adder:target {
+#black {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 9; }
+
+#black:target {
+  display: block; }
+
+#black:target > #adder {
   display: block; }
 
 #food_suggestions_div {
@@ -98,10 +112,17 @@ body {
   .form-class input {
     width: 100%; }
 
+.nutrientStat {
+  width: 30%;
+  float: left; }
+
 @media all and (orientation: portrait) {
   #container {
     width: 100%;
     left: 0px;
-    padding: 10px; } }
+    padding: 10px; }
+
+  .nutrientStat {
+    width: 100%; } }
 
 /*# sourceMappingURL=MealPlan.css.map */

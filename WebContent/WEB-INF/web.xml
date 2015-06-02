@@ -20,6 +20,14 @@
     <servlet-name>MealPlanAdderServlet</servlet-name>
     <servlet-class>controller.MealPlanAdderServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>MealPlanDateServlet</servlet-name>
+    <servlet-class>controller.MealPlanDateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MealPlanDateServlet</servlet-name>
+    <url-pattern>/MealPlanDateServlet</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>MealPlanAdderServlet</servlet-name>
     <url-pattern>/MealPlanAdderServlet</url-pattern>
