@@ -113,8 +113,9 @@ body {
     width: 100%; }
 
 .nutrientStat {
-  width: 30%;
-  float: left; }
+  width: 20%;
+  padding: 16px;
+  display: inline-block; }
 
 @media all and (orientation: portrait) {
   #container {

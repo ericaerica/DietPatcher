@@ -48,10 +48,16 @@ public class MealPlanDateServlet extends HttpServlet {
 	    	UserBean user = (UserBean) request.getSession().getAttribute("uBean");
 	    	ArrayList<String[]> output = DataManager.getMealPlanFromDate(user, date);
 	    	String s = "";
-	    	String[] foodId = output.get(0);
-	    	String[] foodAmount = output.get(1);
-	    	for (int i = 0; i < foodId.length; i++) {
-				s +="<tr><td>"+foodId[i]+"</td><td>"+foodAmount[i]+"</td></tr>";
+	    	if (!output.isEmpty()){
+	    		
+		    	String[] foodId = output.get(0);
+		    	String[] foodAmount = output.get(1);
+		    	for (int i = 0; i < foodId.length; i++) {
+
+					s +="<tr><td>"+foodId[i]+"<input name='food_name' value='"+foodId[i]+"' type='hidden'></td><td>"+foodAmount[i]+"<input name='food_amount' value='"+foodAmount[i]+"' type='hidden'></td></tr>";
+	    	}
+	    	
+	    	
 			}
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    

@@ -13,8 +13,8 @@
     <servlet-class>controller.ProfileServlet</servlet-class>
   </servlet>
     <servlet>
-    <servlet-name>MealPlanServlet</servlet-name>
-    <servlet-class>controller.MealPlanServlet</servlet-class>
+    <servlet-name>MealPlanFoodChooserServlet</servlet-name>
+    <servlet-class>controller.MealPlanFoodChooserServlet</servlet-class>
   </servlet>
 <servlet>
     <servlet-name>MealPlanAdderServlet</servlet-name>
@@ -24,6 +24,14 @@
     <servlet-name>MealPlanDateServlet</servlet-name>
     <servlet-class>controller.MealPlanDateServlet</servlet-class>
   </servlet>
+   <servlet>
+    <servlet-name>MealPlanRSAndStatistics</servlet-name>
+    <servlet-class>controller.MealPlanRSAndStatistics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MealPlanRSAndStatistics</servlet-name>
+    <url-pattern>/MealPlanRSAndStatistics</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>MealPlanDateServlet</servlet-name>
     <url-pattern>/MealPlanDateServlet</url-pattern>
@@ -33,8 +41,8 @@
     <url-pattern>/MealPlanAdderServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>MealPlanServlet</servlet-name>
-    <url-pattern>/MealPlanServlet</url-pattern>
+    <servlet-name>MealPlanFoodChooserServlet</servlet-name>
+    <url-pattern>/MealPlanFoodChooserServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>

@@ -18,6 +18,30 @@
 	<script src="js/jquery.1.9.1.min.js"></script>
 	<script src="js/myfunctions.js"></script>
 	<script type="text/javascript">
+	function getRSAndStats(){
+	var string = $('#inputDate').val();
+    if(string.length >2){
+        $("#statistics div").remove();
+        $.ajax({
+            url: "${pageContext.request.contextPath}/MealPlanRSAndStatistics",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(string),
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            
+                  
+            success: function (data) {
+                document.getElementById('statistics').innerHTML = data;
+
+            },
+            error:function(data,status,er) {
+                alert("error: "+data+" status: "+status+" er:"+er);
+            }
+        });
+    }
+}
+
 	function sendAjax(){
 		var string = $('#autocomplete').val();
     if(string.length >2){
@@ -63,7 +87,7 @@
             
             success: function (data) {
                 document.getElementById('tbody').innerHTML = data+"";
-
+                getRSAndStats();
             },
             error:function(data,status,er) {
                 alert("error: "+data+" status: "+status+" er:"+er);
@@ -87,7 +111,7 @@ function ok(){
 			<body>
 				<div id="black">
 					<div id="adder" class="panel panel-primary">
-						<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax()" >
+						<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax();s" >
 						<div id="food_suggestions_div">
 							<table class="table table-hover" id="food_suggestions">
 
@@ -111,7 +135,7 @@ function ok(){
 					<div id="title">
 						<h2>Meal Plan for the day 	
 						
-							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
+							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onblur="sendDate()" onfocus="dtval(this,event)"/>	
 							<button type="button" class="btn btn-default" aria-label="Left Align" onClick="sendDate()">
 	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 							</button>
@@ -141,41 +165,26 @@ function ok(){
 						</div>
 					</div>
 				</form>
-					<div id="recommender" class="panel panel-primary">
+					<div id="recommender_and_statistics" class="panel panel-primary">
 						<div class="panel-heading">Recommendations and Statistics
-							<button type="button" class="btn btn-info" aria-label="Left Align" onClick="refresh();">
-	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-							</button>
 						</div>
-						<div class="panel-body">
-							Here are some awesome Recommendations to Patch your diet! <br>
-							Please select a nutrient you lack in: 
-							<select>
-								<option value="null"></option>
-								<option value="">Vitamin C</option>
-								<option value="">Magnesium</option>
-							</select><br><br>
-							In the past you have eaten <span><b>Banana</b></span>, you could eat that again!  <a class="btn btn-info" href="#" role="button">More</a> <br><br>
-							Other people with the tag <span><b>Vegan</b></span> ave eaten <span><b>Potassium pills</b></span>!  <a class="btn btn-info" href="#" role="button">More</a> <br><br>
-							If you want something new, you could try <span><b>Beans</b></span>!  <a class="btn btn-info" href="#" role="button">More</a> <br><br>
-						</div>
-						<div class="panel-body">
-							<div class="nutrientStat">
-								Potassium:<div class="progress"><div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">45%</div></div>
-							</div>
-							<div class="nutrientStat">
-								Calcium:<div class="progress"><div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%">30%</div></div>
-							</div>
-							<div class="nutrientStat">
-								Vitamin A:<div class="progress"><div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">60%</div></div>
-							</div>
-							<div class="nutrientStat">
-								Vitamin C:<div class="progress"><div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">100%</div></div>
-							</div>
+						
+						<div class="panel-body" id="statistics">
+						
 						</div>
 					</div>
 
 						
+
+
+
+
+
+
+
+
+
+
 
 
 					<div id="main">

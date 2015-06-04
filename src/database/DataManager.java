@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Random;
 
@@ -229,14 +231,12 @@ public class DataManager {
 	 * @param newTags	ArrayList of tags to save
 	 */
 	public static void saveTags(UserBean user, ArrayList<String> newTags){
-		System.out.println("inside saveTags");
 		if (connection != null) {
 			try {
 				if (userExists(user)) {
 					ArrayList<String> oldTags = getTags(user);
 					
 					if(oldTags.isEmpty()){		//there are no tags saved for this user
-						System.out.println("oldtags is empty");
 						Statement st = connection.createStatement();
 						//save the tags
 						for(String tag : newTags){
@@ -246,12 +246,9 @@ public class DataManager {
 							int tagId = 0;
 							while(rs.next()){
 								tagId = rs.getInt(1);
-							}
-							
+							}							
 							String query2 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
-							System.out.println(query2);
 							st.executeUpdate(query2);
-							System.out.println("after while");
 						}
 						user.setTags(newTags);	//set the tags of the userbean with the new list
 						st.close();
@@ -368,32 +365,32 @@ public class DataManager {
 				}
 				amountToAdd += "}'";
 				
+				String nutrToAdd = calculateNutrients(food, amount);
+				System.out.println(nutrToAdd);
 				if (mealPlanExists(user.getId(), date)) {
 					Statement st = connection.createStatement();
 					String query = "UPDATE mealplan SET foodlist=" + foodToAdd
 							+ "," + "amountlist=" + amountToAdd
+							+ "," + "nutrvaluelist=" + nutrToAdd
 							+ " WHERE mealplan.user=" + user.getId()
 							+ " AND mealplan.date='" + date + "';";
 					System.out.println(query);
 					st.executeUpdate(query);
 					opResult = true;
 					st.close();
-					//TODO call calculateNutrients
 				} else {
 					Statement st = connection.createStatement();
 
 					String query = "INSERT INTO mealplan VALUES ("
 							+ user.getId() + ",'" + date + "'," + foodToAdd
-							+ "," + amountToAdd + ");";
+							+ "," + amountToAdd + "," + nutrToAdd + ");";
 					System.out.println(query);
 					st.executeUpdate(query);
 					opResult = true;
 					st.close();
-					//TODO call calculateNutrients
 				}
 
 				userCrono(user.getId(), food);
-				calculateNutrients(food, amount);
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();
@@ -446,7 +443,12 @@ public class DataManager {
 					st2 = connection.createStatement();
 					rs2 = st2.executeQuery("SELECT foodlist FROM userxfoodcronology WHERE userxfoodcronology.user = "+id+";");
 					if (rs2.next()) {
-						ArrayList<String> oldFood = (ArrayList<String>)Arrays.asList((String[])(rs2.getArray("foodlist")).getArray());
+						
+						String[] temp = (String[])(rs2.getArray("foodlist")).getArray();
+						ArrayList<String> oldFood = new ArrayList<String>();
+						for(String s : temp){
+							oldFood.add(s);
+						}
 					    for (String f : foods){
 					    	if(!oldFood.contains(f)){
 					    		oldFood.add(f);
@@ -462,7 +464,7 @@ public class DataManager {
 						}foodToAdd+="}'";
 					    
 					    Statement st = connection.createStatement();
-						String query = "UPDATE userxfoodcronology SET foodlist="+foodToAdd+" WHERE userxfoodcronology.user="+id+")";
+						String query = "UPDATE userxfoodcronology SET foodlist="+foodToAdd+" WHERE userxfoodcronology.user="+id+";";
 						System.out.println(query);
 						st.executeUpdate(query);
 						st.close();
@@ -529,8 +531,11 @@ public class DataManager {
 				}
 			}
 	
-			output.add(foodId);
-			output.add(foodAmount);
+			if(foodId[0]!=null && foodAmount[0]!=null){
+				output.add(foodId);
+				output.add(foodAmount);
+			}
+			
 			
 		return output;
 	}
@@ -539,21 +544,23 @@ public class DataManager {
 	 * 
 	 * @return
 	 */
-	public static Hashtable<String, Integer> calculateNutrients(String[] foods, String[] amounts){
+	public static String calculateNutrients(String[] foods, String[] amounts){
 		Statement st = null;
 		ResultSet rs = null;
 		
-		//Creation of the hashmap		
-		Hashtable<String, Integer> mealplan_nutrients = new Hashtable<String, Integer>();
+		//Creation of the array		
+		ArrayList<String> mealplan_nutrients = new ArrayList<String>();
+		
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
 				System.out.println("init query");
-				String query = "SELECT nutr_no FROM nutr_def;";
+				String query = "SELECT nutr_no FROM nutr_def ORDER BY nutr_no;";
 				System.out.println(query);
 				rs = st.executeQuery(query);
 				while (rs.next()) {
-					mealplan_nutrients.put(rs.getString(1), 0);
+					System.out.print(rs.getString(1)+" - ");
+					mealplan_nutrients.add(rs.getString(1));
 				}
 				st.close();
 			} catch (SQLException e) {
@@ -561,7 +568,12 @@ public class DataManager {
 				e.printStackTrace();
 			}
 		}
+
 		
+		Double[] mealplan_nutramounts = new Double[mealplan_nutrients.size()];
+		for(int i = 0; i < mealplan_nutramounts.length; i++){
+			mealplan_nutramounts[i]=0.0;
+		}
 		
 		for(String food : DataManager.getFoodIDfromFoodName(foods)){
 			//Get nutrients for each food
@@ -572,12 +584,12 @@ public class DataManager {
 				try {
 					st1 = connection.createStatement();
 					System.out.println("init query");
-					String query = "SELECT nutr_no, nutr_val FROM nut_data WHERE ndb_no="+'"'+food+'"'+";";
+					String query = "SELECT nutr_no, nutr_val FROM nut_data WHERE ndb_no="+"'"+food+"'"+" ORDER BY nutr_no;";
 					System.out.println(query);
-					rs1 = st1.executeQuery(query);
+					rs1 = st1.executeQuery(query);System.out.println();
 					while (rs1.next()) {
 						//For each nutrient, add it to the hastable
-						mealplan_nutrients.replace(rs1.getString(1), mealplan_nutrients.get(rs1.getString(1))+Integer.parseInt(rs1.getString(2)));
+						mealplan_nutramounts[mealplan_nutrients.indexOf(rs1.getString(1))]+=Double.parseDouble(rs1.getString(2));					
 					}
 					st1.close();
 				} catch (SQLException e) {
@@ -586,9 +598,74 @@ public class DataManager {
 				}
 			}
 		}
+		String nutrToAdd = "'{";
+		int i = 0;
+		for(Double n : mealplan_nutramounts){
+			if (i!=0){nutrToAdd+=",";}
+			nutrToAdd+='"'+String.valueOf(n)+'"';
+			i++;
+		}
+		nutrToAdd+="}'";
+		return nutrToAdd;
+	}
+	
+	public static ArrayList<ArrayList<String>> getDescMinMaxNutrients(){
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<String> nutrdesc = new ArrayList<String>();
+		ArrayList<String> DRI_RDA_M = new ArrayList<String>();
+		ArrayList<String> DRI_RDA_F = new ArrayList<String>();
+		ArrayList<String> UL_max_tolerable = new ArrayList<String>();
+		ArrayList<ArrayList<String>> output = new ArrayList<ArrayList<String>>();
 		
+		if (connection != null) {
+			try {
+				st = connection.createStatement();
+				String query = "SELECT nutrdesc, DRI_RDA_M, DRI_RDA_F, UL_max_tolerable"
+						+ " FROM nutr_def ORDER BY nutr_no;";
+				System.out.println(query);
+				rs = st.executeQuery(query);
+				while (rs.next()) {
+					nutrdesc.add(rs.getString(1));
+					DRI_RDA_M.add(rs.getString(2));
+					DRI_RDA_F.add(rs.getString(3));
+					UL_max_tolerable.add(rs.getString(4));
+				}
+				st.close();
+			} catch (SQLException e) {
+				System.err.println("ERROR in the query!");
+				e.printStackTrace();
+			}
+		}
+		output.add(nutrdesc);
+		output.add(DRI_RDA_M);
+		output.add(DRI_RDA_F);
+		output.add(UL_max_tolerable);
+		return output;
+	}
+	
+	public static ArrayList<String> getMealPlanNutrients(String id, String date){
+
+		Statement st1 = null;
+		ResultSet rs = null;
+		ArrayList<String> nutrValues = new ArrayList<String>();
+		if (connection != null) {
+			try {
+				st1 = connection.createStatement();
+				rs = st1.executeQuery("SELECT nutrvaluelist FROM mealplan WHERE mealplan.user = "+ id + "AND mealplan.date='"+date+"';");
+				if (rs.next()) {
+					String[] m = (String[])(rs.getArray("nutrvaluelist").getArray());
+					for(String s : m){
+						nutrValues.add(s);
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
 		
-		return mealplan_nutrients;
+		return nutrValues;
 	}
 	
 	//**********************************************************************************************************//

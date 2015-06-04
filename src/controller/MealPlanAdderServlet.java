@@ -47,7 +47,7 @@ public class MealPlanAdderServlet extends HttpServlet {
 					i++;
 				}
 				if(DataManager.saveMealPlan(user, inputDate, foodArray, amountArray)){
-					response.sendRedirect("MealPlanServlet?VARIABLE=VARVALUE");
+					request.getRequestDispatcher("/MealPlan.jsp").forward(request, response);
 				}else{
 					System.out.println("PROBLEMS!");
 				}
