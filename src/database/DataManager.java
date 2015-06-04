@@ -686,8 +686,60 @@ public class DataManager {
 	 * @param user
 	 * @return
 	 */
-	public static void getBestEatenFood(UserBean user, String nutrient){
-
+	public static ArrayList<String> getBestEatenFood(UserBean user, String nutrient){	//TODO convertirlo per lista di nutrienti
+		System.out.println("inside getbesteaten: user id=" + user.getId());
+		ArrayList<String> food_NutrAmount = new ArrayList<String>();
+		ArrayList<String> eatenIDs = new ArrayList<String>();
+		String foodId = "";
+		double amount = 0.0;
+		Statement st = null;
+		
+		if(connection != null){
+			try {
+				ArrayList<String> eatenFoods = new ArrayList<String>();
+				st = connection.createStatement();
+				String query1 = "SELECT userxfoodcronology.foodlist FROM userxfoodcronology "
+						+ "WHERE userxfoodcronology.user=" + user.getId() + ";";
+				ResultSet rs1 = st.executeQuery(query1);
+				
+				while (rs1.next()) {
+					String[] ef = (String[])(rs1.getArray(1).getArray());
+					for(String s : ef){
+						eatenFoods.add(s);	//list of all the foods ever eaten by the user
+					}
+				}
+				
+				for(String s : eatenFoods){	//obtain IDs of the foods
+					String query2 = "SELECT food_des.ndb_no FROM food_des WHERE food_des.long_desc=" + "'" + s + "'" + ";";
+					ResultSet rs2 = st.executeQuery(query2);
+					while(rs2.next())
+						eatenIDs.add(rs2.getString(1));
+				}
+				
+				for(String s : eatenIDs){
+					String query3 = "SELECT nut_data.nutr_val FROM nut_data WHERE nut_data.nutr_no=" + "'" + nutrient + "'"
+							+ " AND ndb_no=" + "'" + s + "'" + ";";
+					ResultSet rs3 = st.executeQuery(query3);
+					while(rs3.next()){
+						if(rs3.getDouble(1) > amount){
+						amount = rs3.getDouble(1);
+						foodId = s;
+						}
+					}
+				}
+				
+				st.close();
+			} catch (SQLException e) {
+				System.out.println("error in best food query");
+				e.printStackTrace();
+			}
+		}
+		System.out.println("end of getbesteaten, id=" + foodId + " val=" + amount);
+		String amt = "";
+		amt += amount;
+		food_NutrAmount.add(foodId);
+		food_NutrAmount.add(amt);
+		return food_NutrAmount;
 	}
 
 	/**
@@ -708,7 +760,7 @@ public class DataManager {
 	 * @param nutrient
 	 * @return ArrayList<String>	containing the food ID of the food found and the amount of nutrient per 100g
 	 */
-	public static ArrayList<String> getBestFood(String nutrient){
+	public static ArrayList<String> getBestFood(String nutrient){	//TODO convertirlo per lista di nutrienti
 		ArrayList<String> food_NutrAmount = new ArrayList<String>();
 		ArrayList<String> bestFoods = new ArrayList<String>();
 		ArrayList<Double> amounts = new ArrayList<Double>();
@@ -737,6 +789,7 @@ public class DataManager {
 					foodId = bestFoods.get(0);
 					amount += amounts.get(0);
 				}
+				st.close();
 			} catch (SQLException e) {
 				System.out.println("error in best food query");
 				e.printStackTrace();
