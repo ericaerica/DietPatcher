@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import database.DataManager;
@@ -44,16 +45,16 @@ public class MealPlanFoodChooserServlet extends HttpServlet {
 	    	String substring = mapper.readValue(json, String.class);
 
 	    	// 4. Get list of suggestions
-	    	ArrayList<String> foodz = DataManager.getFood(substring);
-	    	ArrayList<String> suggestions = new ArrayList<String>();
+	    	ArrayList<String[]> foodz = (ArrayList<String[]>)DataManager.getFood(substring);
+	    	ArrayList<String[]> suggestions = new ArrayList<String[]>();
 	    	int i = 0;
 	    	if(foodz.size()>60){
-	    		for (String s : foodz){
+	    		for (String[] s : foodz){
 		    		if (i<30){suggestions.add(s);}
 		    		i++;
 		    	}
 	    	} else {
-	    		for(String s : foodz){
+	    		for(String[] s : foodz){
 	    			suggestions.add(s);
 	    		}
 	    	}

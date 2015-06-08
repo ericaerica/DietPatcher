@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.jni.User;
+
 import database.DataManager;
 import model.ProfileUtils;
 import model.UserBean;
@@ -17,7 +19,7 @@ public class ProfileServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
+		    
 			String username = request.getParameter("profileUserName");
 			String password = request.getParameter("profilePassword");
 			String email = request.getParameter("profileEmail");
@@ -52,19 +54,12 @@ public class ProfileServlet extends HttpServlet {
 					DataManager.connect();
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
-					DataManager.saveUser(user);	//TODO saveUser e` booleano, cambiare a void o fare un if?
+					DataManager.saveUser(user);	
 					DataManager.saveTags(user, tags);
-					
-					/*ArrayList<String> prova = DataManager.getTags(user);
-					if(prova.isEmpty())
-						System.out.println("empty");
-					else
-						for(int i=0; i<prova.size(); i++)
-							System.out.println(prova.get(i));*/
-					
+
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);
-					request.getRequestDispatcher("/MealPlan.jsp").forward(request, response);
+					request.getRequestDispatcher("/Profile.jsp").forward(request, response);
 					
 				} else {
 					//Send back again the profile page with the error "Invalid input"

@@ -38,14 +38,7 @@ public class MealPlanAdderServlet extends HttpServlet {
 		UserBean user = (UserBean) session.getAttribute("uBean");
 		if(inputDate!=null){
 			if(foodArray!=null && amountArray!=null && foodArray.length==amountArray.length){
-				//Creating food array with id
-				ArrayList<String> a = DataManager.getFoodIDfromFoodName(foodArray);
-				String[] idArray = new String[foodArray.length];
-				int i = 0;
-				for(String s : a){
-					idArray[i]=s;
-					i++;
-				}
+
 				if(DataManager.saveMealPlan(user, inputDate, foodArray, amountArray)){
 					request.getRequestDispatcher("/MealPlan.jsp").forward(request, response);
 				}else{

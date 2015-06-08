@@ -28,6 +28,22 @@
     <servlet-name>MealPlanRSAndStatistics</servlet-name>
     <servlet-class>controller.MealPlanRSAndStatistics</servlet-class>
   </servlet>
+ <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>controller.Logout</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>Redirect</servlet-name>
+    <servlet-class>controller.Redirect</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Redirect</servlet-name>
+    <url-pattern>/Redirect</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>MealPlanRSAndStatistics</servlet-name>
     <url-pattern>/MealPlanRSAndStatistics</url-pattern>
@@ -52,4 +68,7 @@
     <servlet-name>ProfileServlet</servlet-name>
     <url-pattern>/ProfileServlet</url-pattern>
   </servlet-mapping>
+  
+
+  
 </web-app>

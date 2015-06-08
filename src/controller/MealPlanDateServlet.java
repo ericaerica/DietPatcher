@@ -29,7 +29,6 @@ public class MealPlanDateServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		        throws ServletException, IOException{
-			System.out.println("I'M IN!");
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 			String json = "";
@@ -51,10 +50,11 @@ public class MealPlanDateServlet extends HttpServlet {
 	    	if (!output.isEmpty()){
 	    		
 		    	String[] foodId = output.get(0);
+		    	ArrayList<String> foodDesc = DataManager.getFoodNameFromFoodId(foodId);
 		    	String[] foodAmount = output.get(1);
 		    	for (int i = 0; i < foodId.length; i++) {
 
-					s +="<tr><td>"+foodId[i]+"<input name='food_name' value='"+foodId[i]+"' type='hidden'></td><td>"+foodAmount[i]+"<input name='food_amount' value='"+foodAmount[i]+"' type='hidden'></td></tr>";
+					s +="<tr><td>"+foodDesc.get(i)+"<input name='food_name' value='"+foodId[i]+"' type='hidden'></td><td>"+foodAmount[i]+"<input name='food_amount' value='"+foodAmount[i]+"' type='hidden'></td></tr>";
 	    	}
 	    	
 	    	

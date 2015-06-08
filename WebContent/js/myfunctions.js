@@ -24,7 +24,6 @@ if(dd<10) {dd='0'+dd}
         today = mm + '/' + dd + '/'+yyyy;
     if (dt.length == 0) dt += today;
     d.value = dt;
-    sendDate();
 }
 
 

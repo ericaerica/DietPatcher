@@ -22,6 +22,8 @@ public class Servlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		if(request.getParameterNames().nextElement().equals("usernameLogin")){
 			//-----------------------------------------------
 			//-----------------Login triggered---------------
@@ -45,7 +47,7 @@ public class Servlet extends HttpServlet {
 						//If exists, create bean
 						HttpSession session = request.getSession();
 						session.setAttribute("uBean", user);
-						request.getRequestDispatcher("/Profile.jsp").forward(request, response);
+						response.sendRedirect("Redirect?page=Profile");
 					} else {
 						//Send back again the login page with the error "Wrong UserName or Password"
 						response.sendRedirect("?ERROR=WRONG");

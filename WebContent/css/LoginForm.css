@@ -76,11 +76,18 @@ body{
 	width: 30%;
 }
 
-#footer{
-	min-height:50px;
-	padding:10px;
-	position:relative;
+#container{
+	width:100%;
+	min-height: 70%;
+	position: relative;
+	display: inline-block;
+}
 
+#footer{
+	padding: 5px;
+	padding-left:15px;
+	position: static;
+	display: inline-block;
 	width:100%;
 	background: -webkit-linear-gradient(#ffffff, #eeeeee); /* For Safari 5.1 to 6.0 */
   	background: -o-linear-gradient(#ffffff, #eeeeee); /* For Opera 11.1 to 12.0 */

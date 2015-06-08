@@ -18,6 +18,13 @@
 	<script src="js/jquery.1.9.1.min.js"></script>
 	<script src="js/myfunctions.js"></script>
 	<script type="text/javascript">
+
+	$(document).ready(function() {
+			dtval(document.getElementById("inputDate"),null);
+			});
+
+
+
 	function getRSAndStats(){
 	var string = $('#inputDate').val();
     if(string.length >2){
@@ -58,7 +65,7 @@
                 var setOfSuggestions = "";
                 
                 $.each(data, function (index, sugg) {
-                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td>'+sugg+'<input name="food_name" type="hidden" value="'+sugg+'"></td></tr>';
+                    setOfSuggestions+= '<tr onClick="focused(this)" class=""><td>'+sugg[1]+'<input name="food_name" type="hidden" value="'+sugg[0]+'"></td></tr>';
                 });
                 document.getElementById('food_suggestions').innerHTML = setOfSuggestions;
 
@@ -103,6 +110,7 @@ function focused(c){
 
 function ok(){
 	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td></tr>';
+
 }
 </script>
 
@@ -126,16 +134,27 @@ function ok(){
 				<div id="header">
 					<img src="resources/DietPatcherIco.png" />
 					<b>Diet Patcher</b>
-					<a href=""> Logout </a> 
-					<a> / </a>
-					<a href="">Profile </a>
+					<div id="menu" class="btn-group" role="group" aria-label="...">
+						<form id="menu"action="Logout" method="GET">
+							<button type="submit" class="btn btn-default btn-lg">
+							  	<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
+							</button>
+						</form>
+						<form id="menu" action="Redirect" method="GET">
+							<input type="hidden" class="form-control" name="page" value="Profile" >
+							<button type="submit" class="btn btn-default btn-lg">
+								<span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Profile 
+							</button>
+						</form>
+					</div>
+					
 				</div>
 				<div id="container">
 					<form class="form-class" id="addMealPlan" action="MealPlanAdderServlet" method="GET">	
 					<div id="title">
 						<h2>Meal Plan for the day 	
 						
-							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onblur="sendDate()" onfocus="dtval(this,event)"/>	
+							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
 							<button type="button" class="btn btn-default" aria-label="Left Align" onClick="sendDate()">
 	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 							</button>
@@ -173,20 +192,6 @@ function ok(){
 						
 						</div>
 					</div>
-
-						
-
-
-
-
-
-
-
-
-
-
-
-
 					<div id="main">
 
 
