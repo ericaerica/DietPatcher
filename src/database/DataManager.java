@@ -99,8 +99,8 @@ public class DataManager {
 		boolean opResult = false;
 		if (connection != null) {
 			try {
+				Statement st = connection.createStatement();
 				if (userExists(user)) {
-					Statement st = connection.createStatement();
 					st.executeUpdate("UPDATE userbean SET " + "email=" + "'"
 							+ user.getEmail() + "'" + "," + "username=" + "'"
 							+ user.getUsername() + "'" + "," + "password="
@@ -111,15 +111,8 @@ public class DataManager {
 							+ user.getWeight() + "," + "waist="
 							+ user.getWaist() + "WHERE userbean.email=" + "'"
 							+ user.getEmail() + "'" + ";");
-					ResultSet rs = st.executeQuery("SELECT id FROM userbean WHERE userbean.email=" 
-							+ "'" + user.getEmail() + "'" + ";");
-					if(rs.next())
-						user.setId(rs.getInt(1));
-					opResult = true;
-					st.close();
 				} else {
 					System.out.println("INSERTING");
-					Statement st = connection.createStatement();
 					st.executeUpdate("INSERT INTO userbean VALUES (" + "'"
 							+ user.getEmail() + "'" + "," + "'"
 							+ user.getUsername() + "'" + "," + "'"
@@ -127,13 +120,15 @@ public class DataManager {
 							+ user.getGender() + "'" + "," + user.getAge()
 							+ "," + user.getHeight() + "," + user.getWeight()
 							+ "," + user.getWaist() + ");");
-					ResultSet rs = st.executeQuery("SELECT id FROM userbean WHERE userbean.email=" 
-							+ "'" + user.getEmail() + "'" + ";");
-					if(rs.next())
-						user.setId(rs.getInt(1));
-					opResult = true;
-					st.close();
 				}
+				//retrieve user ID and tags and set them for the bean
+				ResultSet rs = st.executeQuery("SELECT id FROM userbean WHERE userbean.email=" 
+						+ "'" + user.getEmail() + "'" + ";");
+				if(rs.next())
+					user.setId(rs.getInt(1));
+				opResult = true;
+				st.close();
+				user.setTags(getTags(user));
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();
@@ -172,14 +167,11 @@ public class DataManager {
 					user.setTags(getTags(user));
 				}
 				st.close();
-
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();
 			}
-
 		}
-
 		return user;
 	}
 	
@@ -487,7 +479,7 @@ public class DataManager {
 						System.out.println(query);
 						st.executeUpdate(query);
 						st.close();
-					} else{
+					} else {
 						String foodToAdd = "'{";
 						int i = 0;
 						for(String f:foods){
@@ -502,12 +494,9 @@ public class DataManager {
 
 						st.close();
 					}
-										
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
 		}
 	}
 	
@@ -770,7 +759,21 @@ public class DataManager {
 	 * @param nutrient
 	 */
 	public static void getPeerFood(UserBean user, String nutrient){
-
+		System.out.println("inside getpeer");
+		Statement st = null;
+		if(connection != null){
+			//try {
+				ArrayList<String> tags = user.getTags();
+				ArrayList<String> tags2 = getTags(user);
+				for(String s : tags)
+					System.out.println(s);
+				for(String s : tags2)
+					System.out.println(s);
+			//} catch (SQLException e) {
+			//	System.out.println("error in same tags query");
+			//	e.printStackTrace();
+			//}
+		}
 	}
 	
 	/**

@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.jni.User;
-
 import database.DataManager;
 import model.ProfileUtils;
 import model.UserBean;
@@ -30,14 +28,6 @@ public class ProfileServlet extends HttpServlet {
 			double waist = Double.parseDouble(request.getParameter("profileWaist"));
 			String[] tagArray = request.getParameterValues("tag");
 			
-			//Prepare the ArrayList of user tags
-			ArrayList<String> tags = new ArrayList<String>();
-			if(tagArray != null && tagArray.length > 0){
-				for(int i = 0; i < tagArray.length; i++){
-					tags.add(tagArray[i]);
-				}
-			}
-			
 			//Check if null parameters
 			if(username != "" 
 					&& password != "" 
@@ -54,8 +44,27 @@ public class ProfileServlet extends HttpServlet {
 					DataManager.connect();
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
-					DataManager.saveUser(user);	
-					DataManager.saveTags(user, tags);
+					DataManager.saveUser(user);
+					
+					//Prepare the ArrayList of user tags
+					if(tagArray != null && tagArray.length > 0){
+						ArrayList<String> tags = new ArrayList<String>();
+						for(int i = 0; i < tagArray.length; i++){
+							tags.add(tagArray[i]);
+						}
+						DataManager.saveTags(user, tags);
+					}
+					
+					//DataManager.getBestFood("208");
+					DataManager.getPeerFood(user, "203");
+					//DataManager.getBestEatenFood(user, "204");
+					
+					/*ArrayList<String> prova = DataManager.getTags(user);
+					if(prova.isEmpty())
+						System.out.println("empty");
+					else
+						for(int i=0; i<prova.size(); i++)
+							System.out.println(prova.get(i));*/
 
 					HttpSession session = request.getSession();
 					session.setAttribute("uBean", user);
