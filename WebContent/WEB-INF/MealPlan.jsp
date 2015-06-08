@@ -18,9 +18,18 @@
 	<script src="js/jquery.1.9.1.min.js"></script>
 	<script src="js/myfunctions.js"></script>
 	<script type="text/javascript">
-
+	
 	$(document).ready(function() {
-			dtval(document.getElementById("inputDate"),null);
+
+		 	var today = new Date();
+	    	var dd = today.getDate();
+			var mm = today.getMonth()+1; //January is 0!
+			var yyyy = today.getFullYear();
+			if(dd<10) {dd='0'+dd} 
+   			if(mm<10) {mm='0'+mm} 
+       		today = mm + '/' + dd + '/'+yyyy;
+			document.getElementById("inputDate").value=today;
+			sendDate();
 			});
 
 
@@ -94,7 +103,7 @@
             
             success: function (data) {
                 document.getElementById('tbody').innerHTML = data+"";
-                getRSAndStats();
+                getRSAndStats(); $("option").remove();
             },
             error:function(data,status,er) {
                 alert("error: "+data+" status: "+status+" er:"+er);
@@ -106,10 +115,16 @@
 function focused(c){
 	 $(c).addClass("selected").siblings().removeClass('selected'); 
 }
-
+function del(v){
+	$(v).addClass("delete");
+	$(".delete").parent().parent().remove();
+}
 
 function ok(){
-	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td></tr>';
+
+	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td><td><span style="color:#a00; cursor:pointer;" class="glyphicon glyphicon-remove" aria-hidden="true" onclick="del(this);"></span></td></tr>'; 
+
+	getRSAndStats();
 
 }
 </script>

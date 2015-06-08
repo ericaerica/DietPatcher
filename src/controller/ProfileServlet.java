@@ -17,8 +17,17 @@ public class ProfileServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		    
-			String username = request.getParameter("profileUserName");
+
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		response.setDateHeader("Expires", 0); // Proxies.
+		HttpSession session = request.getSession(false);
+	    UserBean usr = (session != null) ? (UserBean) session.getAttribute("uBean") : null;
+	    if (usr == null) {
+	        response.sendRedirect("LoginForm.html"); // No logged-in user found, so redirect to login page.
+	    }else{
+
+		String username = request.getParameter("profileUserName");
 			String password = request.getParameter("profilePassword");
 			String email = request.getParameter("profileEmail");
 			String gender = request.getParameter("profileGender");
@@ -27,6 +36,14 @@ public class ProfileServlet extends HttpServlet {
 			double weight = Double.parseDouble(request.getParameter("profileWeight"));
 			double waist = Double.parseDouble(request.getParameter("profileWaist"));
 			String[] tagArray = request.getParameterValues("tag");
+			ArrayList<String> tags = new ArrayList<String>();
+
+			//Prepare the ArrayList of user tags
+			if(tagArray != null && tagArray.length > 0){
+				for(int i = 0; i < tagArray.length; i++){
+					tags.add(tagArray[i]);
+				}
+			}
 			
 			//Check if null parameters
 			if(username != "" 
@@ -45,30 +62,16 @@ public class ProfileServlet extends HttpServlet {
 					UserBean user = new UserBean();
 					user.setUserBeanParameters(email, username, password, gender, age, height, weight, waist);
 					DataManager.saveUser(user);
-					
-					//Prepare the ArrayList of user tags
-					if(tagArray != null && tagArray.length > 0){
-						ArrayList<String> tags = new ArrayList<String>();
-						for(int i = 0; i < tagArray.length; i++){
-							tags.add(tagArray[i]);
-						}
-						DataManager.saveTags(user, tags);
-					}
-					
+					DataManager.saveTags(user, tags);
+					user.setTags(DataManager.getTags(user));
 					//DataManager.getBestFood("208");
 					DataManager.getPeerFood(user, "203");
 					//DataManager.getBestEatenFood(user, "204");
-					
-					/*ArrayList<String> prova = DataManager.getTags(user);
-					if(prova.isEmpty())
-						System.out.println("empty");
-					else
-						for(int i=0; i<prova.size(); i++)
-							System.out.println(prova.get(i));*/
 
-					HttpSession session = request.getSession();
+
+					session = request.getSession();
 					session.setAttribute("uBean", user);
-					request.getRequestDispatcher("/Profile.jsp").forward(request, response);
+					request.getRequestDispatcher("Redirect?page=Profile").forward(request, response);
 					
 				} else {
 					//Send back again the profile page with the error "Invalid input"
@@ -79,7 +82,7 @@ public class ProfileServlet extends HttpServlet {
 			} else {
 				//Send back again the profile page with the error "missing parameters"
 				response.sendRedirect("ProfileServlet?ERROR=MISSING");
-			}	
+			}	}
 	} 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -226,7 +226,7 @@ public class DataManager {
 	 */
 	public static void saveTags(UserBean user, ArrayList<String> newTags){
 		if (connection != null) {
-			try {
+			/*try {
 				if (userExists(user)) {
 					ArrayList<String> oldTags = getTags(user);
 					if(oldTags.isEmpty()){		//there are no tags saved for this user
@@ -254,13 +254,14 @@ public class DataManager {
 								tagsToAdd.add(neu);
 							}
 						}
-						
+						*/
+			try {
 						Statement st1 = connection.createStatement();						
 						String query2 = "DELETE FROM userxtag WHERE userxtag.user='"+user.getId()+"';";							
 						st1.executeUpdate(query2);
 						st1.close();
 						Statement st = connection.createStatement();
-						for(String tag : tagsToAdd){
+						for(String tag : newTags){
 							String query1 = "SELECT tag.id FROM tag WHERE tag.name=" + "'" + tag + "'" + ";";
 							System.out.println(query1);
 							ResultSet rs = st.executeQuery(query1);
@@ -271,10 +272,10 @@ public class DataManager {
 							String query3 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
 							st.executeUpdate(query3);
 						}
-						user.setTags(tagsToAdd);	//set the tags of the userbean with the new list
+						user.setTags(newTags);	//set the tags of the userbean with the new list
 						st.close();
-					}
-				}
+			//		}
+			//	}
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();

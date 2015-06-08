@@ -14,8 +14,9 @@ public class Logout  extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		if(session != null) {session.invalidate();}
-		request.getRequestDispatcher("/LoginForm.html").forward(request,response);
+		if(session != null) {session.invalidate();
+		
+		}response.sendRedirect("LoginForm.html");
     }
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

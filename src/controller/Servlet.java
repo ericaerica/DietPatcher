@@ -108,7 +108,7 @@ public class Servlet extends HttpServlet {
 							
 							HttpSession session = request.getSession();
 							session.setAttribute("uBean", user);
-							request.getRequestDispatcher("/Profile.jsp").forward(request, response);
+							request.getRequestDispatcher("Redirect?page=Profile").forward(request, response);
 							
 						} else {
 							//Send back again the login page with the error "A user with the same username or password already exist"

@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.UserBean;
 
@@ -28,7 +29,14 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		        throws ServletException, IOException{
-			System.out.println("I'M IN!");
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		response.setDateHeader("Expires", 0); // Proxies.
+		HttpSession session = request.getSession(false);
+	    UserBean usr = (session != null) ? (UserBean) session.getAttribute("uBean") : null;
+	    if (usr == null) {
+	        response.sendRedirect("LoginForm.html"); // No logged-in user found, so redirect to login page.
+	    }else{
 			// 1. get received JSON data from request
 			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
 			String json = "";
@@ -115,6 +123,7 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 
 			// 6. Send ArrayList<String> as JSON to client
 	    	mapper.writeValue(response.getOutputStream(), outputString);
+	    }
 		}
 	public static double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();

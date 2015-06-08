@@ -17,8 +17,8 @@ Generally, people are not really aware about what they are/should be/should not 
 
 Nonetheless the most personalized websites tell the users what nutrients they are/are not assuming and in which percentage, but not where to get the missing ones, so the problem is diagnosed but not solved.
 
-\section{Solution}
-Our web-application will offer a personalized solution to this issue. The user will be able to track his/her own diet and will receive suggestions on how to improve it based on his/her own profile information, food habits and tags.
+\section{Our solution}
+Our web-application offers a personalized solution to this issue. The user is able to track his/her own diet and receive suggestions on how to improve it based on his/her own profile information, food habits and tags.
 
 \section{Features}
 \begin{small}
@@ -27,36 +27,31 @@ Our web-application will offer a personalized solution to this issue. The user w
 		\renewcommand\labelitemi{{\boldmath$\cdot$}}
 		\item Nutrient: nutritional component in foods; this category includes all macronutrients (proteins, carbohydrates and fats), micronutrients (vitamins, minerals and organic acids) and fibers.
 		\item Food: any substance made of nutrients that can be consumed by the user for nutritional purposes (e.g. any fruit, vegetable or meat without additional condiments); this category also includes drinks, common composite foods (e.g. pasta, tomato sauce, French fries) and foods that are not usually consumed alone (e.g. flour, oil).
-		\item Dish: combination of foods that the user consumes together; this definition is intended to facilitate the user during the creation of a meal plan.
 		\item Meal: combination of foods and/or dishes that the user plans to eat during the selected day.
 		\item Meal plan: set of meals the user plans to eat on the selected day.\\
 	\end{itemize}
 	\hspace*{0.5cm}\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\textasteriskcentered\\
 \end{small}
 
-
-The user will have a username and a password to access his/her own account. Every account will have a profile page and a meal plan page.\\
-In the profile page the user will be able to:
+The user has a username and a password to access his/her own account. Every account has a profile page and a meal plan page.\\
+\\
+In the profile page the user is able to:\\
 
 \begin{itemize}
 
   \item insert personal information: name, age, gender, height, weight, waist size.
   \item have tags to identify in a user category, like "Vegetarian", "Vegan", "Paleo" or "Frutarian".
-  \item visualize his/her BMI (Body Mass Index) and BAI (Body Adiposity Index), that the application will calculate based on the personal information.
+  \item visualize his/her BMI (Body Mass Index) and BAI (Body Adiposity Index), that the application will calculate based on the personal information.\\
 
 \end{itemize}
-
-
-In the meal plan page the user will be able to:
+In the meal plan page the user is able to:\\
 \begin{itemize}
 
   \item Navigate through the calendar to select the meal plan of a certain day.
-  \item Select from the DB the foods he/she has eaten or plans to eat.
-  \item Create dishes (aggregates of foods) by choosing the ingredients from the DB and inserting the name of the dish.
-  \item Add dishes to the meal plan. 
-  \item Check how nutritious a daily plan is by looking at the percentage of covered nutrients. These percentages will be shown in a graphical way.
+  \item Select from the DB the foods he/she has eaten or plans to eat, select the amount in grams and add it to the current meal plan.
+  \item Check how nutritious a daily plan is by looking at the percentage of covered nutrients. These percentages are shown with colored bars that indicate if it's not enough (yellow), if it's ok (green) or if it's too much (red).
   \item See a real-time modification of the percentages based on the foods added to the meal plan as soon as the user adds them.
-  \item See recommendations on what foods or dishes could provide the missing nutrients and add them to the meal plan.
+  \item See recommendations based on what foods has the user eaten in the past, what other people with the same tags have eaten and in general what is one of the most suitable food to improve his/her own diet. The user can select the nutrient he/she wants recommendations for, taken from a list of "lacking" nutrients.
 \end{itemize}
 
 

@@ -33,14 +33,21 @@ public class MealPlanAdderServlet extends HttpServlet {
 		String[] foodArray = request.getParameterValues("food_name");
 		String[] amountArray = request.getParameterValues("food_amount");
 		
-		
-		HttpSession session = request.getSession();
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		response.setDateHeader("Expires", 0); // Proxies.
+		HttpSession session = request.getSession(false);
+	    UserBean usr = (session != null) ? (UserBean) session.getAttribute("uBean") : null;
+	    if (usr == null) {
+	        response.sendRedirect("LoginForm.html"); // No logged-in user found, so redirect to login page.
+	    }else{
+		 session = request.getSession();
 		UserBean user = (UserBean) session.getAttribute("uBean");
 		if(inputDate!=null){
 			if(foodArray!=null && amountArray!=null && foodArray.length==amountArray.length){
 
 				if(DataManager.saveMealPlan(user, inputDate, foodArray, amountArray)){
-					request.getRequestDispatcher("/MealPlan.jsp").forward(request, response);
+					request.getRequestDispatcher("Redirect?page=MealPlanner").forward(request, response);
 				}else{
 					System.out.println("PROBLEMS!");
 				}
@@ -51,7 +58,7 @@ public class MealPlanAdderServlet extends HttpServlet {
 			//TODO MISSING DATE
 		}
 		
-		
+	    }
     }
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

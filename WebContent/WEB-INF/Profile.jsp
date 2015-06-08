@@ -75,11 +75,29 @@
 			};
 
 
+			function allowOnlyNumbers(){
+				$(this).keydown(function (e) {
+			        // Allow: backspace, delete, tab, escape, enter and .
+			        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+			             // Allow: Ctrl+A, Command+A
+			            (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
+			             // Allow: home, end, left, right, down, up
+			            (e.keyCode >= 35 && e.keyCode <= 40)) {
+			                 // let it happen, don't do anything
+			                 return;
+			        }
+			        // Ensure that it is a number and stop the keypress
+			        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+			            e.preventDefault();
+			        }
+			    });
+
+			}
 		</script>
 	</head>
 	<body>
 		<div id="header">
-			<img src="resources/DietPatcherIco.png" />
+			<img src="../resources/DietPatcherIco.png" />
 			<b>Diet Patcher</b>
 			
 				<div id="menu" class="btn-group" role="group" aria-label="...">
@@ -127,26 +145,29 @@
 						 
 						 <div class="input-group">
 					      <div class="input-group-addon">Gender</div>
-					      <input type="text" class="form-control" name="profileGender" id="profileGender" value="${uBean.gender}" placeholder="M (Male), F (Female)"><br>
+					      <select class="form-control" name="profileGender" id="profileGender" value="${uBean.gender}">
+							  <option value="m">Male</option>
+							  <option value="f">Female</option>
+							</select>
 					    </div>
 						<div class="input-group">
 					      <div class="input-group-addon">Age</div>
-					      <input type="text" min="0" class="form-control" name="profileAge" id="profileAge" value="${uBean.age}" placeholder="40">
+					      <input type="number" min="0" onkeydown="allowOnlyNumbers();" class="form-control" name="profileAge" id="profileAge" value="${uBean.age}" placeholder="40">
 					      <div class="input-group-addon">y/o</div>
 					    </div>
 						<div class="input-group">
 					      <div class="input-group-addon">Height</div>
-					      <input type="text" min="0" class="form-control" name="profileHeight" id="profileHeight" value="${uBean.height}" placeholder="170">
+					      <input type="number" min="0" onkeydown="allowOnlyNumbers();" class="form-control" name="profileHeight" id="profileHeight" value="${uBean.height}" placeholder="170">
 					      <div class="input-group-addon">cm</div>
 					    </div>
 					    <div class="input-group">
 					      <div class="input-group-addon">Weight</div>
-					      <input type="text" min="0" class="form-control" name="profileWeight" id="profileWeight" value="${uBean.weight}" placeholder="70">
+					      <input type="number" min="0" onkeydown="allowOnlyNumbers();" class="form-control" name="profileWeight" id="profileWeight" value="${uBean.weight}" placeholder="70">
 					      <div class="input-group-addon">kg</div>
 					    </div>
 					    <div class="input-group">
 					      <div class="input-group-addon">Waist</div>
-					      <input type="text" min="0" class="form-control" name="profileWaist" id="profileWaist" value="${uBean.waist}" placeholder="60">
+					      <input type="number" min="0" onkeydown="allowOnlyNumbers();" class="form-control" name="profileWaist" id="profileWaist" value="${uBean.waist}" placeholder="60">
 					      <div class="input-group-addon">cm</div>
 					    </div>
 					</div>
