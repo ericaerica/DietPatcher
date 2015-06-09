@@ -789,18 +789,24 @@ public class DataManager {
 				st = connection.createStatement();
 				ArrayList<String> tags = user.getTags();
 				for(String tag : tags){
-					String query1 = "SELECT user FROM userxtag WHERE tag=" + "'" + tag + "'" + ";";
+					String query1 = "SELECT userxtag.user FROM tag INNER JOIN userxtag "
+							+ "ON tag.id = userxtag.tag WHERE tag.name=" + "'" + tag + "'" + ";";
+					System.out.println(query1);
 					ResultSet rs1 = st.executeQuery(query1);
 					while(rs1.next()){
+						System.out.println("next");
 						int userID = rs1.getInt(1);
 						if(userID != user.getId()){
+							System.out.println("inside if");
 							UserBean otherUser = new UserBean();
 							otherUser.setId(userID);
 							ArrayList<Object> food_amount = getBestEatenFood(otherUser, nutrient);
 							double amount = (Double)food_amount.get(0);
-							ArrayList<String> otherFoods = new ArrayList<String>();
+							System.out.println("amount=" + amount);
+							ArrayList<String> otherFoods = (ArrayList<String>)food_amount.get(1);
 							
 							for(String food : otherFoods){
+								System.out.println("inside for");
 								foods.add(food);
 								amounts.add(amount);
 							}
