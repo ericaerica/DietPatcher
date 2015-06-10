@@ -34,7 +34,6 @@ public class Recommendations extends HttpServlet {
 			if(br != null){
 				json = br.readLine();
 			}
-			System.out.println(json);
 			
 			// 2. initiate jackson mapper
 	    	ObjectMapper mapper = new ObjectMapper();
@@ -83,13 +82,11 @@ public class Recommendations extends HttpServlet {
 	    			+ "<div class='panel-heading' id='moreRecSubtitle'>Suggestions based on the food that other users having your same tags have eaten, having the highest amount of "+nutrientName+":</div>"
 	    			+ "<div class='panel-body'><table class='table'><thead><th>Name</th><th>Amount per 100g</th></thead>";
 	    	for (String food : peerRec_food){
-	    		System.out.println(food);
 	    		output+="<tr><td>"+DataManager.getFoodNameFromFoodId(food)+"</td><td>"+peerRec_amount.get(0)+DataManager.getMeasureUnit(nutrientID)+"</td></tr>";
 	    	}
 	    	output+="</table></div></div></div>";
 
 	    	output	+= "<a id='cancelMoreRec' class='btn btn-default' href='#statistics' role='button'>Cancel</a></div></div><br><hr><br>";
-	    	System.out.println(output);
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    
 

@@ -84,7 +84,6 @@ public class DataManager {
 						+ "'" + user.getEmail() + "'" + ";");
 				if (rs.next()) {
 					opResult = true;
-					//System.out.println(rs.getString(1));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -922,8 +921,7 @@ public class DataManager {
 					rs = st1.executeQuery(query);
 					if (rs.next()) {
 						output=rs.getString(1);
-						System.out.println(output);
-					}else {System.out.println("NO MEASURE UNIT!!! WAAAT");}
+					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -940,7 +938,6 @@ public class DataManager {
 					rs = st1.executeQuery("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
 					if (rs.next()) {
 						output=rs.getString(1);
-						System.out.println(output);
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

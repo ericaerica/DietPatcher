@@ -48,8 +48,6 @@ public class MealPlanAdderServlet extends HttpServlet {
 
 				if(DataManager.saveMealPlan(user, inputDate, foodArray, amountArray)){
 					request.getRequestDispatcher("Redirect?page=MealPlanner").forward(request, response);
-				}else{
-					System.out.println("PROBLEMS!");
 				}
 			} else{
 				//TODO WRONG FOOD ARRAYS

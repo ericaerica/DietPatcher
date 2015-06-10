@@ -45,7 +45,6 @@ public class MealPlanDateServlet extends HttpServlet {
 			if(br != null){
 				json = br.readLine();
 			}
-			System.out.println(json);
 			
 			// 2. initiate jackson mapper
 	    	ObjectMapper mapper = new ObjectMapper();
