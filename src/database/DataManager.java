@@ -7,16 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
 import java.util.Random;
 
 import model.UserBean;
 
 public class DataManager {
-	//TODO riordinare i metodi e controllare che per ogni save ci sia un get e viceversa
 	private static Connection connection = null;
 	
 	private static void setConnection(Connection con) {
@@ -67,6 +62,7 @@ public class DataManager {
 	}
 
 	/**
+	 * This method verifies whether the user is already present in the database or not.
 	 * 
 	 * @param user
 	 * @return True if the user exists in the DB, false if it doesn't
@@ -93,7 +89,12 @@ public class DataManager {
 		return opResult;
 	}
 	
-	//TODO javadoc
+	/**
+	 * This method saves the user in the database if it is not already present, updates user information otherwise.
+	 * 
+	 * @param user
+	 * @return True if the operation has been successful
+	 */
 	public static boolean saveUser(UserBean user) {
 		boolean opResult = false;
 		if (connection != null) {
@@ -137,7 +138,13 @@ public class DataManager {
 		return opResult;
 	}
 
-	//TODO javadoc
+	/**
+	 * This method finds the user in the database and creates a bean.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return UserBean	user
+	 */
 	public static UserBean getUser(String username, String password) {
 		UserBean user = null;
 		Statement st = null;
@@ -223,35 +230,6 @@ public class DataManager {
 	 */
 	public static void saveTags(UserBean user, ArrayList<String> newTags){
 		if (connection != null) {
-			/*try {
-				if (userExists(user)) {
-					ArrayList<String> oldTags = getTags(user);
-					if(oldTags.isEmpty()){		//there are no tags saved for this user
-						Statement st = connection.createStatement();
-						//save the tags
-						for(String tag : newTags){
-							String query1 = "SELECT tag.id FROM tag WHERE tag.name='" + tag + "';";
-							System.out.println(query1);
-							ResultSet rs = st.executeQuery(query1);
-							int tagId = 0;
-							if(rs.next()){
-								tagId = rs.getInt(1);
-								String query2 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
-								System.out.println(query2);
-								st.executeUpdate(query2);
-							}							
-							
-						}
-						user.setTags(newTags);	//set the tags of the userbean with the new list
-						st.close();
-					} else {					//there are already some tags saved for this user
-						ArrayList<String> tagsToAdd = new ArrayList<String>();
-						for(String neu : newTags){
-							if(!oldTags.contains(neu)){
-								tagsToAdd.add(neu);
-							}
-						}
-						*/
 			try {
 						Statement st1 = connection.createStatement();						
 						String query2 = "DELETE FROM userxtag WHERE userxtag.user='"+user.getId()+"';";							
@@ -272,8 +250,6 @@ public class DataManager {
 						}
 						user.setTags(newTags);	//set the tags of the userbean with the new list
 						st.close();
-			//		}
-			//	}
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();
@@ -311,14 +287,14 @@ public class DataManager {
 	}
 	
 	/**
-	 * TODO
+	 * This method receives an array of food IDs and returns their long description.
 	 * 
 	 * @param foods
-	 * @return
+	 * @return ArrayList<String> food names
 	 */
 	public static ArrayList<String> getFoodNameFromFoodId(String[] foods){
 		connect();
-		ArrayList<String> foodsId = new ArrayList<String>();
+		ArrayList<String> foodNames = new ArrayList<String>();
 		for (String food : foods) {
 			Statement st = null;
 			ResultSet rs = null;
@@ -331,7 +307,7 @@ public class DataManager {
 					System.out.println(joinQuery);
 					rs = st.executeQuery(joinQuery);
 					while (rs.next()) {
-						foodsId.add(rs.getString(1));
+						foodNames.add(rs.getString(1));
 					}
 				} catch (SQLException e) {
 					System.out.println("error in joinQuery");
@@ -339,13 +315,14 @@ public class DataManager {
 				}
 			}
 		}
-		return foodsId;
+		return foodNames;
 	}
+	
 	/**
-	 * TODO
+	 * This method receives one food ID and returns its long description.
 	 * 
 	 * @param foods
-	 * @return
+	 * @return String	food name
 	 */
 	public static String getFoodNameFromFoodId(String food){
 		String foodsId = "";
@@ -372,13 +349,13 @@ public class DataManager {
 	}
 	
 	/**
-	 * TODO
+	 * This method saves a meal plan into the database.
 	 * 
 	 * @param user
 	 * @param date
 	 * @param food
 	 * @param amount
-	 * @return
+	 * @return True if the operation has been successful
 	 */
 	public static boolean saveMealPlan(UserBean user, String date, String[] food, String[] amount) {
 		boolean opResult = false;
@@ -440,11 +417,11 @@ public class DataManager {
 	}
 	
 	/**
-	 * TODO
+	 * This method verifies whether a meal plan is present in the database.
 	 * 
 	 * @param id
 	 * @param date
-	 * @return
+	 * @return True if the operation has been successful
 	 */
 	public static boolean mealPlanExists(int id, String date) {
 		boolean opResult = false;
@@ -468,10 +445,11 @@ public class DataManager {
 	}
 	
 	/**
-	 * TODO
+	 * This method saves the cronology of all the foods ever eaten bu the user or updates it with new foods.
 	 * 
 	 * @param id
 	 * @param foods
+	 * @return void
 	 */
 	public static void userCrono(int id, String[] foods){
 		Statement st2 = null;
@@ -530,6 +508,7 @@ public class DataManager {
 	
 	/**
 	 * This method provides a list of all the food ever eaten by the user while using the application.
+	 * 
 	 * @param user
 	 * @return ArrayList<String>	list of food eaten by the user
 	 */
@@ -558,11 +537,11 @@ public class DataManager {
 	}
 	
 	/**
-	 * TODO
+	 * This method retrieves the meal plan of the specified date.
 	 * 
 	 * @param user
 	 * @param date
-	 * @return
+	 * @return ArrayList<String[]> meal plan
 	 */
 	public static ArrayList<String[]> getMealPlanFromDate(UserBean user, String date){
 		connect();
@@ -606,6 +585,7 @@ public class DataManager {
 	}
 	
 	/**
+	 * This method calculates the lacking nutrients based on foods and amounts.
 	 * 
 	 * @return
 	 */
@@ -675,6 +655,11 @@ public class DataManager {
 		return nutrToAdd;
 	}
 	
+	/**
+	 * This method retrieves minimum and maximum recommended amounts for nutrients.
+	 * 
+	 * @return
+	 */
 	public static ArrayList<ArrayList<String>> getDescMinMaxNutrients(){
 		Statement st = null;
 		ResultSet rs = null;
@@ -713,6 +698,13 @@ public class DataManager {
 		return output;
 	}
 	
+	/**
+	 * This method retrieves the list of nutrients for a saved meal plan.
+	 * 
+	 * @param id
+	 * @param date
+	 * @return ArrayList<String>
+	 */
 	public static ArrayList<String> getMealPlanNutrients(String id, String date){
 		Statement st1 = null;
 		ResultSet rs = null;
@@ -945,7 +937,7 @@ public class DataManager {
 			}
 		return output;
 	}
-	public static void database(){
+	/*public static void database(){
 		/*try {
 			connect();
 			Statement st = connection.createStatement();
@@ -986,6 +978,6 @@ public class DataManager {
 			System.out.println("ERROR ERROR");
 			e.printStackTrace();
 		}*/
-	}
+//	}
 	
 }
