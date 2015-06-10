@@ -68,10 +68,10 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 9; }
 
-#black:target {
+#adder:target {
   display: block; }
 
-#black:target > #adder {
+#adder:target ~ #black {
   display: block; }
 
 #food_suggestions_div {
@@ -119,6 +119,12 @@ body {
 
 #menu {
   float: right; }
+
+#moreRec {
+  display: none; }
+
+#moreRec:target {
+  display: block; }
 
 @media all and (orientation: portrait) {
   #container {

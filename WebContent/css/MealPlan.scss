@@ -84,10 +84,11 @@ body{
 	background-color:  rgba(0,0,0,0.8);
 	z-index: 9;
 }
-#black:target{
+
+#adder:target{
 	display: block;
 }
-#black:target > #adder{
+#adder:target ~ #black{
 	display: block;
 }
 
@@ -147,6 +148,13 @@ body{
 }
 #menu{
 	float: right;
+}
+
+#moreRec{
+	display:none;
+}
+#moreRec:target{
+	display:block;
 }
 
 

@@ -58,6 +58,30 @@
     }
 }
 
+	function getSpecificRec(){
+	var string = document.getElementById("rec_food").value;
+    document.getElementById('loading').innerHTML = "<img src='https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif'>";
+    document.getElementById('lower_rec_container').innerHTML = ""
+    
+        $.ajax({
+            url: "${pageContext.request.contextPath}/Recommendations",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(string),
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            
+            success: function (data) {
+            	document.getElementById('loading').innerHTML ="",
+                document.getElementById('lower_rec_container').innerHTML = data+"";
+            },
+            error:function(data,status,er) {
+            	document.getElementById('loading').innerHTML ="",
+                alert("error: "+data+" status: "+status+" er:"+er);
+            }
+    });
+}
+
 	function sendAjax(){
 		var string = $('#autocomplete').val();
     if(string.length >2){
@@ -124,15 +148,19 @@ function ok(){
 
 	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td><td><span style="color:#a00; cursor:pointer;" class="glyphicon glyphicon-remove" aria-hidden="true" onclick="del(this);"></span></td></tr>'; 
 
-	getRSAndStats();
-
 }
+
+$("#goToMoreRec").click(function() {
+  $( "#black" ).css("display","block");
+});
+$("#cancelMoreRec").click(function() {
+  $( "#black" ).css("display","none");
+});
 </script>
 
 				<title>Meal Plan Manager - Diet Patcher</title>
 			</head>
 			<body>
-				<div id="black">
 					<div id="adder" class="panel panel-primary">
 						<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax();s" >
 						<div id="food_suggestions_div">
@@ -145,7 +173,7 @@ function ok(){
 										<a class="btn btn-info" href="#header" onClick="ok()" role="button">Add!</a>
 										<a class="btn btn-default" href="#header" role="button">Cancel</a><br>
 					</div>
-				</div>
+				
 				<div id="header">
 					<img src="resources/DietPatcherIco.png" />
 					<b>Diet Patcher</b>
@@ -180,7 +208,7 @@ function ok(){
 						<div class="panel-heading">Contents table</div>
 						<div class="panel-body">
 							<div id="addModule">
-								<a class="btn btn-info" id="addFood" role="button" href="#black">Choose a food to add to your meal plan!</a>
+								<a class="btn btn-info" id="addFood" role="button" href="#adder">Choose a food to add to your meal plan!</a>
 							</div>
 							
 							<table class="table">
@@ -214,5 +242,7 @@ function ok(){
 					<div id="footer">
 					</div>
 				</div>
+				<div id="black"></div>
+
 			</body>
 			</html>

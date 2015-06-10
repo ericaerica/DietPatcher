@@ -36,6 +36,14 @@
     <servlet-name>Redirect</servlet-name>
     <servlet-class>controller.Redirect</servlet-class>
   </servlet>
+     <servlet>
+    <servlet-name>Recommendations</servlet-name>
+    <servlet-class>controller.Recommendations</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Recommendations</servlet-name>
+    <url-pattern>/Recommendations</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>Redirect</servlet-name>
     <url-pattern>/Redirect</url-pattern>

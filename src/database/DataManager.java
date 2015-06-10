@@ -261,13 +261,14 @@ public class DataManager {
 						Statement st = connection.createStatement();
 						for(String tag : newTags){
 							String query1 = "SELECT tag.id FROM tag WHERE tag.name=" + "'" + tag + "'" + ";";
-							//System.out.println(query1);
+							System.out.println(query1);
 							ResultSet rs = st.executeQuery(query1);
 							int tagId = 0;
 							while(rs.next()){
 								tagId = rs.getInt(1);
 							}							
 							String query3 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
+							System.out.println(query3);
 							st.executeUpdate(query3);
 						}
 						user.setTags(newTags);	//set the tags of the userbean with the new list
@@ -339,6 +340,35 @@ public class DataManager {
 				}
 			}
 		}
+		return foodsId;
+	}
+	/**
+	 * TODO
+	 * 
+	 * @param foods
+	 * @return
+	 */
+	public static String getFoodNameFromFoodId(String food){
+		String foodsId = "";
+		
+			Statement st = null;
+			ResultSet rs = null;
+
+			if (connection != null) {
+				try {
+					st = connection.createStatement();
+					String joinQuery = "SELECT food_des.long_desc FROM food_des "
+							+ "WHERE food_des.ndb_no='" + food + "';";
+					rs = st.executeQuery(joinQuery);
+					if (rs.next()) {
+						foodsId=rs.getString(1);
+					}
+				} catch (SQLException e) {
+					System.out.println("error in joinQuery");
+					e.printStackTrace();
+				}
+			}
+		
 		return foodsId;
 	}
 	
@@ -653,12 +683,13 @@ public class DataManager {
 		ArrayList<String> DRI_RDA_M = new ArrayList<String>();
 		ArrayList<String> DRI_RDA_F = new ArrayList<String>();
 		ArrayList<String> UL_max_tolerable = new ArrayList<String>();
+		ArrayList<String> nutr_no = new ArrayList<String>();
 		ArrayList<ArrayList<String>> output = new ArrayList<ArrayList<String>>();
 		
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
-				String query = "SELECT nutrdesc, DRI_RDA_M, DRI_RDA_F, UL_max_tolerable"
+				String query = "SELECT nutrdesc, DRI_RDA_M, DRI_RDA_F, UL_max_tolerable, nutr_no"
 						+ " FROM nutr_def ORDER BY nutr_no;";
 				System.out.println(query);
 				rs = st.executeQuery(query);
@@ -667,6 +698,7 @@ public class DataManager {
 					DRI_RDA_M.add(rs.getString(2));
 					DRI_RDA_F.add(rs.getString(3));
 					UL_max_tolerable.add(rs.getString(4));
+					nutr_no.add(rs.getString(5));
 				}
 				st.close();
 			} catch (SQLException e) {
@@ -678,6 +710,7 @@ public class DataManager {
 		output.add(DRI_RDA_M);
 		output.add(DRI_RDA_F);
 		output.add(UL_max_tolerable);
+		output.add(nutr_no);
 		return output;
 	}
 	
@@ -850,7 +883,7 @@ public class DataManager {
 				st = connection.createStatement();
 				String query = "SELECT ndb_no, nutr_val FROM highest_nutr WHERE nutr_no=" + "'" + nutrient + "'" + ";";
 				rs = st.executeQuery(query);
-				
+				System.out.println(query);
 				while (rs.next()) {
 					bestFoods.add(rs.getString(1));
 					amounts.add(rs.getDouble(2));
@@ -877,7 +910,44 @@ public class DataManager {
 		return food_NutrAmount;
 	}
 
-	
+	public static String getMeasureUnit(String nutrientID){
+		String output ="";
+			Statement st1 = null;
+			ResultSet rs = null;
+			if (connection != null) {
+				try {
+					st1 = connection.createStatement();
+					String query = "SELECT units FROM nutr_def WHERE nutr_def.nutr_no ='"+ nutrientID + "';";
+					System.out.println(query);
+					rs = st1.executeQuery(query);
+					if (rs.next()) {
+						output=rs.getString(1);
+						System.out.println(output);
+					}else {System.out.println("NO MEASURE UNIT!!! WAAAT");}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		return output;
+	}
+	public static String getNutrientIDFromName(String nutrientName){
+		String output ="";
+			Statement st1 = null;
+			ResultSet rs = null;
+			if (connection != null) {
+				try {
+					st1 = connection.createStatement();
+					rs = st1.executeQuery("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
+					if (rs.next()) {
+						output=rs.getString(1);
+						System.out.println(output);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		return output;
+	}
 	public static void database(){
 		/*try {
 			connect();

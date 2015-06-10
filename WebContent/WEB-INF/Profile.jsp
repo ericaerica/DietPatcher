@@ -97,7 +97,7 @@
 	</head>
 	<body>
 		<div id="header">
-			<img src="../resources/DietPatcherIco.png" />
+			<img src="resources/DietPatcherIco.png" />
 			<b>Diet Patcher</b>
 			
 				<div id="menu" class="btn-group" role="group" aria-label="...">
