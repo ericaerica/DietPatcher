@@ -779,7 +779,9 @@ public class DataManager {
 				index = 0;
 				for(double amt : amounts){
 					if(amt == max)
-						foodIDs.add(eatenFoods.get(index));
+						if (!foodIDs.contains(eatenFoods.get(index))){
+							foodIDs.add(eatenFoods.get(index));
+						}
 					index++;
 				}
 				
@@ -815,24 +817,20 @@ public class DataManager {
 				for(String tag : tags){
 					String query1 = "SELECT userxtag.user FROM tag INNER JOIN userxtag "
 							+ "ON tag.id = userxtag.tag WHERE tag.name=" + "'" + tag + "'" + ";";
-					System.out.println(query1);
 					ResultSet rs1 = st.executeQuery(query1);
 					while(rs1.next()){
-						System.out.println("next");
 						int userID = rs1.getInt(1);
 						if(userID != user.getId()){
-							System.out.println("inside if");
 							UserBean otherUser = new UserBean();
 							otherUser.setId(userID);
 							ArrayList<Object> food_amount = getBestEatenFood(otherUser, nutrient);
 							double amount = (Double)food_amount.get(0);
-							System.out.println("amount=" + amount);
 							ArrayList<String> otherFoods = (ArrayList<String>)food_amount.get(1);
-							
 							for(String food : otherFoods){
-								System.out.println("inside for");
-								foods.add(food);
-								amounts.add(amount);
+								if (!foods.contains(food)){
+									foods.add(food);
+									amounts.add(amount);
+								}
 							}
 						}
 					}
@@ -842,12 +840,6 @@ public class DataManager {
 				e.printStackTrace();
 			}
 		}
-		for(double d : amounts)
-			System.out.print(d + "\t");
-		System.out.println();
-		for(String s : foods)
-			System.out.print(s + "\t");
-		System.out.println();
 		peerFood.add(amounts);
 		peerFood.add(foods);
 		return peerFood;
@@ -860,7 +852,7 @@ public class DataManager {
 	 * @param nutrient
 	 * @return ArrayList<String>	containing the food ID of the food found and the amount of nutrient per 100g
 	 */
-	public static ArrayList<String> getBestFood(String nutrient){	//TODO convertirlo per lista di nutrienti
+	public static ArrayList<String> getBestFood(String nutrient){
 		ArrayList<String> food_NutrAmount = new ArrayList<String>();
 		ArrayList<String> bestFoods = new ArrayList<String>();
 		ArrayList<Double> amounts = new ArrayList<Double>();
@@ -928,6 +920,7 @@ public class DataManager {
 				try {
 					st1 = connection.createStatement();
 					rs = st1.executeQuery("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
+					System.out.println("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
 					if (rs.next()) {
 						output=rs.getString(1);
 					}

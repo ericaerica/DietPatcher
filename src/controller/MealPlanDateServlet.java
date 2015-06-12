@@ -51,23 +51,30 @@ public class MealPlanDateServlet extends HttpServlet {
 	    	
 	    	// 3. Convert received JSON to String
 	    	String date = mapper.readValue(json, String.class);
-
-	    	// 4. Go get the meal plan table
-	    	UserBean user = (UserBean) request.getSession().getAttribute("uBean");
-	    	ArrayList<String[]> output = DataManager.getMealPlanFromDate(user, date);
+	    	
 	    	String s = "";
-	    	if (!output.isEmpty()){
-	    		
-		    	String[] foodId = output.get(0);
-		    	ArrayList<String> foodDesc = DataManager.getFoodNameFromFoodId(foodId);
-		    	String[] foodAmount = output.get(1);
-		    	for (int i = 0; i < foodId.length; i++) {
+	    	
+	    	if(date.matches("^([0]?[1-9]|[1][0-2])[/]([0]?[1-9]|[1|2][0-9]|[3][0|1])[/]([0-9]{4}|[0-9]{2})$")){
+	    		// 4. Go get the meal plan table
+		    	UserBean user = (UserBean) request.getSession().getAttribute("uBean");
+		    	ArrayList<String[]> output = DataManager.getMealPlanFromDate(user, date);
+		    	
+		    	if (!output.isEmpty()){
+		    		
+			    	String[] foodId = output.get(0);
+			    	ArrayList<String> foodDesc = DataManager.getFoodNameFromFoodId(foodId);
+			    	String[] foodAmount = output.get(1);
+			    	for (int i = 0; i < foodId.length; i++) {
 
-					s +="<tr><td>"+foodDesc.get(i)+"<input name='food_name' value='"+foodId[i]+"' type='hidden'></td><td>"+foodAmount[i]+"<input name='food_amount' value='"+foodAmount[i]+"' type='hidden'></td><td><span style='color:#a00; cursor:pointer;' class='glyphicon glyphicon-remove' aria-hidden='true' onclick='del(this);'></span></td></tr>";
+						s +="<tr><td>"+foodDesc.get(i)+"<input name='food_name' value='"+foodId[i]+"' type='hidden'></td><td>"+foodAmount[i]+"<input name='food_amount' value='"+foodAmount[i]+"' type='hidden'></td><td><span style='color:#a00; cursor:pointer;' class='glyphicon glyphicon-remove' aria-hidden='true' onclick='del(this);'></span></td></tr>";
+		    	}
+		    	
+		    	
+				}
+	    	}else{
+	    		s+="<div class='alert alert-danger' role='alert'>You inserted a wrongly formatted Date, please use the format MM/DD/YYYY</div>";
 	    	}
 	    	
-	    	
-			}
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    
 

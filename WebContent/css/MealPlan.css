@@ -126,6 +126,17 @@ body {
 #moreRec:target {
   display: block; }
 
+.simpleRec {
+  min-width: 31.5%;
+  max-width: 31.5%;
+  margin: 5px;
+  min-height: 240px;
+  display: inline-block;
+  vertical-align: top; }
+
+.simpleRec .panel-body {
+  min-height: 200px; }
+
 @media all and (orientation: portrait) {
   #container {
     width: 100%;
@@ -133,6 +144,13 @@ body {
     padding: 10px; }
 
   .nutrientStat {
-    width: 100%; } }
+    width: 100%; }
+
+  .simpleRec {
+    min-width: 100%;
+    max-width: 100%;
+    margin: 5px;
+    display: block;
+    float: left; } }
 
 /*# sourceMappingURL=MealPlan.css.map */

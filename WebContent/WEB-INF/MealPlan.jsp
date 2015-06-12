@@ -29,12 +29,12 @@
    			if(mm<10) {mm='0'+mm} 
        		today = mm + '/' + dd + '/'+yyyy;
 			document.getElementById("inputDate").value=today;
-			sendDate();
 			});
 
 
 
 	function getRSAndStats(){
+	document.getElementById('statistics').innerHTML = "<img src='https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif'>";
 	var string = $('#inputDate').val();
     if(string.length >2){
         $("#statistics div").remove();
@@ -61,7 +61,7 @@
 	function getSpecificRec(){
 	var string = document.getElementById("rec_food").value;
     document.getElementById('loading').innerHTML = "<img src='https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif'>";
-    document.getElementById('lower_rec_container').innerHTML = ""
+    document.getElementById('lower_rec_container').innerHTML = "";
     
         $.ajax({
             url: "${pageContext.request.contextPath}/Recommendations",
@@ -85,7 +85,7 @@
 	function sendAjax(){
 		var string = $('#autocomplete').val();
     if(string.length >2){
-        $("option").remove();
+        $("#food_suggestions option").remove();
         $.ajax({
             url: "${pageContext.request.contextPath}/MealPlanFoodChooserServlet",
             type: 'POST',
@@ -115,7 +115,7 @@
     // get inputs
     
     var string = $('#inputDate').val();
-    if(string.length >2){
+    if(/^([0]?[1-9]|[1][0-2])[\/]([0]?[1-9]|[1|2][0-9]|[3][0|1])[\/]([0-9]{4}|[0-9]{2})$/.test(string)){
         $(".table td").remove();
         $.ajax({
             url: "${pageContext.request.contextPath}/MealPlanDateServlet",
@@ -145,8 +145,10 @@ function del(v){
 }
 
 function ok(){
-
-	document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td><td><span style="color:#a00; cursor:pointer;" class="glyphicon glyphicon-remove" aria-hidden="true" onclick="del(this);"></span></td></tr>'; 
+	if(document.getElementById('amount').value!=0){
+		document.getElementById('tbody').innerHTML +=  "<tr>"+document.getElementsByClassName('selected')[0].innerHTML+'<td>'+document.getElementById('amount').value + '<input name="food_amount" type="hidden" value="'+document.getElementById('amount').value+'" readonly></td><td><span style="color:#a00; cursor:pointer;" class="glyphicon glyphicon-remove" aria-hidden="true" onclick="del(this);"></span></td></tr>'; 
+	}
+	
 
 }
 
@@ -156,19 +158,24 @@ $("#goToMoreRec").click(function() {
 $("#cancelMoreRec").click(function() {
   $( "#black" ).css("display","none");
 });
+
+function addRec(desc){
+	document.getElementById("autocomplete").value = desc;
+	sendAjax();
+}
 </script>
 
 				<title>Meal Plan Manager - Diet Patcher</title>
 			</head>
 			<body>
 					<div id="adder" class="panel panel-primary">
-						<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax();s" >
+						<input type="text" name="food" id="autocomplete" class="form-control" placeholder="Enter Food name" onkeyup="sendAjax();" >
 						<div id="food_suggestions_div">
 							<table class="table table-hover" id="food_suggestions">
 
 							</table>
 						</div><div class="input-group">
-						<input name="amount" class="form-control" id="amount" type="text" placeholder="100"></input><span class="input-group-addon">g</span></div>
+						<input name="amount" class="form-control" min="0" onkeydown="allowOnlyNumbers();" id="amount" type="number" placeholder="100"></input><br><span class="input-group-addon"><b>g</b></span></div>
 										<br><br>
 										<a class="btn btn-info" href="#header" onClick="ok()" role="button">Add!</a>
 										<a class="btn btn-default" href="#header" role="button">Cancel</a><br>
@@ -198,17 +205,17 @@ $("#cancelMoreRec").click(function() {
 						<h2>Meal Plan for the day 	
 						
 							<input class="inputDate" name="inputDate" id="inputDate" placeholder="mm/dd/yyyy" size="10" maxlength="10" onkeyup="dtval(this,event)" onfocus="dtval(this,event)"/>	
-							<button type="button" class="btn btn-default" aria-label="Left Align" onClick="sendDate()">
+							<button type="button" class="btn btn-success" aria-label="Left Align" onClick="sendDate()">
 	  							<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
 							</button>
 						</h2>
 					</div>
 
 					<div id="meal_plan_table" class="panel panel-primary">
-						<div class="panel-heading">Contents table</div>
+						<div class="panel-heading">Meal Plan table</div>
 						<div class="panel-body">
 							<div id="addModule">
-								<a class="btn btn-info" id="addFood" role="button" href="#adder">Choose a food to add to your meal plan!</a>
+								<a class="btn btn-warning" id="addFood" role="button" href="#adder">Select a food you plan to eat today!</a>
 							</div>
 							
 							<table class="table">

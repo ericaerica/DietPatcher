@@ -41,6 +41,7 @@ public class Recommendations extends HttpServlet {
 	    	// 3. Convert received JSON to String
 	    	String nutrientName = mapper.readValue(json, String.class);
 	    	String nutrientID = DataManager.getNutrientIDFromName(nutrientName);
+	    	System.out.println(nutrientName + " - "+nutrientID);
 	    	// 4. Go get the meal plan table
 	    	UserBean user = (UserBean) request.getSession().getAttribute("uBean");
 	    	
@@ -56,25 +57,56 @@ public class Recommendations extends HttpServlet {
 	    	String absoluteRec_amount = absoluteRec.get(1);
 	    	String absoluteRec_food = absoluteRec.get(0);
 	    	
-	    	String output = "<div id='lower_rec'><ul><li>In the past you have eaten <b>"+DataManager.getFoodNameFromFoodId(userRec_food.get(0))+"</b>, "
-	    			+ "you could try it again! It contains "+userRec_amount+DataManager.getMeasureUnit(nutrientID)+" for each 100g! </li>";
-	    	output+="<li>Other people with your tags have eaten <b>"+DataManager.getFoodNameFromFoodId(peerRec_food.get(0))+"</b>, so you may like it too!"
-	    			+ " It contains "+peerRec_amount.get(0)+DataManager.getMeasureUnit(nutrientID)+" for each 100g! </li><br>";
-	    	output+="<li>We personally suggest you to try <b>"+DataManager.getFoodNameFromFoodId(absoluteRec_food)+"</b>, since in our databases it is one of the richest foods in this nutrient!"
-	    			+ " It contains "+absoluteRec_amount+DataManager.getMeasureUnit(nutrientID)+" for each 100g! </li></ul><br>";
-	    	output+="Want more recommendations for this nutrient?  "
+	    	//First recommendation
+	    	String output = "<br><div id='lower_rec'><div class='panel panel-default simpleRec'><div class='panel-heading'>Based on your habits</div><div class='panel-body'>In the past you have eaten <b>"+DataManager.getFoodNameFromFoodId(userRec_food.get(0))+"</b>, "
+	    			+ "you could try it again! It contains <b>"+userRec_amount+DataManager.getMeasureUnit(nutrientID)+" for each 100g</b>!  "
+	    			+ "</div><div class='panel-footer'>"
+	    			+ "<a href='#adder' class='btn btn-success addToMealplan' onclick=\"addRec('"+DataManager.getFoodNameFromFoodId(userRec_food.get(0)).replace(',',' ')+"')\";'>"
+	    			+ "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
+	    			+ " Add it!"
+	    			+ "</a>"
+	    			+ "</div>"
+	    			+ "</div>";
+	    	//Second recommendation
+	    	output+="<div class='panel panel-default simpleRec'><div class='panel-heading'>Based on your tags</div><div class='panel-body'>Other people with your tags have eaten <b>"+DataManager.getFoodNameFromFoodId(peerRec_food.get(0))+"</b>, so you may like it too!"
+	    			+ " It contains <b>"+peerRec_amount.get(0)+DataManager.getMeasureUnit(nutrientID)+" for each 100g</b>!  "
+	    			+ "</div><div class='panel-footer'>"
+	    			+ "<a href='#adder' class='btn btn-success addToMealplan' onclick=\"addRec('"+DataManager.getFoodNameFromFoodId(peerRec_food.get(0)).replace(',',' ')+"')\";'>"
+	    			+ "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
+	    			+ " Add it!"
+	    			+ "</a>"
+	    			+ "</div>"
+	    			+ "</div>";
+	    	//Third recommendation
+	    	output+="<div class='panel panel-default simpleRec'><div class='panel-heading'>What we suggest you</div><div class='panel-body'>We personally suggest you to try <b>"+DataManager.getFoodNameFromFoodId(absoluteRec_food)+"</b>, since in our databases it is one of the richest foods in this nutrient!"
+	    			+ " It contains <b>"+absoluteRec_amount+DataManager.getMeasureUnit(nutrientID)+" for each 100g</b>!  "
+	    			+ "</div><div class='panel-footer'>"
+	    			+ "<a href='#adder' class='btn btn-success addToMealplan' onclick=\"addRec('"+DataManager.getFoodNameFromFoodId(absoluteRec_food).replace(',',' ')+"')\";'>"
+	    			+ "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
+	    			+ " Add it!"
+	    			+ "</a>"
+	    			+ "</div>"
+	    			+ "</div>";
+	    	
+	    	
+	    	output+="<br>Want more recommendations for this nutrient?  "
 	    			+ "<a id='goToMoreRec' href='#moreRec' class='btn btn-info btn-xs'>"
 	    			+ "<span class=' glyphicon glyphicon-list-alt' aria-hidden='true'></span> "
 	    			+ " Click here"
 	    			+ "</a>";
-	    	output+="  to get a list of foods to add to your diet!</div>";
+	    	output+="  to get a list of foods to add to your diet!</div><br>";
 	    	
 	    	output+="<div id='moreRec' class='panel panel-primary'><div class='panel-heading'>Food suggestions for "+nutrientName+"</div><br>"
 	    			+ "<div class='panel-body'><div class='panel panel-default'>"
 	    			+ "<div class='panel-heading'  id='moreRecSubtitle'>Suggestions based on your previously eaten foods, having the highest amount of "+nutrientName+":</div>"
 	    			+ "<div class='panel-body'><table class='table'><thead><th>Name</th><th>Amount per 100g</th></thead>";
 	    	for (String food : userRec_food){
-	    		output+="<tr><td>"+DataManager.getFoodNameFromFoodId(food)+"</td><td>"+userRec_amount+DataManager.getMeasureUnit(nutrientID)+"</td></tr>";
+	    		output+="<tr><td>"+DataManager.getFoodNameFromFoodId(food)+"</td><td>"+userRec_amount+DataManager.getMeasureUnit(nutrientID)+"</td><td>"
+	    				+ "<a href='#adder' class='btn btn-success btn-xs addToMealplan' onclick=\"addRec('"+DataManager.getFoodNameFromFoodId(food).replace(',',' ')+"')\";'>"
+		    			+ "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
+		    			+ " Add it!"
+		    			+ "</a>"
+	    				+ "</td></tr>";
 	    	}
 	    	output+="</table></div></div>";
 	    	
@@ -82,11 +114,16 @@ public class Recommendations extends HttpServlet {
 	    			+ "<div class='panel-heading' id='moreRecSubtitle'>Suggestions based on the food that other users having your same tags have eaten, having the highest amount of "+nutrientName+":</div>"
 	    			+ "<div class='panel-body'><table class='table'><thead><th>Name</th><th>Amount per 100g</th></thead>";
 	    	for (String food : peerRec_food){
-	    		output+="<tr><td>"+DataManager.getFoodNameFromFoodId(food)+"</td><td>"+peerRec_amount.get(0)+DataManager.getMeasureUnit(nutrientID)+"</td></tr>";
+	    		output+="<tr><td>"+DataManager.getFoodNameFromFoodId(food)+"</td><td>"+peerRec_amount.get(0)+DataManager.getMeasureUnit(nutrientID)+"</td><td>"
+	    				+ "<a href='#adder' class='btn btn-success btn-xs addToMealplan' onclick=\"addRec('"+DataManager.getFoodNameFromFoodId(food).replace(',',' ')+"')\";'>"
+		    			+ "<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
+		    			+ " Add it!"
+		    			+ "</a>"
+	    				+ "</td></tr>";
 	    	}
 	    	output+="</table></div></div></div>";
 
-	    	output	+= "<a id='cancelMoreRec' class='btn btn-default' href='#statistics' role='button'>Cancel</a></div></div><br><hr><br>";
+	    	output	+= "<a id='cancelMoreRec' class='btn btn-default' href='#statistics' role='button'>Cancel</a></div></div>";
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    
 
