@@ -64,11 +64,6 @@ public class ProfileServlet extends HttpServlet {
 					DataManager.saveUser(user);
 					DataManager.saveTags(user, tags);
 					user.setTags(DataManager.getTags(user));
-					//DataManager.getBestFood("208");
-					DataManager.getPeerFood(user, "203");
-					//DataManager.getBestEatenFood(user, "204");
-
-
 					session = request.getSession();
 					session.setAttribute("uBean", user);
 					request.getRequestDispatcher("Redirect?page=Profile").forward(request, response);
@@ -77,7 +72,6 @@ public class ProfileServlet extends HttpServlet {
 					//Send back again the profile page with the error "Invalid input"
 					response.sendRedirect("ProfileServlet?ERROR=INVALID");
 				}
-				
 				
 			} else {
 				//Send back again the profile page with the error "missing parameters"

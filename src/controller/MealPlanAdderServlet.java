@@ -23,7 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import database.DataManager;
 
-
+/**
+ * This class adds a meal plan to the database.
+ */
 public class MealPlanAdderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Override
@@ -33,6 +35,7 @@ public class MealPlanAdderServlet extends HttpServlet {
 		String[] foodArray = request.getParameterValues("food_name");
 		String[] amountArray = request.getParameterValues("food_amount");
 		
+		//Standard session checker
 		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		response.setDateHeader("Expires", 0); // Proxies.
@@ -45,7 +48,6 @@ public class MealPlanAdderServlet extends HttpServlet {
 		UserBean user = (UserBean) session.getAttribute("uBean");
 		if(inputDate!=null){
 			if(foodArray!=null && amountArray!=null && foodArray.length==amountArray.length){
-
 				if(DataManager.saveMealPlan(user, inputDate, foodArray, amountArray)){
 					request.getRequestDispatcher("Redirect?page=MealPlanner").forward(request, response);
 				}

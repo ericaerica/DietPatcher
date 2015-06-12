@@ -53,7 +53,6 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 
 	    	// 4. Go get the meal plan table
 	    	UserBean user = (UserBean) request.getSession().getAttribute("uBean");
-	    	ArrayList<String[]> output = DataManager.getMealPlanFromDate(user, date);
 	    	String recommender = "";
 	    	String statistics = "";
 	    	try{		    	
@@ -71,15 +70,15 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    	ArrayList<String> nutr_max = DescMinMax.get(3);
 		    	ArrayList<String> nutr_id = DescMinMax.get(4);
 
-		    	ArrayList<ArrayList<ArrayList<String>>> AllLists = new ArrayList<ArrayList<ArrayList<String>>>();
+		    	//Some arrays for the automatic generation of html code 
 		    	ArrayList<ArrayList<String>> General_list = new ArrayList<ArrayList<String>>();
 		    	ArrayList<ArrayList<String>> Carb_list = new ArrayList<ArrayList<String>>();
 		    	ArrayList<ArrayList<String>> Lipid_list = new ArrayList<ArrayList<String>>();
 		    	ArrayList<ArrayList<String>> Protein_list = new ArrayList<ArrayList<String>>();
 		    	ArrayList<ArrayList<String>> Vitamin_list = new ArrayList<ArrayList<String>>();
 		    	ArrayList<ArrayList<String>> Mineral_list = new ArrayList<ArrayList<String>>();
-		    	
-		    	
+
+		    	ArrayList<ArrayList<ArrayList<String>>> AllLists = new ArrayList<ArrayList<ArrayList<String>>>();
 		    	AllLists.add(General_list);
 		    	AllLists.add(Carb_list);
 		    	AllLists.add(Lipid_list);
@@ -95,13 +94,14 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    		list.add(new ArrayList<String>());
 		    		list.add(new ArrayList<String>());
 		    	}
+		    	//Here we define the precise nutrients that belong to each category
 		    	List<String> General_IDs = Arrays.asList("203","204","205","206","208");
 		    	List<String> Carb_IDs = Arrays.asList("205", "209", "291","269");
 		    	List<String> Lipid_IDs = Arrays.asList("204", "645", "646" ,"621","629","851","685","675","606","605","601");
 		    	List<String> Protein_IDs = Arrays.asList("203","507","512","503","504","505","506","508","502","501","509","510");
 		    	List<String> Vitamin_IDs = Arrays.asList("418","578","404","405","406","410","415","401","324","325","326","328","573","323","430","318","320");
 		    	List<String> Mineral_IDs = Arrays.asList("301","312","303","304","315","305","306","317","307","309");
-		    	
+		    	//We dispose them into the different arrays with other information about them
 		    	for(int i = 0; i < nutr_values.size(); i++){
 		    		String id = nutr_id.get(i);
 		    		System.out.println(id);
@@ -161,13 +161,17 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    		}
 		    	}
 		    	
+		    	//Generation of code
 		    	int k = 0;
 		    	String[] titles = {"General","Carbohydrates","Lipids","Proteins","Vitamins","Minerals"};
 		    	String[] htmlText = {"","","","","",""};
+		    	//For each category of nutrients
 		    	for(ArrayList<ArrayList<String>> list : AllLists){
+		    		//Creating a panel and a table inside
 		    		htmlText[k]+="<div class='panel panel-default'><div class='panel-heading'>"+titles[k]+"</div>";
 		    		htmlText[k]+="<table class='table table-condensed'><col width='50%'><col width='50%'>";
 		    		
+		    		//Creating row
 		    		for(int j = 0; j<list.get(0).size(); j++){
 		    			htmlText[k]+="<tr><td>";
 		    			htmlText[k]+=list.get(0).get(j);
@@ -180,6 +184,7 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 			    			} else if(Double.parseDouble(list.get(5).get(j))<Double.parseDouble(list.get(1).get(j))){
 			    				//if the value is lower than min - Warning
 			    				htmlText[k]+="progress-bar-warning";
+			    				//The warning nutrients are the "deficiencies" in the mealplan
 			    				rec_desc.add(list.get(0).get(j));
 			    				rec_id.add(list.get(4).get(j));
 			    			} else {
@@ -193,12 +198,14 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 			    			} else if(Double.parseDouble(list.get(5).get(j))<Double.parseDouble(list.get(2).get(j))){
 			    				//if the value is lower than min - Warning
 			    				htmlText[k]+="progress-bar-warning";
+			    				//The warning nutrients are the "deficiencies" in the mealplan
 			    				rec_desc.add(list.get(0).get(j));
 			    				rec_id.add(list.get(4).get(j));
 			    			} else {
 			    				htmlText[k]+="progress-bar-success";
 			    			}
 			    		}
+			    		//Setting some bars specific information
 			    		htmlText[k]+=" progress-bar-striped active' role='progressbar' ";
 			    		htmlText[k]+="aria-valuenow='"+list.get(5).get(j);
 						if(user.getGender().equals("Male")){
@@ -222,65 +229,10 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    		htmlText[k]+="</table></div>";
 		    		k++;
 		    	}
-		    	
+		    	//Adding them all to a single string
 		    	statistics+=htmlText[0]+htmlText[1]+htmlText[2]+htmlText[3]+htmlText[4]+htmlText[5];
 		    	
-		    	/*
-		    	//For every single nutrient we create a customized bar in html, and we save in an array 
-		    	//those nutrients that are lacking.
-		    	for(int i = 0; i < mealplan_nutr.size(); i++){
-		    		if(!(nutr_desc.get(i).contains(":"))){
-			    		statistics+="<div class='nutrientStat'>";
-			    		statistics+=nutr_desc.get(i);
-			    		statistics+="<div class='progress'><div class='progress-bar ";
-			    		if (user.getGender().equals("Male")){
-			    			//if male
-			    			if(Double.parseDouble(mealplan_nutr.get(i))>Double.parseDouble(nutr_max.get(i)) && !nutr_max.get(i).equals("0") ){
-			    				//if the value is higher than max - Danger
-			    				statistics+="progress-bar-danger";
-			    			} else if(Double.parseDouble(mealplan_nutr.get(i))<Double.parseDouble(nutr_min_M.get(i))){
-			    				//if the value is lower than min - Warning
-			    				statistics+="progress-bar-warning";
-			    				rec_desc.add(nutr_desc.get(i));
-			    				rec_id.add(nutr_id.get(i));
-			    			} else {
-			    				statistics+="progress-bar-success";
-			    			}
-			    		} else {
-			    			//if female
-			    			if(Double.parseDouble(mealplan_nutr.get(i))>Double.parseDouble(nutr_max.get(i)) && !nutr_max.get(i).equals("0") ){
-			    				//if the value is higher than max - Danger
-			    				statistics+="progress-bar-danger";
-			    			} else if(Double.parseDouble(mealplan_nutr.get(i))<Double.parseDouble(nutr_min_F.get(i))){
-			    				//if the value is lower than min - Warning
-			    				statistics+="progress-bar-warning";
-			    				rec_desc.add(nutr_desc.get(i));
-			    				rec_id.add(nutr_id.get(i));
-			    			} else {
-			    				statistics+="progress-bar-success";
-			    			}
-			    		}
-						statistics+=" progress-bar-striped active' role='progressbar' ";
-						statistics+="aria-valuenow='"+mealplan_nutr.get(i);
-						if(user.getGender().equals("Male")){
-							double percentage = Double.parseDouble(mealplan_nutr.get(i))/Double.parseDouble(nutr_min_M.get(i))*100;
-							if(nutr_min_M.get(i).equals("0") || mealplan_nutr.get(i).equals("0") || percentage>100){
-								percentage=100;
-							}
-							
-							statistics+="' aria-valuemin='0' aria-valuemax='"+round(Double.parseDouble(nutr_min_M.get(i)),2);
-							statistics+="' style='width:"+percentage+"%'>"+round(Double.parseDouble(mealplan_nutr.get(i)),2)+"/"+round(Double.parseDouble(nutr_min_M.get(i)),2)+"</div></div></div>";
-						} else {
-							double percentage = Double.parseDouble(mealplan_nutr.get(i))/Double.parseDouble(nutr_min_F.get(i))*100;
-							if(nutr_min_M.get(i).equals("0") || mealplan_nutr.get(i).equals("0") || percentage>100){
-								percentage=100;
-							}
-							statistics+="' aria-valuemin='0' aria-valuemax='"+round(Double.parseDouble(nutr_min_F.get(i)),2);
-							statistics+="' style='width:"+percentage+"%'>"+round(Double.parseDouble(mealplan_nutr.get(i)),2)+"/"+round(Double.parseDouble(nutr_min_F.get(i)),2)+"</div></div></div>";
-						}
-		    		}
-				}//*******************************
-		    	*/
+		    	//Creating the combobox for recommendations
 		    	recommender+="<div id='recommendations'>"
 		    			+ "<div id='upper_rec'>"
 		    			+ "Here are some recommendations to Patch your Diet! <br>Please choose a nutrient you lack in: "
@@ -295,14 +247,24 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 	    	}catch(Exception e){e.printStackTrace();}
 	    	recommender = "<div class='panel panel-default'><div class='panel-heading'>Recommendations</div><div class='panel-body'>" + recommender + "</div></div>";
 	    	statistics = "<div class='panel panel-default'><div class='panel-heading'>Statistics</div><div class='panel-body'>" + statistics + "</div></div>";
+	    	
+	    	//Put them all together
 	    	String final_output = recommender+statistics;
+	    	
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    
 
-			// 6. Send ArrayList<String> as JSON to client
+			// 6. Send string as JSON to client
 	    	mapper.writeValue(response.getOutputStream(), final_output);
 	    }
 		}
+	
+	/**
+	 * This method rounds the input value to a given number of decimals
+	 * @param value
+	 * @param places
+	 * @return
+	 */
 	public static double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 

@@ -60,7 +60,7 @@ public class MealPlanFoodChooserServlet extends HttpServlet {
 			// 5. Set response type to JSON
 			response.setContentType("application/json");		    
 
-			// 6. Send ArrayList<String> as JSON to client
+			// 6. Send the string as JSON to client
 	    	mapper.writeValue(response.getOutputStream(), suggestions);
 		}
 	}
