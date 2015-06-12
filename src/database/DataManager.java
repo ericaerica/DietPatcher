@@ -76,9 +76,9 @@ public class DataManager {
 		if (connection != null) {
 			try {
 				st1 = connection.createStatement();
-				rs = st1.executeQuery("SELECT * FROM userbean WHERE userbean.email = "
+				rs = st1.executeQuery("SELECT * FROM userbean WHERE userbean.email = "	//find user with the unique email
 						+ "'" + user.getEmail() + "'" + ";");
-				if (rs.next()) {
+				if (rs.next()) {	//if found
 					opResult = true;
 				}
 			} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class DataManager {
 		if (connection != null) {
 			try {
 				Statement st = connection.createStatement();
-				if (userExists(user)) {
+				if (userExists(user)) {	//if the user is in the database, update all its info with the new ones
 					st.executeUpdate("UPDATE userbean SET " + "email=" + "'"
 							+ user.getEmail() + "'" + "," + "username=" + "'"
 							+ user.getUsername() + "'" + "," + "password="
@@ -111,7 +111,7 @@ public class DataManager {
 							+ user.getWeight() + "," + "waist="
 							+ user.getWaist() + "WHERE userbean.email=" + "'"
 							+ user.getEmail() + "'" + ";");
-				} else {
+				} else {	//otherwise create new tuple
 					System.out.println("INSERTING");
 					st.executeUpdate("INSERT INTO userbean VALUES (" + "'"
 							+ user.getEmail() + "'" + "," + "'"
@@ -157,9 +157,9 @@ public class DataManager {
 						+ "WHERE userbean.username=" + "'" + username + "'"
 						+ " AND userbean.password = " + "'" + password + "'"
 						+ ';';
-				rs = st.executeQuery(query);
+				rs = st.executeQuery(query);	//retrieve user tuple
 
-				if (rs.next()) {
+				if (rs.next()) {	//create bean
 					user = new UserBean();
 					user.setEmail(rs.getString(1));
 					user.setUsername(rs.getString(2));
@@ -193,25 +193,25 @@ public class DataManager {
 		Statement st = null;
 		ResultSet rs = null;
 		
-		String[] words = partialName.split("\\s+");
+		String[] words = partialName.split("\\s+");	//split partial food name on spaces
 		
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
 				String query = "SELECT ndb_no, long_desc " + "FROM food_des ";
 				int i = 0;
-				for(String s : words){
+				for(String s : words){	//construct query
 					if (i==0)query+="WHERE ";
 					if (i>=1)query+="AND ";
 					query+="UPPER(food_des.long_desc) LIKE UPPER('%" + s + "%') ";
 					i++;
 				}
 				query+=";";
-				rs = st.executeQuery(query);
+				rs = st.executeQuery(query);	//retrieve the ID and complete food description from the partial one
 				while (rs.next()) {
 					String[] couple = new String[2];
-					couple[0]=rs.getString(1);
-					couple[1]=rs.getString(2);
+					couple[0]=rs.getString(1);	//get food ID
+					couple[1]=rs.getString(2);	//get food description
 					foodList.add(couple);
 				}
 				st.close();
@@ -231,25 +231,23 @@ public class DataManager {
 	public static void saveTags(UserBean user, ArrayList<String> newTags){
 		if (connection != null) {
 			try {
-						Statement st1 = connection.createStatement();						
-						String query2 = "DELETE FROM userxtag WHERE userxtag.user='"+user.getId()+"';";							
-						st1.executeUpdate(query2);
-						st1.close();
-						Statement st = connection.createStatement();
-						for(String tag : newTags){
-							String query1 = "SELECT tag.id FROM tag WHERE tag.name=" + "'" + tag + "'" + ";";
-							System.out.println(query1);
-							ResultSet rs = st.executeQuery(query1);
-							int tagId = 0;
-							while(rs.next()){
-								tagId = rs.getInt(1);
-							}							
-							String query3 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
-							System.out.println(query3);
-							st.executeUpdate(query3);
-						}
-						user.setTags(newTags);	//set the tags of the userbean with the new list
-						st.close();
+				Statement st1 = connection.createStatement();						
+				String query2 = "DELETE FROM userxtag WHERE userxtag.user='"+user.getId()+"';";
+				st1.executeUpdate(query2);	//delete old tags
+				st1.close();
+				Statement st = connection.createStatement();
+				for(String tag : newTags){	//save each new tag
+					String query1 = "SELECT tag.id FROM tag WHERE tag.name=" + "'" + tag + "'" + ";";
+					ResultSet rs = st.executeQuery(query1);
+					int tagId = 0;
+					while(rs.next()){
+						tagId = rs.getInt(1);
+					}							
+					String query3 = "INSERT INTO userxtag VALUES (" + tagId + "," + user.getId() + ");";
+					st.executeUpdate(query3);
+				}
+				user.setTags(newTags);	//set the tags of the userbean with the new list
+				st.close();
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();
@@ -264,7 +262,6 @@ public class DataManager {
 	 * @return	ArrayList<String>
 	 */
 	public static ArrayList<String> getTags(UserBean user) {
-		System.out.println("inside getTags");
 		ArrayList<String> tags = new ArrayList<String>();
 		Statement st = null;
 		ResultSet rs = null;
@@ -274,12 +271,12 @@ public class DataManager {
 				st = connection.createStatement();
 				String joinQuery = "SELECT userxtag.tag, tag.name, userxtag.user FROM tag INNER JOIN userxtag "
 						+ "ON tag.id = userxtag.tag WHERE userxtag.user=" + user.getId() + ";";
-				rs = st.executeQuery(joinQuery);
+				rs = st.executeQuery(joinQuery);	//retrieve user tags
 				while (rs.next()) {
 					tags.add((rs.getString(2)));
 				}
 			} catch (SQLException e) {
-				System.out.println("error in joinQuery");
+				System.err.println("error in joinQuery");
 				e.printStackTrace();
 			}
 		}
@@ -293,7 +290,6 @@ public class DataManager {
 	 * @return ArrayList<String> food names
 	 */
 	public static ArrayList<String> getFoodNameFromFoodId(String[] foods){
-		connect();
 		ArrayList<String> foodNames = new ArrayList<String>();
 		for (String food : foods) {
 			Statement st = null;
@@ -304,8 +300,7 @@ public class DataManager {
 					st = connection.createStatement();
 					String joinQuery = "SELECT food_des.long_desc FROM food_des "
 							+ "WHERE food_des.ndb_no='" + food + "';";
-					System.out.println(joinQuery);
-					rs = st.executeQuery(joinQuery);
+					rs = st.executeQuery(joinQuery); //retrieve food description from ID
 					while (rs.next()) {
 						foodNames.add(rs.getString(1));
 					}
@@ -335,7 +330,7 @@ public class DataManager {
 					st = connection.createStatement();
 					String joinQuery = "SELECT food_des.long_desc FROM food_des "
 							+ "WHERE food_des.ndb_no='" + food + "';";
-					rs = st.executeQuery(joinQuery);
+					rs = st.executeQuery(joinQuery);	//retrieve food description from ID
 					if (rs.next()) {
 						foodsId=rs.getString(1);
 					}
@@ -375,38 +370,35 @@ public class DataManager {
 				int j = 0;
 				for (String a : amount) {
 					if (j != 0)
-						amountToAdd += ",";
-					amountToAdd += '"' + a + '"';
+						amountToAdd += ",";		//if it is not the first food, add ","
+					amountToAdd += '"' + a + '"';  //add the food to the array under construction
 					j++;
 				}
-				amountToAdd += "}'";
+				amountToAdd += "}'";			//close the array
 				
-				String nutrToAdd = calculateNutrients(food, amount);
-				System.out.println(nutrToAdd);
-				if (mealPlanExists(user.getId(), date)) {
+				String nutrToAdd = calculateNutrients(food, amount);	//calculate amount of nutrients
+				if (mealPlanExists(user.getId(), date)) {	//if the mealplan already exists, update it
 					Statement st = connection.createStatement();
 					String query = "UPDATE mealplan SET foodlist=" + foodToAdd
 							+ "," + "amountlist=" + amountToAdd
 							+ "," + "nutrvaluelist=" + nutrToAdd
 							+ " WHERE mealplan.user=" + user.getId()
 							+ " AND mealplan.date='" + date + "';";
-					System.out.println(query);
 					st.executeUpdate(query);
 					opResult = true;
 					st.close();
-				} else {
+				} else {	//otherwise create a new tuple with the mealplan
 					Statement st = connection.createStatement();
 
 					String query = "INSERT INTO mealplan VALUES ("
 							+ user.getId() + ",'" + date + "'," + foodToAdd
 							+ "," + amountToAdd + "," + nutrToAdd + ");";
-					System.out.println(query);
 					st.executeUpdate(query);
 					opResult = true;
 					st.close();
 				}
 
-				userCrono(user.getId(), food);
+				userCrono(user.getId(), food);	//save user-food cronology
 			} catch (SQLException e) {
 				System.err.println("ERROR in the query!");
 				e.printStackTrace();
@@ -445,7 +437,7 @@ public class DataManager {
 	}
 	
 	/**
-	 * This method saves the cronology of all the foods ever eaten bu the user or updates it with new foods.
+	 * This method saves the cronology of all the foods ever eaten by the user or updates it with new foods.
 	 * 
 	 * @param id
 	 * @param foods
@@ -457,49 +449,46 @@ public class DataManager {
 
 		if (connection != null) {
 			try {
-					st2 = connection.createStatement();
-					rs2 = st2.executeQuery("SELECT foodlist FROM userxfoodcronology WHERE userxfoodcronology.user = "+id+";");
-					if (rs2.next()) {
-						
-						String[] temp = (String[])(rs2.getArray("foodlist")).getArray();
-						ArrayList<String> oldFood = new ArrayList<String>();
-						for(String s : temp){
-							oldFood.add(s);
-						}
-					    for (String f : foods){
-					    	if(!oldFood.contains(f)){
-					    		oldFood.add(f);
-					    	}
-					    }
-					    
-					    String foodToAdd = "'{";
-						int i = 0;
-						for(String f:oldFood){
-							if (i!=0)foodToAdd+=",";
-							foodToAdd+='"'+f+'"';
-							i++;
-						}foodToAdd+="}'";
-					    
-					    Statement st = connection.createStatement();
-						String query = "UPDATE userxfoodcronology SET foodlist="+foodToAdd+" WHERE userxfoodcronology.user="+id+";";
-						System.out.println(query);
-						st.executeUpdate(query);
-						st.close();
-					} else {
-						String foodToAdd = "'{";
-						int i = 0;
-						for(String f:foods){
-							if (i!=0)foodToAdd+=",";
-							foodToAdd+='"'+f+'"';
-							i++;
-						}foodToAdd+="}'";
-						Statement st = connection.createStatement();
-						String query = "INSERT INTO userxfoodcronology VALUES("+id+","+foodToAdd+")";
-						System.out.println(query);
-						st.executeUpdate(query);
-
-						st.close();
+				st2 = connection.createStatement();
+				rs2 = st2.executeQuery("SELECT foodlist FROM userxfoodcronology WHERE userxfoodcronology.user = "+id+";");
+				if (rs2.next()) {	//if there is already a cronology saved for user, update it
+					String[] temp = (String[])(rs2.getArray("foodlist")).getArray();
+					ArrayList<String> oldFood = new ArrayList<String>();
+					for(String s : temp){
+						oldFood.add(s);
 					}
+					for (String f : foods){
+						if(!oldFood.contains(f)){
+							oldFood.add(f);
+						}
+					}
+
+					String foodToAdd = "'{";	//construct food array
+					int i = 0;
+					for(String f:oldFood){
+						if (i!=0)foodToAdd+=",";
+						foodToAdd+='"'+f+'"';
+						i++;
+					}foodToAdd+="}'";
+
+					Statement st = connection.createStatement();
+					String query = "UPDATE userxfoodcronology SET foodlist="+foodToAdd+" WHERE userxfoodcronology.user="+id+";";
+					st.executeUpdate(query);
+					st.close();
+				} else {	//if there is no cronology for that user, create it
+					String foodToAdd = "'{";
+					int i = 0;
+					for(String f:foods){	//construct food array
+						if (i!=0)foodToAdd+=",";
+						foodToAdd+='"'+f+'"';
+						i++;
+					}foodToAdd+="}'";
+					Statement st = connection.createStatement();
+					String query = "INSERT INTO userxfoodcronology VALUES("+id+","+foodToAdd+")";
+					st.executeUpdate(query);
+
+					st.close();
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -521,7 +510,7 @@ public class DataManager {
 			try {
 				st = connection.createStatement();
 				rs = st.executeQuery("SELECT foodlist FROM userxfoodcronology WHERE userxfoodcronology.user = "+ user.getId() +";");
-				
+				//retrieve user-food cronology
 				if(rs.next()){
 					String[] temp = (String[])(rs.getArray("foodlist")).getArray();
 					for(String s : temp){
@@ -544,43 +533,35 @@ public class DataManager {
 	 * @return ArrayList<String[]> meal plan
 	 */
 	public static ArrayList<String[]> getMealPlanFromDate(UserBean user, String date){
-		connect();
 		String[] foodId = new String[200];
 		String[] foodAmount = new String[200];
 		ArrayList<String[]> output = new ArrayList<String[]>();
-			Statement st = null;
-			ResultSet rs = null;
+		Statement st = null;
+		ResultSet rs = null;
 
-			if (connection != null) {
-				try {
-					st = connection.createStatement();
-					String query = "SELECT foodlist, amountlist FROM mealplan WHERE "+'"'+"user"+'"'+"="+ + user.getId() +" AND "+'"'+"date"+'"'+"='" +date + "';";
-					//System.out.println(query);
-					rs = st.executeQuery(query);
-					
-					if (rs.next()) {
-						Array y = rs.getArray("foodlist");
-						foodId = ((String[])(y.getArray()));
-						y.free();
-						y = rs.getArray("amountlist");
-						//for (int i = 0; i < ((String[])(y).getArray()).length; i++) {
-						//	System.out.println(((String[])(y).getArray())[i]);
-						//}
-						foodAmount = ((String[])(y).getArray());					
-					}
-					
-				} catch (SQLException e) {
-					System.err.println("error in query");
-					e.printStackTrace();
+		if (connection != null) {
+			try {
+				st = connection.createStatement();
+				String query = "SELECT foodlist, amountlist FROM mealplan WHERE "+'"'+"user"+'"'+"="+ + user.getId() +" AND "+'"'+"date"+'"'+"='" +date + "';";
+				rs = st.executeQuery(query);	//retrieve mealplan
+
+				if (rs.next()) {
+					Array y = rs.getArray("foodlist");
+					foodId = ((String[])(y.getArray()));	//get food IDs
+					y.free();
+					y = rs.getArray("amountlist");			//get food amounts
+					foodAmount = ((String[])(y).getArray());					
 				}
+
+			} catch (SQLException e) {
+				System.err.println("error in query");
+				e.printStackTrace();
 			}
-	
-			if(foodId[0]!=null && foodAmount[0]!=null){
-				output.add(foodId);
-				output.add(foodAmount);
-			}
-			
-			
+		}
+		if(foodId[0]!=null && foodAmount[0]!=null){
+			output.add(foodId);
+			output.add(foodAmount);
+		}
 		return output;
 	}
 	
@@ -592,17 +573,13 @@ public class DataManager {
 	public static String calculateNutrients(String[] foods, String[] amounts){
 		Statement st = null;
 		ResultSet rs = null;
-		
-		//Creation of the array		
-		ArrayList<String> mealplan_nutrients = new ArrayList<String>();
+		ArrayList<String> mealplan_nutrients = new ArrayList<String>(); //Creation of the array	
 		
 		if (connection != null) {
 			try {
 				st = connection.createStatement();
-				//System.out.println("init query");
 				String query = "SELECT nutr_no FROM nutr_def ORDER BY nutr_no;";
-				//System.out.println(query);
-				rs = st.executeQuery(query);
+				rs = st.executeQuery(query);	//retrieve nutrient IDs
 				while (rs.next()) {
 					mealplan_nutrients.add(rs.getString(1));
 				}
@@ -612,11 +589,10 @@ public class DataManager {
 				e.printStackTrace();
 			}
 		}
-
 		
 		Double[] mealplan_nutramounts = new Double[mealplan_nutrients.size()];
 		for(int i = 0; i < mealplan_nutramounts.length; i++){
-			mealplan_nutramounts[i]=0.0;
+			mealplan_nutramounts[i]=0.0;	//initialize array elements with 0
 		}
 		
 		for(int i = 0; i<foods.length; i++){
@@ -627,14 +603,10 @@ public class DataManager {
 			if (connection != null) {
 				try {
 					st1 = connection.createStatement();
-					System.out.println("init query");
 					String query = "SELECT nutr_no, nutr_val FROM nut_data WHERE ndb_no="+"'"+foods[i]+"'"+" ORDER BY nutr_no;";
-					//System.out.println(query);
 					rs1 = st1.executeQuery(query);System.out.println();
-					//System.out.println("***************");
 					while (rs1.next()) {
 						//For each nutrient, add it to the hastable
-						//System.out.println(Double.parseDouble(amounts[i])/100);
 						mealplan_nutramounts[mealplan_nutrients.indexOf(rs1.getString(1))]+=(Double.parseDouble(rs1.getString(2)))*(Double.parseDouble(amounts[i])/100);					
 					}
 					st1.close();
@@ -658,16 +630,16 @@ public class DataManager {
 	/**
 	 * This method retrieves minimum and maximum recommended amounts for nutrients.
 	 * 
-	 * @return
+	 * @return	ArrayList<ArrayList<String>>
 	 */
 	public static ArrayList<ArrayList<String>> getDescMinMaxNutrients(){
 		Statement st = null;
 		ResultSet rs = null;
-		ArrayList<String> nutrdesc = new ArrayList<String>();
-		ArrayList<String> DRI_RDA_M = new ArrayList<String>();
-		ArrayList<String> DRI_RDA_F = new ArrayList<String>();
-		ArrayList<String> UL_max_tolerable = new ArrayList<String>();
-		ArrayList<String> nutr_no = new ArrayList<String>();
+		ArrayList<String> nutrdesc = new ArrayList<String>();	//nutrient descriptions
+		ArrayList<String> DRI_RDA_M = new ArrayList<String>();	//recommended values for males
+		ArrayList<String> DRI_RDA_F = new ArrayList<String>();	//recommended values for females
+		ArrayList<String> UL_max_tolerable = new ArrayList<String>();	//maximum tolerable values
+		ArrayList<String> nutr_no = new ArrayList<String>();	//nutrient IDs
 		ArrayList<ArrayList<String>> output = new ArrayList<ArrayList<String>>();
 		
 		if (connection != null) {
@@ -675,7 +647,6 @@ public class DataManager {
 				st = connection.createStatement();
 				String query = "SELECT nutrdesc, DRI_RDA_M, DRI_RDA_F, UL_max_tolerable, nutr_no"
 						+ " FROM nutr_def ORDER BY nutr_no;";
-				System.out.println(query);
 				rs = st.executeQuery(query);
 				while (rs.next()) {
 					nutrdesc.add(rs.getString(1));
@@ -728,26 +699,69 @@ public class DataManager {
 		return nutrValues;
 	}
 	
+	/**
+	 * This method retrieves the measure unit of a nutrient.
+	 * 
+	 * @param nutrientID
+	 * @return String
+	 */
+	public static String getMeasureUnit(String nutrientID){
+		String output ="";
+			Statement st1 = null;
+			ResultSet rs = null;
+			if (connection != null) {
+				try {
+					st1 = connection.createStatement();
+					String query = "SELECT units FROM nutr_def WHERE nutr_def.nutr_no ='"+ nutrientID + "';";
+					rs = st1.executeQuery(query);
+					if (rs.next()) {
+						output=rs.getString(1);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		return output;
+	}
+	
+	/**
+	 * This method retrieved the nutrient ID from the name.
+	 * 
+	 * @param nutrientName
+	 * @return String
+	 */
+	public static String getNutrientIDFromName(String nutrientName){
+		String output ="";
+			Statement st1 = null;
+			ResultSet rs = null;
+			if (connection != null) {
+				try {
+					st1 = connection.createStatement();
+					rs = st1.executeQuery("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
+					if (rs.next()) {
+						output=rs.getString(1);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		return output;
+	}
+	
+	
 	//**********************************************************************************************************//
 	//***************************************** RECOMMENDATION METHODS *****************************************//
 	//**********************************************************************************************************//
-
-	/*
-	 * § per ogni cibo mangiato dall'utente, vedere quello che ne contiene di più [cibo,nutriente]
-	 * § per ogni utente con gli stessi tag, per ogni cibo mangiato da quel utente,
-	 * vedere quello che ne contiene di più[tag,utente,cibo,nutriente]
-	 */
-
+	
 	/**
 	 * This recommender method finds the food containing the greatest amount of the given nutrient among the list of
 	 * foods eaten by the user in the past.
 	 * 
 	 * @param nutrient
 	 * @param user
-	 * @return
+	 * @return ArrayList<Object>
 	 */
 	public static ArrayList<Object> getBestEatenFood(UserBean user, String nutrient){
-		System.out.println("inside getbesteaten: user id=" + user.getId());
 		ArrayList<Object> food_NutrAmount = new ArrayList<Object>();
 		double max = 0.0;
 		ArrayList<String> foodIDs = new ArrayList<String>();
@@ -760,7 +774,7 @@ public class DataManager {
 				
 				double[] amounts = new double[eatenFoods.size()];
 				int index = 0;
-				for(String s : eatenFoods){
+				for(String s : eatenFoods){	//for each eaten food retrieve nutrient amounts
 					String query3 = "SELECT nut_data.nutr_val FROM nut_data WHERE nut_data.nutr_no=" + "'" + nutrient + "'"
 							+ " AND ndb_no=" + "'" + s + "'" + ";";
 					ResultSet rs3 = st.executeQuery(query3);
@@ -771,13 +785,13 @@ public class DataManager {
 					index++;
 				}
 				
-				for(double amt : amounts){
+				for(double amt : amounts){	//find maximum amount
 					if(amt > max)
 						max = amt;
 				}
 				
 				index = 0;
-				for(double amt : amounts){
+				for(double amt : amounts){	//retrieve all the eaten foods with the maximum amount of the nutrient
 					if(amt == max)
 						if (!foodIDs.contains(eatenFoods.get(index))){
 							foodIDs.add(eatenFoods.get(index));
@@ -787,7 +801,7 @@ public class DataManager {
 				
 				st.close();
 			} catch (SQLException e) {
-				System.out.println("error in best food query");
+				System.err.println("error in best food query");
 				e.printStackTrace();
 			}
 		}
@@ -803,9 +817,9 @@ public class DataManager {
 	 * 
 	 * @param user
 	 * @param nutrient
+	 * @return ArrayList<Object>
 	 */
 	public static ArrayList<Object> getPeerFood(UserBean user, String nutrient){
-		System.out.println("inside getpeer");
 		ArrayList<Object> peerFood = new ArrayList<Object>();
 		ArrayList<Double> amounts = new ArrayList<Double>();
 		ArrayList<String> foods = new ArrayList<String>();
@@ -813,20 +827,21 @@ public class DataManager {
 		if(connection != null){
 			try {
 				st = connection.createStatement();
-				ArrayList<String> tags = user.getTags();
-				for(String tag : tags){
+				ArrayList<String> tags = user.getTags();	//retrieve user tags
+				for(String tag : tags){		//for each user tag
 					String query1 = "SELECT userxtag.user FROM tag INNER JOIN userxtag "
 							+ "ON tag.id = userxtag.tag WHERE tag.name=" + "'" + tag + "'" + ";";
-					ResultSet rs1 = st.executeQuery(query1);
-					while(rs1.next()){
+					ResultSet rs1 = st.executeQuery(query1);	//retrieve other users with the same tag
+					while(rs1.next()){		//for each user with the same tag
 						int userID = rs1.getInt(1);
 						if(userID != user.getId()){
-							UserBean otherUser = new UserBean();
+							UserBean otherUser = new UserBean();	//create a bean for it
 							otherUser.setId(userID);
+							//find its best eaten foods for the given nutrient
 							ArrayList<Object> food_amount = getBestEatenFood(otherUser, nutrient);
-							double amount = (Double)food_amount.get(0);
+							double amount = (Double)food_amount.get(0);	//get amount of the given nutrient
 							ArrayList<String> otherFoods = (ArrayList<String>)food_amount.get(1);
-							for(String food : otherFoods){
+							for(String food : otherFoods){ //save foods eaten by the other user containing the maximum amount of nutrient
 								if (!foods.contains(food)){
 									foods.add(food);
 									amounts.add(amount);
@@ -836,7 +851,7 @@ public class DataManager {
 					}
 				}
 			} catch (SQLException e) {
-				System.out.println("error in same tags query");
+				System.err.println("error in same tags query");
 				e.printStackTrace();
 			}
 		}
@@ -865,14 +880,13 @@ public class DataManager {
 			try {
 				st = connection.createStatement();
 				String query = "SELECT ndb_no, nutr_val FROM highest_nutr WHERE nutr_no=" + "'" + nutrient + "'" + ";";
-				rs = st.executeQuery(query);
-				System.out.println(query);
+				rs = st.executeQuery(query);	//select foods with maximum amount of the given nutrient
 				while (rs.next()) {
-					bestFoods.add(rs.getString(1));
-					amounts.add(rs.getDouble(2));
+					bestFoods.add(rs.getString(1));	//save food ID
+					amounts.add(rs.getDouble(2));	//save nutrient amount
 				}
 				
-				if(bestFoods.size() > 1){						//there is more than one food with the same amount
+				if(bestFoods.size() > 1){		//there is more than one food with the same amount
 					Random rnd = new Random();
 					int index = rnd.nextInt(bestFoods.size());	//choose randomly one food
 					foodId = bestFoods.get(index);
@@ -883,53 +897,15 @@ public class DataManager {
 				}
 				st.close();
 			} catch (SQLException e) {
-				System.out.println("error in best food query");
+				System.err.println("error in best food query");
 				e.printStackTrace();
 			}
 		}
 		food_NutrAmount.add(foodId);
 		food_NutrAmount.add(amount);
-		System.out.println(food_NutrAmount.get(0) + "\t" + food_NutrAmount.get(1));
 		return food_NutrAmount;
 	}
 
-	public static String getMeasureUnit(String nutrientID){
-		String output ="";
-			Statement st1 = null;
-			ResultSet rs = null;
-			if (connection != null) {
-				try {
-					st1 = connection.createStatement();
-					String query = "SELECT units FROM nutr_def WHERE nutr_def.nutr_no ='"+ nutrientID + "';";
-					System.out.println(query);
-					rs = st1.executeQuery(query);
-					if (rs.next()) {
-						output=rs.getString(1);
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		return output;
-	}
-	public static String getNutrientIDFromName(String nutrientName){
-		String output ="";
-			Statement st1 = null;
-			ResultSet rs = null;
-			if (connection != null) {
-				try {
-					st1 = connection.createStatement();
-					rs = st1.executeQuery("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
-					System.out.println("SELECT nutr_no FROM nutr_def WHERE nutr_def.nutrdesc = '"+ nutrientName + "';");
-					if (rs.next()) {
-						output=rs.getString(1);
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		return output;
-	}
 	/*public static void database(){
 		/*try {
 			connect();
