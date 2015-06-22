@@ -28,7 +28,7 @@ public class Redirect extends HttpServlet {
 			}else if(page.equals("MealPlanner")){
 				request.getRequestDispatcher("/WEB-INF/MealPlan.jsp").forward(request,response);
 			}else{
-				request.getRequestDispatcher("/WEB-INF/404.html").forward(request,response);
+				request.getRequestDispatcher("/404.html").forward(request,response);
 			}
 		
 	    }

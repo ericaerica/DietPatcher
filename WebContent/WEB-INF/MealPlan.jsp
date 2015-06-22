@@ -29,10 +29,18 @@
    			if(mm<10) {mm='0'+mm} 
        		today = mm + '/' + dd + '/'+yyyy;
 			document.getElementById("inputDate").value=today;
+			sendDate();
 			});
 
 
+function allowOnlyNumbers(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57)){
+            return false;}
 
+         return true;
+      }
 	function getRSAndStats(){
 	document.getElementById('statistics').innerHTML = "<img src='https://d13yacurqjgara.cloudfront.net/users/12755/screenshots/1037374/hex-loader2.gif'>";
 	var string = $('#inputDate').val();
@@ -175,7 +183,7 @@ function addRec(desc){
 
 							</table>
 						</div><div class="input-group">
-						<input name="amount" class="form-control" min="0" onkeydown="allowOnlyNumbers();" id="amount" type="number" placeholder="100"></input><br><span class="input-group-addon"><b>g</b></span></div>
+						<input name="amount" class="form-control" min="0" onkeydown="return allowOnlyNumbers(event);" id="amount" type="number" placeholder="100"></input><br><span class="input-group-addon"><b>g</b></span></div>
 										<br><br>
 										<a class="btn btn-info" href="#header" onClick="ok()" role="button">Add!</a>
 										<a class="btn btn-default" href="#header" role="button">Cancel</a><br>

@@ -104,9 +104,7 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    	//We dispose them into the different arrays with other information about them
 		    	for(int i = 0; i < nutr_values.size(); i++){
 		    		String id = nutr_id.get(i);
-		    		System.out.println(id);
 		    		if(General_IDs.contains(id)){
-		    			System.out.println("a general added");
 		    			General_list.get(0).add(nutr_desc.get(i));//Desc
 		    			General_list.get(1).add(nutr_min_M.get(i));//MinM
 		    			General_list.get(2).add(nutr_min_F.get(i));//MinF
@@ -115,7 +113,6 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    			General_list.get(5).add(nutr_values.get(i));//Consumed amount
 		    		}
 		    		if(Carb_IDs.contains(id)){
-		    			System.out.println("a carb added");
 		    			Carb_list.get(0).add(nutr_desc.get(i));//Desc
 		    			Carb_list.get(1).add(nutr_min_M.get(i));//MinM
 		    			Carb_list.get(2).add(nutr_min_F.get(i));//MinF
@@ -124,7 +121,6 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    			Carb_list.get(5).add(nutr_values.get(i));//Consumed amount
 		    		}
 		    		if(Lipid_IDs.contains(id)){
-		    			System.out.println("a lipid added");
 		    			Lipid_list.get(0).add(nutr_desc.get(i));//Desc
 		    			Lipid_list.get(1).add(nutr_min_M.get(i));//MinM
 		    			Lipid_list.get(2).add(nutr_min_F.get(i));//MinF
@@ -133,7 +129,6 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    			Lipid_list.get(5).add(nutr_values.get(i));//Consumed amount
 		    		}
 		    		if(Protein_IDs.contains(id)){
-		    			System.out.println("a protein added");
 		    			Protein_list.get(0).add(nutr_desc.get(i));//Desc
 		    			Protein_list.get(1).add(nutr_min_M.get(i));//MinM
 		    			Protein_list.get(2).add(nutr_min_F.get(i));//MinF
@@ -142,7 +137,6 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    			Protein_list.get(5).add(nutr_values.get(i));//Consumed amount
 		    		}
 		    		if(Vitamin_IDs.contains(id)){
-		    			System.out.println("a vitamin added");
 		    			Vitamin_list.get(0).add(nutr_desc.get(i));//Desc
 		    			Vitamin_list.get(1).add(nutr_min_M.get(i));//MinM
 		    			Vitamin_list.get(2).add(nutr_min_F.get(i));//MinF
@@ -151,7 +145,6 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 		    			Vitamin_list.get(5).add(nutr_values.get(i));//Consumed amount
 		    		}
 		    		if(Mineral_IDs.contains(id)){
-		    			System.out.println("a mineral added");
 		    			Mineral_list.get(0).add(nutr_desc.get(i));//Desc
 		    			Mineral_list.get(1).add(nutr_min_M.get(i));//MinM
 		    			Mineral_list.get(2).add(nutr_min_F.get(i));//MinF
@@ -210,19 +203,19 @@ public class MealPlanRSAndStatistics extends HttpServlet {
 			    		htmlText[k]+="aria-valuenow='"+list.get(5).get(j);
 						if(user.getGender().equals("Male")){
 							double percentage = Double.parseDouble(list.get(5).get(j))/Double.parseDouble(list.get(1).get(j))*100;
-							if(nutr_min_M.get(j).equals("0") || list.get(5).get(j).equals("0") || percentage>100){
+							if(list.get(1).get(j).equals("0") || list.get(5).get(j).equals("0") || percentage>100){
 								percentage=100;
 							}
 							
 							htmlText[k]+="' aria-valuemin='0' aria-valuemax='"+round(Double.parseDouble(list.get(1).get(j)),2);
-							htmlText[k]+="' style='width:"+percentage+"%'>"+round(Double.parseDouble(list.get(5).get(j)),2)+"/"+round(Double.parseDouble(list.get(1).get(j)),2)+"</div>";
+							htmlText[k]+="' style='width:"+percentage+"%'>"+round(Double.parseDouble(list.get(5).get(j)),2)+"/"+round(Double.parseDouble(list.get(1).get(j)),2)+DataManager.getMeasureUnit(list.get(4).get(j))+"</div>";
 						} else {
 							double percentage = Double.parseDouble(list.get(5).get(j))/Double.parseDouble(list.get(2).get(j))*100;
-							if(nutr_min_M.get(j).equals("0") || list.get(5).get(j).equals("0") || percentage>100){
+							if(list.get(1).get(j).equals("0") || list.get(5).get(j).equals("0") || percentage>100){
 								percentage=100;
 							}
 							htmlText[k]+="' aria-valuemin='0' aria-valuemax='"+round(Double.parseDouble(list.get(2).get(j)),2);
-							htmlText[k]+="' style='width:"+percentage+"%'>"+round(Double.parseDouble(list.get(5).get(j)),2)+"/"+round(Double.parseDouble(list.get(2).get(j)),2)+"</div>";
+							htmlText[k]+="' style='width:"+percentage+"%'>"+round(Double.parseDouble(list.get(5).get(j)),2)+"/"+round(Double.parseDouble(list.get(2).get(j)),2)+DataManager.getMeasureUnit(list.get(4).get(j))+"</div>";
 						}
 		    		}
 		    		
