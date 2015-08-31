@@ -22,7 +22,7 @@ category includes drinks, condiments and foods that are not usually consumed
 alone (e.g. flour, oil).
 * Meal plan: combination of foods that the user plans to eat on the selected day.
 
-************************
+***** /Legend **********
 
 ###Login/Registration page
 
