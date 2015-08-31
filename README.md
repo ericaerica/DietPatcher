@@ -1,5 +1,6 @@
 # DietPatcher
 Authored by Erica Tomaselli & Stanko Franz Ovkaric
+
 Free University of Bozen-Bolzano
 
 ##Introduction
